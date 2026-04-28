@@ -25,43 +25,32 @@ FastAPI, GitHub Actions
 Data & Infrastructure:
 Vector Databases (Pinecone, Chroma, Supabase)
 API Integration & Automation
-💼 ✅ 4. RELEVANT EXPERIENCE (THIS IS MOST IMPORTANT)
-
-I refined your Augmentus work into strong consulting-style bullets 👇
 
 🔹 Augmentus | Jan 2026 – Mar 2026 | Singapore
 
 AI Engineer – Agentic AI & LLM Systems
 
-Designed and implemented Model Context Protocol (MCP)-based architecture to standardize tool orchestration and data access across autonomous AI agents
-Developed multi-agent systems enabling autonomous reasoning and tool execution for robotic workflows, reducing manual intervention
-Built scalable LLM pipelines integrating function calling and contextual reasoning for complex task automation
+Designed and deployed an end-to-end LLM-driven 3D instance segmentation system to eliminate manual object selection in robotic workflows
+Built an intent interpretation agent to convert user input into structured prompts for precise object-level segmentation
+Integrated image understanding + prompt engineering + diffusion-based masking to automatically isolate target regions (e.g., car bumper)
+Enabled interactive clarification through agent-based questioning for ambiguous inputs, improving selection accuracy
+Delivered production-ready integration with Unity backend for real-time 3D mesh projection and object selection
 🔹 Augmentus | Feb 2025 – Dec 2025 | Singapore
 
 R&D AI Engineer
 
-Designed and deployed an agent-based RAG system for automated UI design review, reducing manual validation effort and improving compliance accuracy
-Developed self-reflective prompt validation and enhancement framework to improve LLM response quality and reliability
-Conducted R&D on scalable multi-agent orchestration and API-driven automation for adaptive AI systems
+Designed and implemented an agent-based RAG system for automated UI design review, reducing dependency on manual validation by leadership
+Built a multi-agent pipeline integrating:
+image-to-text understanding
+policy retrieval (vector DB – Supabase)
+evaluation and feedback generation
+Developed approval + rating system (1–5 scale) with actionable improvement suggestions for UI compliance
+Enabled design generation capability using AI to create guideline-compliant UI samples on demand
+Integrated system with Slack for real-time interaction and seamless user workflow
 🔹 Augmentus | Jul 2024 – Jan 2025 | Singapore
 
 Perception Intern / Computer Vision Engineer
 
-Trained and optimized PointNeXt-based models for 3D point cloud segmentation, achieving ~97% mIoU
-Developed 3D perception pipelines supporting robotic environment understanding and real-time scene analysis
-🔥 OPTIONAL (If You Want to Add Impact Line)
-
-You can add 1 line in experience:
-
-“Delivered production-ready AI systems used in real-world robotic and automation environments.”
-
-🎯 Why This Version is Strong
-aligned with consulting style
-shows impact, not just tasks
-highlights GenAI + agentic systems (high demand at EY)
-clean and easy to scan
-⚠️ Final Tips Before You Submit
-keep formatting consistent
-don’t overcrowd text
-use bullet points (not paragraphs)
-keep it 1-page clean
+Developed 3D perception pipelines for robotic scene understanding using point cloud data
+Trained and optimized segmentation models achieving high accuracy (~97% mIoU)
+Contributed to real-world deployment of perception systems for robotics applications
