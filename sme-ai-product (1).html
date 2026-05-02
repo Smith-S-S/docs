@@ -1,0 +1,1646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SME AI Adoption Agent</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f5f3;
+    --panel: #ffffff;
+    --sidebar: #1a1a1a;
+    --sidebar-2: #242424;
+    --sidebar-line: #2e2e2e;
+    --ink: #1a1a1a;
+    --ink-soft: #555;
+    --muted: #8a8a8a;
+    --line: #e3e3e0;
+    --line-soft: #ececea;
+    --accent: #ffe600;
+    --accent-deep: #ffe600;
+    --success: #2e7d57;
+    --success-soft: #c8e8d6;
+    --done-bg: #fff7c2;
+    --upload-bg: #fafafa;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    height: 100%;
+    overflow: hidden;
+  }
+  .mono { font-family: 'IBM Plex Mono', monospace; }
+
+  /* APP SHELL */
+  .app {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    height: 100vh;
+    background: var(--bg);
+  }
+
+  /* ── SIDEBAR ─────────────────────── */
+  .sidebar {
+    background: var(--sidebar);
+    color: #ddd;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid #000;
+    overflow: hidden;
+  }
+  .brand {
+    padding: 18px 18px 16px;
+    border-bottom: 1px solid var(--sidebar-line);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .brand .logo {
+    display: flex; align-items: center; gap: 10px;
+  }
+  .brand .logo-mark {
+    width: 28px; height: 28px;
+    background: var(--accent);
+    color: #1a1a1a;
+    display: grid; place-items: center;
+    font-weight: 700; font-size: 14px;
+    border-radius: 4px;
+  }
+  .brand .logo-text {
+    font-size: 14px; font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .brand .logo-text .ai {
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .brand .menu-icon {
+    color: #888; cursor: pointer; font-size: 18px;
+    line-height: 1;
+  }
+
+  .nav-section {
+    padding: 14px 14px 6px;
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .nav-btn {
+    background: var(--sidebar-2);
+    color: #ddd;
+    border: 1px solid var(--sidebar-line);
+    border-radius: 4px;
+    padding: 9px 12px;
+    font-size: 12.5px;
+    font-weight: 500;
+    text-align: left;
+    cursor: pointer;
+    display: flex; align-items: center; gap: 8px;
+    transition: all 0.15s;
+    font-family: inherit;
+  }
+  .nav-btn:hover { background: #2e2e2e; }
+  .nav-btn.active {
+    background: #3a2f00;
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .nav-btn .icon { font-size: 13px; opacity: 0.8; }
+
+  .history-label {
+    padding: 16px 18px 8px;
+    font-size: 10.5px;
+    color: #777;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .history {
+    overflow-y: auto;
+    padding: 0 12px 16px;
+    display: flex; flex-direction: column; gap: 8px;
+    flex: 1;
+  }
+  .history::-webkit-scrollbar { width: 4px; }
+  .history::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+
+  .session {
+    background: var(--sidebar-2);
+    border: 1px solid var(--sidebar-line);
+    border-radius: 4px;
+    padding: 10px 12px;
+    cursor: pointer;
+    transition: all 0.15s;
+    position: relative;
+  }
+  .session:hover { background: #2e2e2e; }
+  .session.current {
+    background: #2a2400;
+    border-color: var(--accent);
+  }
+  .session-name {
+    font-size: 12px;
+    font-weight: 500;
+    color: #e8e8e8;
+    margin-bottom: 6px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .session-tags {
+    display: flex; gap: 5px; margin-bottom: 6px; flex-wrap: wrap;
+  }
+  .tag-pill {
+    font-size: 9.5px;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+  .tag-pill.use-case { background: #3a2f00; color: var(--accent); border: 1px solid #4a3a00; }
+  .tag-pill.status { background: #1a3a2a; color: #6ee7a0; border: 1px solid #1f4a35; }
+  .session-meta {
+    font-size: 10px;
+    color: #777;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .session .delete {
+    position: absolute;
+    top: 9px; right: 9px;
+    color: #555;
+    font-size: 12px;
+    cursor: pointer;
+  }
+  .session .delete:hover { color: #ddd; }
+  .session .lock {
+    position: absolute;
+    top: 10px; right: 10px;
+    color: #6a6a6a;
+    font-size: 11px;
+    line-height: 1;
+    filter: grayscale(100%);
+  }
+  .session.locked { opacity: 0.85; }
+  .session.locked .session-name { color: #b8b8b8; }
+
+  .sidebar-foot {
+    padding: 12px 16px;
+    border-top: 1px solid var(--sidebar-line);
+    font-size: 10.5px;
+    color: #666;
+    display: flex; justify-content: space-between;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  /* ── MAIN ────────────────────────── */
+  .main {
+    background: var(--bg);
+    display: flex; flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* TITLE BAR */
+  .titlebar {
+    padding: 18px 36px;
+    background: #fff;
+    border-bottom: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .titlebar h1 {
+    font-size: 18px; font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .titlebar .right {
+    display: flex; gap: 14px; align-items: center;
+    font-size: 12px; color: var(--ink-soft);
+  }
+  .titlebar .badge {
+    background: var(--bg);
+    border: 1px solid var(--line);
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+  }
+  .titlebar .avatar {
+    width: 30px; height: 30px;
+    background: var(--ink);
+    color: var(--accent);
+    border-radius: 50%;
+    display: grid; place-items: center;
+    font-size: 12px; font-weight: 600;
+  }
+
+  /* STEPPER */
+  .stepper-bar {
+    background: #fff;
+    border-bottom: 1px solid var(--line);
+    padding: 22px 36px;
+  }
+  .stepper {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    align-items: center;
+  }
+  .step {
+    display: flex; align-items: center; gap: 12px;
+    cursor: pointer;
+    position: relative;
+    padding-right: 24px;
+  }
+  .step:not(:last-child)::after {
+    content: ">";
+    position: absolute;
+    right: 8px; top: 50%;
+    transform: translateY(-50%);
+    color: #c4c4c0;
+    font-size: 14px;
+    font-weight: 300;
+  }
+  .step-circle {
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    display: grid; place-items: center;
+    font-size: 12.5px;
+    font-weight: 600;
+    background: #f0f0ec;
+    color: var(--muted);
+    border: 1px solid var(--line);
+    flex-shrink: 0;
+    transition: all 0.2s;
+  }
+  .step.active .step-circle {
+    background: var(--accent);
+    color: var(--ink);
+    border-color: var(--accent-deep);
+  }
+  .step.done .step-circle {
+    background: var(--accent);
+    color: var(--ink);
+    border-color: var(--accent-deep);
+  }
+  .step.done .step-circle::after { content: ""; }
+  .step-label {
+    display: flex; flex-direction: column; gap: 1px;
+    line-height: 1.2;
+  }
+  .step-label .top {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .step:not(.active):not(.done) .step-label .top { color: var(--muted); font-weight: 500; }
+  .step-label .sub {
+    font-size: 10.5px;
+    color: var(--muted);
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  /* CONTENT AREA */
+  .content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px 36px 36px;
+  }
+  .content::-webkit-scrollbar { width: 8px; }
+  .content::-webkit-scrollbar-thumb { background: #d0d0cc; border-radius: 4px; }
+
+  .panel-title {
+    border-left: 3px solid var(--accent);
+    padding: 2px 0 2px 14px;
+    margin-bottom: 22px;
+  }
+  .panel-title h2 {
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 3px;
+    letter-spacing: -0.01em;
+  }
+  .panel-title p {
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+
+  .work-area {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    min-height: 480px;
+    padding: 32px;
+  }
+
+  /* ── STEP 1 — UPLOAD ─────────── */
+  .step-content { display: none; }
+  .step-content.active { display: block; animation: fadeUp 0.3s ease; }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .upload-zone {
+    background: var(--upload-bg);
+    border: 1.5px dashed #c8c8c4;
+    border-radius: 6px;
+    padding: 60px 32px 50px;
+    text-align: center;
+    transition: all 0.2s;
+  }
+  .upload-zone:hover {
+    border-color: var(--accent-deep);
+    background: #fffbe6;
+  }
+  .upload-icon {
+    width: 70px; height: 70px;
+    margin: 0 auto 20px;
+    border: 1.5px solid #b0b0ac;
+    border-radius: 50%;
+    display: grid; place-items: center;
+    color: #888;
+    font-size: 26px;
+  }
+  .upload-zone h3 {
+    font-size: 16px; font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .upload-zone .formats {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 28px;
+  }
+  .uploaded-list {
+    margin-top: 20px;
+    display: flex; flex-direction: column; gap: 8px;
+    max-width: 460px; margin-left: auto; margin-right: auto;
+  }
+  .uploaded-file {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 14px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    font-size: 13px;
+    text-align: left;
+  }
+  .uploaded-file .fname {
+    display: flex; align-items: center; gap: 10px;
+    color: var(--ink);
+  }
+  .uploaded-file .fname::before {
+    content: "▤"; color: var(--success); font-size: 14px;
+  }
+  .uploaded-file .fsize {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .upload-categories {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-top: 28px;
+  }
+  .upload-cat {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 5px;
+    padding: 14px;
+    font-size: 12px;
+    transition: all 0.15s;
+    cursor: pointer;
+  }
+  .upload-cat:hover { border-color: var(--accent-deep); }
+  .upload-cat.checked {
+    background: #fffbe6;
+    border-color: var(--accent-deep);
+  }
+  .upload-cat .cat-name {
+    font-weight: 600;
+    margin-bottom: 4px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .upload-cat .check {
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: var(--ink);
+    display: grid; place-items: center;
+    font-size: 10px;
+    font-weight: 700;
+  }
+  .upload-cat:not(.checked) .check { display: none; }
+  .upload-cat .cat-desc {
+    color: var(--muted);
+    font-size: 11.5px;
+    line-height: 1.4;
+  }
+
+  /* ── STEP 2 — DATA SELECTION ─── */
+  .selection-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+  .select-card {
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 22px;
+  }
+  .select-card h4 {
+    font-size: 13px; font-weight: 600;
+    margin-bottom: 14px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .select-card h4 .num {
+    width: 20px; height: 20px;
+    background: var(--accent);
+    border-radius: 50%;
+    display: grid; place-items: center;
+    font-size: 11px;
+    color: var(--ink);
+  }
+  .industry-options {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+  }
+  .opt {
+    padding: 10px 12px;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    font-size: 12.5px;
+    cursor: pointer;
+    transition: all 0.15s;
+    background: #fff;
+  }
+  .opt:hover { border-color: var(--accent-deep); }
+  .opt.selected {
+    background: #fffbe6;
+    border-color: var(--accent-deep);
+    font-weight: 500;
+  }
+  .questionnaire {
+    display: flex; flex-direction: column; gap: 14px;
+  }
+  .question {
+    font-size: 13px;
+  }
+  .question label {
+    display: block;
+    color: var(--ink-soft);
+    margin-bottom: 6px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+  .question .answer-pills {
+    display: flex; flex-wrap: wrap; gap: 6px;
+  }
+  .pill {
+    padding: 6px 11px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    font-size: 11.5px;
+    cursor: pointer;
+    background: #fff;
+    transition: all 0.15s;
+  }
+  .pill:hover { border-color: var(--accent-deep); }
+  .pill.selected {
+    background: var(--ink);
+    color: var(--accent);
+    border-color: var(--ink);
+  }
+  .question input[type="text"] {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    font-size: 12.5px;
+    font-family: inherit;
+  }
+  .question input[type="text"]:focus {
+    outline: none; border-color: var(--accent-deep);
+  }
+
+  /* ── STEP 3 — PROCESSING ─────── */
+  .processing-wrap {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 28px;
+    height: 100%;
+  }
+  .progress-main h3 {
+    font-size: 15px; font-weight: 600; margin-bottom: 6px;
+  }
+  .progress-main .sub {
+    font-size: 12.5px; color: var(--ink-soft); margin-bottom: 22px;
+  }
+  .progress-bar {
+    width: 100%; height: 6px;
+    background: var(--line-soft);
+    border-radius: 999px;
+    overflow: hidden;
+    margin-bottom: 22px;
+  }
+  .progress-fill {
+    height: 100%;
+    width: 62%;
+    background: linear-gradient(90deg, var(--accent), var(--accent-deep));
+    border-radius: 999px;
+  }
+  .agent-log {
+    background: var(--sidebar);
+    color: #ddd;
+    border-radius: 6px;
+    padding: 18px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    line-height: 1.7;
+    max-height: 360px;
+    overflow-y: auto;
+  }
+  .agent-log .line {
+    display: flex; gap: 10px;
+    margin-bottom: 4px;
+  }
+  .agent-log .ts { color: #6a6a6a; flex-shrink: 0; }
+  .agent-log .ok { color: #6ee7a0; }
+  .agent-log .info { color: var(--accent); }
+  .agent-log .think { color: #b8b8b8; font-style: italic; }
+  .agent-log .blink {
+    display: inline-block;
+    width: 8px; height: 14px;
+    background: var(--accent);
+    vertical-align: -2px;
+    animation: blink 1s step-end infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  .progress-side {
+    border-left: 1px solid var(--line);
+    padding-left: 28px;
+  }
+  .progress-side h4 {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    margin-bottom: 14px;
+    font-weight: 600;
+  }
+  .check-list { display: flex; flex-direction: column; gap: 10px; }
+  .check-item {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 13px;
+  }
+  .check-item .ico {
+    width: 18px; height: 18px; border-radius: 50%;
+    display: grid; place-items: center;
+    font-size: 10px; font-weight: 700;
+    flex-shrink: 0;
+  }
+  .check-item.done .ico { background: var(--success); color: #fff; }
+  .check-item.done .ico::after { content: "✓"; }
+  .check-item.now .ico {
+    background: var(--accent); color: var(--ink);
+    animation: spin 1.5s linear infinite;
+  }
+  .check-item.now .ico::after { content: "◐"; }
+  .check-item.todo .ico { background: var(--line-soft); color: var(--muted); border: 1px solid var(--line); }
+  .check-item.todo .ico::after { content: ""; }
+  .check-item.todo { color: var(--muted); }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ── STEP 4 — REVIEW ─────────── */
+  .review-head {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 22px;
+    flex-wrap: wrap; gap: 12px;
+  }
+  .review-head .summary {
+    display: flex; gap: 28px;
+  }
+  .summary-item .label {
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin-bottom: 3px;
+  }
+  .summary-item .value {
+    font-size: 17px; font-weight: 600;
+  }
+  .summary-item .value.accent { color: var(--success); }
+
+  .results-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .results-table th {
+    text-align: left;
+    padding: 11px 16px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    border-bottom: 1px solid var(--line);
+    background: #fafafa;
+    font-weight: 600;
+  }
+  .results-table td {
+    padding: 14px 16px;
+    font-size: 13px;
+    border-bottom: 1px solid var(--line-soft);
+    vertical-align: middle;
+  }
+  .results-table tr:last-child td { border-bottom: none; }
+  .results-table tr.uc-row { cursor: pointer; }
+  .results-table tr.uc-row:hover td { background: #fffbe6; }
+  .results-table tr.uc-row td { transition: background 0.15s; }
+  .chev {
+    display: inline-block;
+    transition: transform 0.2s ease;
+    color: var(--ink-soft);
+    font-size: 11px;
+    margin-left: 6px;
+  }
+  .uc-row.open .chev { transform: rotate(180deg); color: var(--accent-deep); }
+  .uc-row.open td { background: #fffbe6; }
+
+  .uc-detail-row { display: none; }
+  .uc-detail-row.open { display: table-row; }
+  .uc-detail-row td {
+    padding: 0 !important;
+    background: #fafafa !important;
+    border-bottom: 1px solid var(--line) !important;
+  }
+  .uc-detail {
+    padding: 22px 24px 26px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    border-top: 1px dashed var(--line);
+    animation: detailFade 0.25s ease;
+  }
+  @keyframes detailFade {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .detail-block h5 {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    margin-bottom: 10px;
+    font-weight: 600;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .detail-block h5 .dot-i {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--accent);
+  }
+  .detail-block.pain h5 .dot-i { background: #d9534f; }
+  .detail-block ul { list-style: none; }
+  .detail-block li {
+    font-size: 12.5px;
+    line-height: 1.55;
+    padding: 5px 0 5px 18px;
+    position: relative;
+    color: var(--ink-soft);
+  }
+  .detail-block li::before {
+    content: "→";
+    position: absolute; left: 0;
+    color: var(--accent-deep);
+    font-weight: 600;
+  }
+  .detail-block.pain li::before { content: "▪"; color: #d9534f; }
+  .detail-meta {
+    grid-column: 1 / -1;
+    margin-top: 6px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--line);
+    display: flex; gap: 28px; flex-wrap: wrap;
+    font-size: 11.5px;
+    color: var(--ink-soft);
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .detail-meta .meta-k { color: var(--muted); margin-right: 6px; }
+
+  @media (max-width: 860px) {
+    .uc-detail { grid-template-columns: 1fr; }
+  }
+  .rank-num {
+    display: inline-grid; place-items: center;
+    width: 24px; height: 24px;
+    background: var(--accent);
+    border-radius: 50%;
+    font-weight: 600;
+    font-size: 12px;
+    color: var(--ink);
+  }
+  .uc-name { font-weight: 600; }
+  .uc-sector { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .badge-phase {
+    font-size: 10.5px;
+    padding: 3px 8px;
+    border-radius: 999px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .badge-phase.now { background: #2e7d57; color: #fff; }
+  .badge-phase.next { background: #fff7c2; color: #5a4500; }
+  .badge-phase.later { background: #ececea; color: #555; }
+  .value-cell {
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 600;
+    color: var(--success);
+  }
+  .funding {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11.5px;
+    color: var(--ink-soft);
+  }
+  .override {
+    font-size: 11px;
+    color: var(--accent-deep);
+    cursor: pointer;
+    border: 1px solid var(--line);
+    padding: 4px 9px;
+    border-radius: 4px;
+    background: #fff;
+  }
+  .override:hover { background: var(--accent); }
+
+  .roadmap-strip {
+    margin-top: 22px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 22px;
+  }
+  .roadmap-strip h4 {
+    font-size: 13px; font-weight: 600; margin-bottom: 16px;
+  }
+  .timeline-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+  .ph {
+    padding: 14px 16px;
+    border-radius: 5px;
+    background: var(--bg);
+  }
+  .ph.now { background: #f0fdf4; border-left: 3px solid var(--success); }
+  .ph.next { background: #fffbe6; border-left: 3px solid var(--accent-deep); }
+  .ph.later { background: #f7f7f6; border-left: 3px solid #c4c4c0; }
+  .ph .label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; }
+  .ph .title { font-size: 14px; font-weight: 600; margin-bottom: 8px; }
+  .ph ul { list-style: none; }
+  .ph li { font-size: 12px; padding: 3px 0; padding-left: 14px; position: relative; }
+  .ph li::before { content: "·"; position: absolute; left: 4px; font-weight: 700; }
+
+  /* FOOTER ACTIONS */
+  .actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 22px;
+    padding: 16px 0 0;
+  }
+  .btn {
+    border: none;
+    padding: 10px 18px;
+    font-size: 13px;
+    font-weight: 500;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: inherit;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.15s;
+  }
+  .btn-primary { background: var(--ink); color: var(--accent); }
+  .btn-primary:hover { background: #000; }
+  .btn-ghost { background: transparent; color: var(--ink-soft); border: 1px solid var(--line); }
+  .btn-ghost:hover { background: #fff; }
+  .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  /* small EY-style mark */
+  .corner-mark {
+    position: absolute;
+    bottom: 14px; right: 22px;
+    font-weight: 700;
+    color: var(--ink);
+    font-size: 13px;
+    letter-spacing: 0.02em;
+  }
+  .main { position: relative; }
+
+  @media (max-width: 1100px) {
+    .upload-categories { grid-template-columns: 1fr 1fr; }
+    .selection-grid { grid-template-columns: 1fr; }
+    .processing-wrap { grid-template-columns: 1fr; }
+    .progress-side { border-left: none; padding-left: 0; border-top: 1px solid var(--line); padding-top: 22px; }
+  }
+  @media (max-width: 860px) {
+    .app { grid-template-columns: 1fr; }
+    .sidebar { display: none; }
+    .stepper { grid-template-columns: 1fr 1fr; gap: 14px; }
+    .step-label .sub { display: none; }
+    .timeline-row { grid-template-columns: 1fr; }
+    .content, .titlebar, .stepper-bar { padding-left: 18px; padding-right: 18px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ─── SIDEBAR ─── -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="logo">
+        <div class="logo-mark">EY</div>
+        <div class="logo-text">SME Adopt<span class="ai">.AI</span></div>
+      </div>
+      <div class="menu-icon">≡</div>
+    </div>
+
+    <div class="nav-section">
+      <button class="nav-btn active">
+        <span class="icon">⊕</span> New Assessment
+      </button>
+      <button class="nav-btn">
+        <span class="icon">⊟</span> Knowledge Base
+      </button>
+    </div>
+
+    <div class="history-label">Recent assessments</div>
+    <div class="history">
+
+      <div class="session current">
+        <div class="session-name">Lim Precision Engineering</div>
+        <div class="session-tags">
+          <span class="tag-pill use-case">Predictive Maint.</span>
+          <span class="tag-pill status">In progress</span>
+        </div>
+        <div class="session-meta">2026.05.02 · 09:14</div>
+      </div>
+
+      <div class="session locked">
+        <div class="session-name">SengHup Metalworks Pte</div>
+        <div class="session-tags">
+          <span class="tag-pill use-case">Inventory Opt.</span>
+          <span class="tag-pill status">Complete</span>
+        </div>
+        <div class="session-meta">2026.04.28 · 16:32</div>
+        <div class="lock">🔒</div>
+      </div>
+
+      <div class="session locked">
+        <div class="session-name">TechFab Industries</div>
+        <div class="session-tags">
+          <span class="tag-pill use-case">Quality AI</span>
+          <span class="tag-pill status">Complete</span>
+        </div>
+        <div class="session-meta">2026.04.21 · 11:08</div>
+        <div class="lock">🔒</div>
+      </div>
+
+      <div class="session locked">
+        <div class="session-name">Yong Hardware Mfg</div>
+        <div class="session-tags">
+          <span class="tag-pill use-case">Spare Parts</span>
+          <span class="tag-pill status">Complete</span>
+        </div>
+        <div class="session-meta">2026.04.15 · 14:50</div>
+        <div class="lock">🔒</div>
+      </div>
+
+      <div class="session locked">
+        <div class="session-name">Pioneer Plastics SG</div>
+        <div class="session-tags">
+          <span class="tag-pill use-case">Energy Opt.</span>
+          <span class="tag-pill status">Complete</span>
+        </div>
+        <div class="session-meta">2026.04.09 · 10:22</div>
+        <div class="lock">🔒</div>
+      </div>
+
+      <div class="session locked">
+        <div class="session-name">Acme Components Ltd</div>
+        <div class="session-tags">
+          <span class="tag-pill use-case">Vision QC</span>
+          <span class="tag-pill status">Complete</span>
+        </div>
+        <div class="session-meta">2026.04.02 · 15:44</div>
+        <div class="lock">🔒</div>
+      </div>
+
+    </div>
+
+    <div class="sidebar-foot">
+      <span>v 1.0.4</span>
+      <span>EY · IMDA</span>
+    </div>
+  </aside>
+
+  <!-- ─── MAIN ─── -->
+  <main class="main">
+
+    <div class="titlebar">
+      <h1>SME AI Adoption Agent</h1>
+      <div class="right">
+        <div class="badge mono">Session #4821</div>
+        <div class="avatar">LP</div>
+      </div>
+    </div>
+
+    <!-- STEPPER -->
+    <div class="stepper-bar">
+      <div class="stepper" id="stepper">
+        <div class="step active" data-step="1">
+          <div class="step-circle">1</div>
+          <div class="step-label">
+            <div class="top">Upload data</div>
+            <div class="sub">Business context</div>
+          </div>
+        </div>
+        <div class="step" data-step="2">
+          <div class="step-circle">2</div>
+          <div class="step-label">
+            <div class="top">Sector & questions</div>
+            <div class="sub">Operational context</div>
+          </div>
+        </div>
+        <div class="step" data-step="3">
+          <div class="step-circle">3</div>
+          <div class="step-label">
+            <div class="top">Agent assessment</div>
+            <div class="sub">RAG analysis</div>
+          </div>
+        </div>
+        <div class="step" data-step="4">
+          <div class="step-circle">4</div>
+          <div class="step-label">
+            <div class="top">Roadmap & override</div>
+            <div class="sub">Final output</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="content">
+
+      <!-- STEP 1 -->
+      <div class="step-content active" data-content="1">
+        <div class="panel-title">
+          <h2>Upload data</h2>
+          <p>Let's begin by uploading your business documents. No technical input required.</p>
+        </div>
+        <div class="work-area">
+          <div class="upload-zone">
+            <div class="upload-icon">↑</div>
+            <h3>Drag & drop files or Browse</h3>
+            <div class="formats">Supported file formats: PDF, XLSX, CSV, DOCX, JPG · Max 25MB</div>
+            <div class="uploaded-list">
+              <div class="uploaded-file">
+                <div class="fname">Financial_Statements_FY2024.pdf</div>
+                <div class="fsize">1.4 MB</div>
+              </div>
+              <div class="uploaded-file">
+                <div class="fname">Company_Brochure.pdf</div>
+                <div class="fsize">820 KB</div>
+              </div>
+              <div class="uploaded-file">
+                <div class="fname">Operations_Data_Q1.xlsx</div>
+                <div class="fsize">312 KB</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="upload-categories">
+            <div class="upload-cat checked">
+              <div class="cat-name">Financial statements <span class="check">✓</span></div>
+              <div class="cat-desc">P&L, balance sheet, cash flow</div>
+            </div>
+            <div class="upload-cat checked">
+              <div class="cat-name">Website / brochures <span class="check">✓</span></div>
+              <div class="cat-desc">Company overview material</div>
+            </div>
+            <div class="upload-cat checked">
+              <div class="cat-name">Operational data <span class="check">✓</span></div>
+              <div class="cat-desc">Production, inventory logs</div>
+            </div>
+            <div class="upload-cat">
+              <div class="cat-name">Industry questions <span class="check">✓</span></div>
+              <div class="cat-desc">Answered in next step</div>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button class="btn btn-ghost">Save & exit</button>
+            <button class="btn btn-primary" data-next="2">Continue →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 2 -->
+      <div class="step-content" data-content="2">
+        <div class="panel-title">
+          <h2>Sector & operational context</h2>
+          <p>Tell us about your business in plain language. The agent uses this to narrow the use-case search.</p>
+        </div>
+        <div class="work-area">
+          <div class="selection-grid">
+
+            <div class="select-card">
+              <h4><span class="num">1</span> Manufacturing sub-sector</h4>
+              <div class="industry-options">
+                <div class="opt selected">Precision engineering</div>
+                <div class="opt">Electronics & semicon</div>
+                <div class="opt">Metals & metal products</div>
+                <div class="opt">Plastics & rubber</div>
+                <div class="opt">Food & beverage mfg</div>
+                <div class="opt">Chemicals & pharma</div>
+                <div class="opt">Machinery & equipment</div>
+                <div class="opt">Other / mixed</div>
+              </div>
+            </div>
+
+            <div class="select-card">
+              <h4><span class="num">2</span> Company size</h4>
+              <div class="industry-options">
+                <div class="opt">Under 20 staff</div>
+                <div class="opt selected">20 – 50 staff</div>
+                <div class="opt">51 – 200 staff</div>
+                <div class="opt">200+ staff</div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="select-card" style="margin-top: 18px;">
+            <h4><span class="num">3</span> A few quick questions</h4>
+            <div class="questionnaire">
+              <div class="question">
+                <label>Where do you lose the most time today?</label>
+                <div class="answer-pills">
+                  <div class="pill selected">Unplanned downtime</div>
+                  <div class="pill">Inventory mismatch</div>
+                  <div class="pill">Manual data entry</div>
+                  <div class="pill">Quality rework</div>
+                  <div class="pill">Demand forecasting</div>
+                </div>
+              </div>
+              <div class="question">
+                <label>Which areas are you open to investing in over the next 12 months?</label>
+                <div class="answer-pills">
+                  <div class="pill selected">Predictive maintenance</div>
+                  <div class="pill selected">Inventory optimisation</div>
+                  <div class="pill">Vision-based QC</div>
+                  <div class="pill">Energy management</div>
+                  <div class="pill">Supply chain AI</div>
+                </div>
+              </div>
+              <div class="question">
+                <label>What's your budget appetite for AI investment in the next 12 months?</label>
+                <div class="answer-pills">
+                  <div class="pill">Under S$ 20k</div>
+                  <div class="pill selected">S$ 20k – 50k</div>
+                  <div class="pill">S$ 50k – 100k</div>
+                  <div class="pill">S$ 100k+</div>
+                  <div class="pill">Open — depends on ROI</div>
+                </div>
+              </div>
+              <div class="question">
+                <label>How would you describe your team's data & tech maturity?</label>
+                <div class="answer-pills">
+                  <div class="pill">No data systems yet</div>
+                  <div class="pill selected">Spreadsheets & basic ERP</div>
+                  <div class="pill">Some digital tools, no AI</div>
+                  <div class="pill">AI / advanced analytics in use</div>
+                </div>
+              </div>
+              <div class="question">
+                <label>Anything specific you want the agent to consider? (optional)</label>
+                <input type="text" placeholder="e.g. We have 4 CNC machines, 2 are over 10 years old…" value="We have 4 CNC machines, 2 are over 10 years old and break down monthly." />
+              </div>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button class="btn btn-ghost" data-next="1">← Back</button>
+            <button class="btn btn-primary" data-next="3">Run assessment →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 3 -->
+      <div class="step-content" data-content="3">
+        <div class="panel-title">
+          <h2>Agent assessment in progress</h2>
+          <p>The agent is combining your data with the manufacturing knowledge base.</p>
+        </div>
+        <div class="work-area">
+          <div class="processing-wrap">
+            <div class="progress-main">
+              <h3 id="progressTitle">Analysing — 0% complete</h3>
+              <div class="sub" id="progressEta">Estimated time remaining: ~ 5 seconds</div>
+              <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width: 0%;"></div></div>
+
+              <div class="agent-log" id="agentLog">
+                <div class="line"><span class="ts">[09:14:02]</span><span class="info">▸ Indexing 3 uploaded documents</span></div>
+              </div>
+            </div>
+
+            <div class="progress-side">
+              <h4>Pipeline</h4>
+              <div class="check-list" id="pipeline">
+                <div class="check-item now" data-stage="0"><div class="ico"></div>Documents parsed</div>
+                <div class="check-item todo" data-stage="1"><div class="ico"></div>Knowledge base queried</div>
+                <div class="check-item todo" data-stage="2"><div class="ico"></div>Use cases retrieved</div>
+                <div class="check-item todo" data-stage="3"><div class="ico"></div>Business value scored</div>
+                <div class="check-item todo" data-stage="4"><div class="ico"></div>Mapping funding & vendors</div>
+                <div class="check-item todo" data-stage="5"><div class="ico"></div>Drafting roadmap</div>
+                <div class="check-item todo" data-stage="6"><div class="ico"></div>Final report</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button class="btn btn-ghost" data-next="2">← Back</button>
+            <button class="btn btn-primary" data-next="4" id="viewResultsBtn" disabled>View results →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 4 -->
+      <div class="step-content" data-content="4">
+        <div class="panel-title">
+          <h2>Your AI roadmap — review and override</h2>
+          <p>Top 5 use cases ranked by value. Adjust the phase or remove any item before exporting.</p>
+        </div>
+        <div class="work-area">
+          <div class="review-head">
+            <div class="summary">
+              <div class="summary-item">
+                <div class="label">Total est. value</div>
+                <div class="value accent">+ S$ 705k / yr</div>
+              </div>
+              <div class="summary-item">
+                <div class="label">Funding identified</div>
+                <div class="value">S$ 240k</div>
+              </div>
+              <div class="summary-item">
+                <div class="label">Use cases</div>
+                <div class="value">5 ranked</div>
+              </div>
+            </div>
+            <button class="btn btn-primary">⤓ Export roadmap (PDF)</button>
+          </div>
+
+          <table class="results-table">
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Use case</th>
+                <th>Phase</th>
+                <th>Est. value</th>
+                <th>Funding match</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+
+              <tr class="uc-row" data-uc="1">
+                <td><span class="rank-num">1</span></td>
+                <td>
+                  <div class="uc-name">Predictive Maintenance — CNC line</div>
+                  <div class="uc-sector">Precision engineering · 8-week pilot</div>
+                </td>
+                <td><span class="badge-phase now">Now</span></td>
+                <td class="value-cell">+ S$ 240k</td>
+                <td class="funding">PSG · IMDA-approved</td>
+                <td><span class="chev">▼</span></td>
+              </tr>
+              <tr class="uc-detail-row" data-detail="1">
+                <td colspan="6">
+                  <div class="uc-detail">
+                    <div class="detail-block pain">
+                      <h5><span class="dot-i"></span>Pain points solved</h5>
+                      <ul>
+                        <li>2 of 4 CNC machines are over 10 years old and break down monthly</li>
+                        <li>Unplanned downtime is your biggest source of lost time</li>
+                        <li>Reactive maintenance leads to expensive emergency callouts</li>
+                        <li>No early warning before a critical failure</li>
+                      </ul>
+                    </div>
+                    <div class="detail-block">
+                      <h5><span class="dot-i"></span>Benefits delivered</h5>
+                      <ul>
+                        <li>Sensors + ML model predict failures 48–72 hours in advance</li>
+                        <li>Estimated 35% reduction in unplanned downtime</li>
+                        <li>Maintenance shifts from reactive to scheduled — lower overtime cost</li>
+                        <li>Extends useful life of older CNC equipment</li>
+                      </ul>
+                    </div>
+                    <div class="detail-meta">
+                      <div><span class="meta-k">Vendor options:</span> AITech Pte · MachineSense SG · Ufactory</div>
+                      <div><span class="meta-k">Implementation:</span> 8 weeks</div>
+                      <div><span class="meta-k">Funding:</span> PSG up to 50% (max S$ 30k)</div>
+                      <div><span class="meta-k">Payback:</span> ~ 9 months</div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+              <tr class="uc-row" data-uc="2">
+                <td><span class="rank-num">2</span></td>
+                <td>
+                  <div class="uc-name">Inventory Optimisation</div>
+                  <div class="uc-sector">Reduces working capital lock-up</div>
+                </td>
+                <td><span class="badge-phase now">Now</span></td>
+                <td class="value-cell">+ S$ 180k</td>
+                <td class="funding">PSG · IMDA-approved</td>
+                <td><span class="chev">▼</span></td>
+              </tr>
+              <tr class="uc-detail-row" data-detail="2">
+                <td colspan="6">
+                  <div class="uc-detail">
+                    <div class="detail-block pain">
+                      <h5><span class="dot-i"></span>Pain points solved</h5>
+                      <ul>
+                        <li>Inventory mismatch flagged in your operational data</li>
+                        <li>Working capital tied up in slow-moving stock</li>
+                        <li>Manual stock counts prone to error</li>
+                        <li>Stock-outs on fast-movers cause production delays</li>
+                      </ul>
+                    </div>
+                    <div class="detail-block">
+                      <h5><span class="dot-i"></span>Benefits delivered</h5>
+                      <ul>
+                        <li>AI demand forecasting cuts safety stock by ~ 25%</li>
+                        <li>Frees up an estimated S$ 180k in working capital annually</li>
+                        <li>Auto-reorder triggers reduce manual planning effort</li>
+                        <li>Works with your existing ERP — no rip-and-replace</li>
+                      </ul>
+                    </div>
+                    <div class="detail-meta">
+                      <div><span class="meta-k">Vendor options:</span> Inventoro · Netstock · Lokad</div>
+                      <div><span class="meta-k">Implementation:</span> 6 weeks</div>
+                      <div><span class="meta-k">Funding:</span> PSG up to 50%</div>
+                      <div><span class="meta-k">Payback:</span> ~ 6 months</div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+              <tr class="uc-row" data-uc="3">
+                <td><span class="rank-num">3</span></td>
+                <td>
+                  <div class="uc-name">Spare Parts Forecasting</div>
+                  <div class="uc-sector">Builds on inventory data</div>
+                </td>
+                <td><span class="badge-phase next">Next</span></td>
+                <td class="value-cell">+ S$ 120k</td>
+                <td class="funding">EDG matched grant</td>
+                <td><span class="chev">▼</span></td>
+              </tr>
+              <tr class="uc-detail-row" data-detail="3">
+                <td colspan="6">
+                  <div class="uc-detail">
+                    <div class="detail-block pain">
+                      <h5><span class="dot-i"></span>Pain points solved</h5>
+                      <ul>
+                        <li>Critical spare parts often unavailable when needed</li>
+                        <li>Over-stocking expensive low-turn parts to "be safe"</li>
+                        <li>No link between maintenance schedule and parts ordering</li>
+                      </ul>
+                    </div>
+                    <div class="detail-block">
+                      <h5><span class="dot-i"></span>Benefits delivered</h5>
+                      <ul>
+                        <li>Forecasts spare-parts demand from machine usage data</li>
+                        <li>Synchronises with predictive maintenance pipeline</li>
+                        <li>Cuts emergency procurement spend by ~ 40%</li>
+                        <li>Reduces obsolete stock write-offs</li>
+                      </ul>
+                    </div>
+                    <div class="detail-meta">
+                      <div><span class="meta-k">Vendor options:</span> Augury · Senseye · Inventoro</div>
+                      <div><span class="meta-k">Implementation:</span> 10 weeks</div>
+                      <div><span class="meta-k">Funding:</span> EDG up to 50% matched</div>
+                      <div><span class="meta-k">Payback:</span> ~ 12 months</div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+              <tr class="uc-row" data-uc="4">
+                <td><span class="rank-num">4</span></td>
+                <td>
+                  <div class="uc-name">Quality Vision Inspection</div>
+                  <div class="uc-sector">Capex moderate · 3 vendor options</div>
+                </td>
+                <td><span class="badge-phase next">Next</span></td>
+                <td class="value-cell">+ S$ 95k</td>
+                <td class="funding">EDG matched grant</td>
+                <td><span class="chev">▼</span></td>
+              </tr>
+              <tr class="uc-detail-row" data-detail="4">
+                <td colspan="6">
+                  <div class="uc-detail">
+                    <div class="detail-block pain">
+                      <h5><span class="dot-i"></span>Pain points solved</h5>
+                      <ul>
+                        <li>Quality rework flagged as a top time-loss area</li>
+                        <li>Manual visual inspection misses subtle defects</li>
+                        <li>Inconsistent quality between operators and shifts</li>
+                        <li>Defects caught only at final QC, not at source</li>
+                      </ul>
+                    </div>
+                    <div class="detail-block">
+                      <h5><span class="dot-i"></span>Benefits delivered</h5>
+                      <ul>
+                        <li>Camera + AI detects defects in real-time on the line</li>
+                        <li>Reduces rework rate by ~ 60%</li>
+                        <li>Consistent quality 24/7, no operator fatigue</li>
+                        <li>Defect data feeds back into process improvement</li>
+                      </ul>
+                    </div>
+                    <div class="detail-meta">
+                      <div><span class="meta-k">Vendor options:</span> Cognex · Landing AI · Visionify</div>
+                      <div><span class="meta-k">Implementation:</span> 12 weeks</div>
+                      <div><span class="meta-k">Funding:</span> EDG up to 50% matched</div>
+                      <div><span class="meta-k">Payback:</span> ~ 14 months</div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+              <tr class="uc-row" data-uc="5">
+                <td><span class="rank-num">5</span></td>
+                <td>
+                  <div class="uc-name">Energy Demand Optimisation</div>
+                  <div class="uc-sector">Long-term · pairs with sustainability</div>
+                </td>
+                <td><span class="badge-phase later">Later</span></td>
+                <td class="value-cell">+ S$ 70k</td>
+                <td class="funding">EnterpriseSG grant</td>
+                <td><span class="chev">▼</span></td>
+              </tr>
+              <tr class="uc-detail-row" data-detail="5">
+                <td colspan="6">
+                  <div class="uc-detail">
+                    <div class="detail-block pain">
+                      <h5><span class="dot-i"></span>Pain points solved</h5>
+                      <ul>
+                        <li>Energy bills rising with no clear visibility on drivers</li>
+                        <li>Equipment running idle outside production hours</li>
+                        <li>Peak-demand charges increasing utility cost</li>
+                      </ul>
+                    </div>
+                    <div class="detail-block">
+                      <h5><span class="dot-i"></span>Benefits delivered</h5>
+                      <ul>
+                        <li>AI schedules energy-hungry tasks off-peak</li>
+                        <li>Cuts energy spend by ~ 15–20%</li>
+                        <li>Supports ESG / sustainability reporting</li>
+                        <li>Qualifies for green-financing programmes</li>
+                      </ul>
+                    </div>
+                    <div class="detail-meta">
+                      <div><span class="meta-k">Vendor options:</span> EnPowered · GridPoint · BeeBryte</div>
+                      <div><span class="meta-k">Implementation:</span> 16 weeks</div>
+                      <div><span class="meta-k">Funding:</span> EnterpriseSG sustainability grant</div>
+                      <div><span class="meta-k">Payback:</span> ~ 18 months</div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+
+          <div class="roadmap-strip">
+            <h4>Sequenced roadmap</h4>
+            <div class="timeline-row">
+              <div class="ph now">
+                <div class="label">Phase 1 · 0–3 months</div>
+                <div class="title">Now</div>
+                <ul>
+                  <li>Predictive maintenance pilot</li>
+                  <li>Inventory optimisation</li>
+                  <li>Apply for PSG grant</li>
+                </ul>
+              </div>
+              <div class="ph next">
+                <div class="label">Phase 2 · 3–9 months</div>
+                <div class="title">Next</div>
+                <ul>
+                  <li>Spare parts forecasting</li>
+                  <li>Vision QC pilot</li>
+                  <li>Train two ops leads</li>
+                </ul>
+              </div>
+              <div class="ph later">
+                <div class="label">Phase 3 · 9–24 months</div>
+                <div class="title">Later</div>
+                <ul>
+                  <li>Energy optimisation</li>
+                  <li>Full data platform</li>
+                  <li>Capability transfer</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button class="btn btn-ghost" data-next="3">← Back</button>
+            <button class="btn btn-primary">Save & Adopt →</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="corner-mark">EY</div>
+  </main>
+
+</div>
+
+<script>
+  // ── Stepper navigation ──
+  const steps = document.querySelectorAll('.step');
+  const contents = document.querySelectorAll('.step-content');
+
+  function goTo(n) {
+    steps.forEach(s => {
+      const num = parseInt(s.dataset.step);
+      s.classList.toggle('active', num === n);
+      s.classList.toggle('done', num < n);
+    });
+    contents.forEach(c => {
+      c.classList.toggle('active', parseInt(c.dataset.content) === n);
+    });
+    document.querySelector('.content').scrollTop = 0;
+
+    if (n === 3) startProcessing();
+  }
+
+  steps.forEach(s => s.addEventListener('click', () => goTo(parseInt(s.dataset.step))));
+  document.querySelectorAll('[data-next]').forEach(btn => {
+    btn.addEventListener('click', e => {
+      if (btn.disabled) return;
+      goTo(parseInt(btn.dataset.next));
+    });
+  });
+
+  // ── Form selections ──
+  document.querySelectorAll('.upload-cat').forEach(c => c.addEventListener('click', () => c.classList.toggle('checked')));
+  document.querySelectorAll('.opt').forEach(o => o.addEventListener('click', e => {
+    const grid = o.closest('.industry-options');
+    if (grid && grid.previousElementSibling.textContent.includes('size')) {
+      grid.querySelectorAll('.opt').forEach(x => x.classList.remove('selected'));
+    }
+    o.classList.toggle('selected');
+  }));
+  document.querySelectorAll('.pill').forEach(p => p.addEventListener('click', () => p.classList.toggle('selected')));
+
+  // ── Step 3 — dynamic progress simulation ──
+  let processingStarted = false;
+
+  const logScript = [
+    { delay: 0,    type: 'ok',    text: '✓ Financial_Statements_FY2024.pdf parsed (24 pages)' },
+    { delay: 350,  type: 'ok',    text: '✓ Operations_Data_Q1.xlsx parsed (1,204 rows)' },
+    { delay: 750,  type: 'info',  text: '▸ Querying EY\'s RAG knowledge base · precision-engineering' },
+    { delay: 1200, type: 'think', text: '…retrieving 47 relevant use cases from EY library' },
+    { delay: 1700, type: 'ok',    text: '✓ Cross-referenced with Singapore manufacturing benchmarks' },
+    { delay: 2200, type: 'info',  text: '▸ Scoring opportunities by business value' },
+    { delay: 2700, type: 'think', text: '…considering CNC downtime signal · weighting predictive maint.' },
+    { delay: 3200, type: 'ok',    text: '✓ Top 5 candidates identified' },
+    { delay: 3700, type: 'info',  text: '▸ Mapping to IMDA pre-approved software & vendor ecosystem' },
+    { delay: 4200, type: 'ok',    text: '✓ Vendor matches found across 5 use cases' },
+    { delay: 4500, type: 'info',  text: '▸ Drafting Now / Next / Later roadmap' },
+    { delay: 4900, type: 'ok',    text: '✓ Roadmap & final report ready' },
+  ];
+
+  // Pipeline stage triggers based on progress %
+  const stageAt = [10, 25, 40, 55, 70, 85, 100];
+
+  function startProcessing() {
+    if (processingStarted) return;
+    processingStarted = true;
+
+    const fill = document.getElementById('progressFill');
+    const title = document.getElementById('progressTitle');
+    const eta = document.getElementById('progressEta');
+    const log = document.getElementById('agentLog');
+    const pipeline = document.getElementById('pipeline');
+    const viewBtn = document.getElementById('viewResultsBtn');
+
+    // Schedule log entries
+    logScript.forEach(entry => {
+      setTimeout(() => {
+        const ts = formatTs(entry.delay);
+        const line = document.createElement('div');
+        line.className = 'line';
+        line.innerHTML = `<span class="ts">${ts}</span><span class="${entry.type}">${entry.text}</span>`;
+        log.appendChild(line);
+        log.scrollTop = log.scrollHeight;
+      }, entry.delay);
+    });
+
+    // Smooth progress over 5 seconds
+    const duration = 5000;
+    const startTime = performance.now();
+
+    function tick(now) {
+      const elapsed = now - startTime;
+      const pct = Math.min(100, (elapsed / duration) * 100);
+      fill.style.width = pct + '%';
+      title.textContent = `Analysing — ${Math.floor(pct)}% complete`;
+      const remaining = Math.max(0, Math.ceil((duration - elapsed) / 1000));
+      eta.textContent = remaining > 0
+        ? `Estimated time remaining: ~ ${remaining} second${remaining === 1 ? '' : 's'}`
+        : 'Complete — ready to view results';
+
+      // Update pipeline stages
+      const stages = pipeline.querySelectorAll('.check-item');
+      stageAt.forEach((threshold, i) => {
+        const item = stages[i];
+        if (pct >= threshold) {
+          item.classList.remove('now', 'todo');
+          item.classList.add('done');
+        } else if (i === 0 || pct >= stageAt[i - 1]) {
+          if (!item.classList.contains('done')) {
+            item.classList.remove('todo');
+            item.classList.add('now');
+          }
+        }
+      });
+
+      if (pct < 100) {
+        requestAnimationFrame(tick);
+      } else {
+        // Done
+        title.textContent = 'Analysis complete · 100%';
+        title.style.color = 'var(--success)';
+        eta.textContent = 'All 5 use cases ranked. Click "View results" to continue.';
+        viewBtn.disabled = false;
+        viewBtn.style.animation = 'pulseBtn 1.4s ease-in-out infinite';
+      }
+    }
+    requestAnimationFrame(tick);
+  }
+
+  function formatTs(msOffset) {
+    const base = new Date(2026, 4, 2, 9, 14, 2);
+    const t = new Date(base.getTime() + msOffset);
+    const pad = n => String(n).padStart(2, '0');
+    return `[${pad(t.getHours())}:${pad(t.getMinutes())}:${pad(t.getSeconds())}]`;
+  }
+
+  // Add pulse animation for view results button
+  const pulseStyle = document.createElement('style');
+  pulseStyle.textContent = `
+    @keyframes pulseBtn {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(255,210,58,0.6); }
+      50% { box-shadow: 0 0 0 8px rgba(255,210,58,0); }
+    }
+  `;
+  document.head.appendChild(pulseStyle);
+
+  // ── Step 4 — expandable use case rows ──
+  document.querySelectorAll('.uc-row').forEach(row => {
+    row.addEventListener('click', () => {
+      const uc = row.dataset.uc;
+      const detail = document.querySelector(`.uc-detail-row[data-detail="${uc}"]`);
+      const isOpen = row.classList.contains('open');
+
+      // Optional: close others (uncomment if you want only one open at a time)
+      // document.querySelectorAll('.uc-row.open').forEach(r => {
+      //   r.classList.remove('open');
+      //   document.querySelector(`.uc-detail-row[data-detail="${r.dataset.uc}"]`).classList.remove('open');
+      // });
+
+      row.classList.toggle('open', !isOpen);
+      detail.classList.toggle('open', !isOpen);
+    });
+  });
+</script>
+
+</body>
+</html>
