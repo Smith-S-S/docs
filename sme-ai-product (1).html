@@ -2075,6 +2075,11 @@
       // Add the initial log line dynamically with the current time
       log.innerHTML = `<div class="line"><span class="ts">${formatTs()}</span><span class="info">▸ Indexing 3 uploaded documents</span></div>`;
 
+      // Get the selected sector and update the log script dynamically
+      const sectorOpt = document.querySelector('.select-card:nth-child(1) .industry-options .opt.selected');
+      const sectorText = sectorOpt ? sectorOpt.textContent.trim().toLowerCase().replace(/\s*&\s*/g, '-').replace(/\s+/g, '-') : 'precision-engineering';
+      logScript[2].text = `▸ Querying EY's knowledge base · ${sectorText}`;
+
       // Schedule log entries
       logScript.forEach(entry => {
         setTimeout(() => {
