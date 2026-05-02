@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>SME AI Adoption Agent</title>
+<title>SME AI Assessment Agent</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -262,7 +262,8 @@
   .step-circle {
     width: 30px; height: 30px;
     border-radius: 50%;
-    display: grid; place-items: center;
+    display: flex; align-items: center; justify-content: center;
+    line-height: 1;
     font-size: 12.5px;
     font-weight: 600;
     background: #f0f0ec;
@@ -870,7 +871,7 @@
     <div class="brand">
       <div class="logo">
         <div class="logo-mark">EY</div>
-        <div class="logo-text">SME Adopt<span class="ai">.AI</span></div>
+        <div class="logo-text">Assess<span class="ai">.AI</span></div>
       </div>
       <div class="menu-icon">≡</div>
     </div>
@@ -891,9 +892,9 @@
         <div class="session-name">Lim Precision Engineering</div>
         <div class="session-tags">
           <span class="tag-pill use-case">Predictive Maint.</span>
-          <span class="tag-pill status">In progress</span>
+          <span class="tag-pill status" id="sessionStatusPill">In progress</span>
         </div>
-        <div class="session-meta">2026.05.02 · 09:14</div>
+        <div class="session-meta" id="sessionTimeMeta">2026.05.02 · 09:14</div>
       </div>
 
       <div class="session locked">
@@ -958,7 +959,7 @@
   <main class="main">
 
     <div class="titlebar">
-      <h1>SME AI Adoption Agent</h1>
+      <h1>SME AI Assessment Agent</h1>
       <div class="right">
         <div class="badge mono">Session #4821</div>
         <div class="avatar">LP</div>
@@ -1469,7 +1470,7 @@
 
           <div class="actions">
             <button class="btn btn-ghost" data-next="3">← Back</button>
-            <button class="btn btn-primary">Save & Adopt →</button>
+            <button class="btn btn-primary" id="finishBtn">Save & Adopt →</button>
           </div>
         </div>
       </div>
@@ -1640,6 +1641,39 @@
       detail.classList.toggle('open', !isOpen);
     });
   });
+
+  // ── Dynamic Session Status & Time ──
+  const statusPill = document.getElementById("sessionStatusPill");
+  const timeMeta = document.getElementById("sessionTimeMeta");
+  const finishBtn = document.getElementById("finishBtn");
+
+  function initSession() {
+    const now = new Date();
+    const pad = n => String(n).padStart(2, '0');
+    timeMeta.textContent = `${now.getFullYear()}.${pad(now.getMonth() + 1)}.${pad(now.getDate())} · ${pad(now.getHours())}:${pad(now.getMinutes())}`;
+    statusPill.textContent = "In progress";
+  }
+
+  initSession();
+
+  if (finishBtn) {
+    finishBtn.addEventListener("click", () => {
+      statusPill.textContent = "Complete";
+      
+      const sessionDiv = statusPill.closest('.session');
+      if (sessionDiv) {
+        sessionDiv.classList.remove('current');
+        sessionDiv.classList.add('locked');
+        
+        if (!sessionDiv.querySelector('.lock')) {
+          const lock = document.createElement('div');
+          lock.className = 'lock';
+          lock.textContent = '🔒';
+          sessionDiv.appendChild(lock);
+        }
+      }
+    });
+  }
 </script>
 
 </body>
