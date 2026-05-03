@@ -2,6 +2,8 @@
 
 👉 AI Governance = Rules + Processes to control how AI is built and used safely
 
+https://www.theanalystacademy.com/consulting-presentations/#ey
+
 Think:
 
 “How do we make sure AI doesn’t break things, harm users, or create risk?”
