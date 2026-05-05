@@ -108,6 +108,144 @@
       font-weight: 600;
     }
 
+    .autofill-card {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-left: 3px solid var(--accent);
+      padding: 16px;
+      border-radius: 6px;
+      margin-bottom: 16px;
+      transition: transform 0.2s;
+    }
+
+    .autofill-card:hover {
+      transform: translateX(4px);
+    }
+
+    .activated-tag {
+      font-size: 11px;
+      color: var(--ink-soft);
+      opacity: 0.6;
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .activated-tag span {
+      background: rgba(0,0,0,0.05);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+
+    .autofill-a {
+      font-size: 12.5px;
+      color: var(--ink);
+      line-height: 1.5;
+      opacity: 0;
+      height: 0;
+      overflow: hidden;
+      transition: all 0.5s ease;
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      padding: 8px 12px;
+      font-family: inherit;
+      background: #fafafa;
+      resize: none;
+    }
+
+    .autofill-a.visible {
+      opacity: 1;
+      height: auto;
+      margin-top: 8px;
+      min-height: 50px;
+    }
+
+    @keyframes autofillPulse {
+      0% { border-left-color: var(--accent); }
+      50% { border-left-color: #fff; }
+      100% { border-left-color: var(--accent); }
+    }
+
+    .autofill-card.generating {
+      animation: autofillPulse 1s infinite;
+    }
+
+    .autofill-q {
+      font-weight: 600;
+      font-size: 13px;
+      margin-bottom: 8px;
+      color: var(--ink);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .autofill-a {
+      font-size: 12.5px;
+      color: var(--ink-soft);
+      line-height: 1.5;
+    }
+
+    .autofill-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 9px;
+      background: #fff7c2;
+      color: #5a4500;
+      padding: 2px 6px;
+      border-radius: 999px;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .upload-task-card {
+      background: #fafafa;
+      border: 1px dashed #ccc;
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .upload-task-card.done {
+      border-style: solid;
+      border-color: var(--success);
+      background: #f0fdf4;
+    }
+
+    .task-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .task-title {
+      font-weight: 600;
+      font-size: 13.5px;
+    }
+
+    .task-desc {
+      font-size: 12px;
+      color: var(--ink-soft);
+    }
+
+    .task-status {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .task-status.ready { color: var(--success); }
+    .task-status.pending { color: var(--muted); }
+
     .brand .menu-icon {
       color: #888;
       cursor: pointer;
@@ -355,8 +493,8 @@
 
     .stepper {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 0;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
       align-items: center;
     }
 
@@ -962,40 +1100,45 @@
     }
 
     .agent-log {
-      background: var(--sidebar);
-      color: #ddd;
-      border-radius: 6px;
-      padding: 18px;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 12px;
+      background: #0d0d0d;
+      color: #f8f8f2;
+      border-radius: 8px;
+      padding: 24px;
+      font-family: 'IBM Plex Mono', 'Courier New', monospace;
+      font-size: 12.5px;
       line-height: 1.7;
-      max-height: 380px;
+      height: 400px;
       overflow-y: auto;
+      border: 1px solid #333;
+      box-shadow: inset 0 2px 10px rgba(0,0,0,0.5);
     }
 
     .agent-log .line {
+      margin-bottom: 6px;
       display: flex;
-      gap: 10px;
-      margin-bottom: 4px;
+      gap: 14px;
+      align-items: flex-start;
     }
 
     .agent-log .ts {
-      color: #6a6a6a;
-      flex-shrink: 0;
+      color: #6272a4;
+      font-weight: 500;
+      min-width: 85px;
     }
 
-    .agent-log .ok {
-      color: #6ee7a0;
+    .agent-log .symbol {
+      min-width: 18px;
+      font-weight: 700;
+      text-align: center;
     }
 
-    .agent-log .info {
-      color: var(--accent);
-    }
+    .agent-log .sym-action { color: #f1fa8c; }
+    .agent-log .sym-ok { color: #50fa7b; }
+    .agent-log .sym-think { color: #bd93f9; opacity: 0.8; }
 
-    .agent-log .think {
-      color: #b8b8b8;
-      font-style: italic;
-    }
+    .agent-log .text-action { color: #f1fa8c; }
+    .agent-log .text-ok { color: #50fa7b; }
+    .agent-log .text-think { color: #999; font-style: italic; }
 
     .progress-side {
       border-left: 1px solid var(--line);
@@ -1025,33 +1168,37 @@
     }
 
     .check-item .ico {
-      width: 18px;
-      height: 18px;
+      width: 22px;
+      height: 22px;
       border-radius: 50%;
-      display: grid;
-      place-items: center;
-      font-size: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
       font-weight: 700;
       flex-shrink: 0;
+      line-height: 1;
     }
 
     .check-item.done .ico {
-      background: var(--success);
+      background: #2e7d57;
       color: #fff;
-    }
-
-    .check-item.done .ico::after {
-      content: "✓";
     }
 
     .check-item.now .ico {
       background: var(--accent);
       color: var(--ink);
-      animation: spin 1.5s linear infinite;
     }
 
     .check-item.now .ico::after {
       content: "◐";
+      animation: spin 1.5s linear infinite;
+      display: block;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
     }
 
     .check-item.todo .ico {
@@ -1735,29 +1882,36 @@
           <div class="step active" data-step="1">
             <div class="step-circle">1</div>
             <div class="step-label">
-              <div class="top">Sector & questions</div>
-              <div class="sub">Operational context</div>
+              <div class="top">Business information</div>
+              <div class="sub">Provide Company Docs</div>
             </div>
           </div>
           <div class="step" data-step="2">
             <div class="step-circle">2</div>
             <div class="step-label">
-              <div class="top">Upload data</div>
-              <div class="sub">Business documents</div>
+              <div class="top">Strategic Context</div>
+              <div class="sub">Agentic questions</div>
             </div>
           </div>
           <div class="step" data-step="3">
             <div class="step-circle">3</div>
             <div class="step-label">
-              <div class="top">Review</div>
-              <div class="sub">RAG analysis</div>
+              <div class="top">Review & Analysis</div>
+              <div class="sub">RAG confirmation</div>
             </div>
           </div>
           <div class="step" data-step="4">
             <div class="step-circle">4</div>
             <div class="step-label">
-              <div class="top">Final output</div>
-              <div class="sub">Roadmap & approval</div>
+              <div class="top">Roadmap</div>
+              <div class="sub">Strategy generation</div>
+            </div>
+          </div>
+          <div class="step" data-step="5">
+            <div class="step-circle">5</div>
+            <div class="step-label">
+              <div class="top">Approval</div>
+              <div class="sub">Final submission</div>
             </div>
           </div>
         </div>
@@ -1927,368 +2081,416 @@
         <!-- ─── ASSESSMENT VIEW ─── -->
         <div id="assessmentView" style="display: none;">
 
-          <!-- STEP 1 — SECTOR & QUESTIONS -->
+          <!-- STEP 1 — PROVIDE DOCS & AUTOFILL -->
           <div class="step-content active" data-content="1">
             <div class="panel-title">
-              <h2>Sector & operational context</h2>
-              <p>Tell the agent about your company structure and operational pressures. The more detail, the sharper the
-                recommendations.</p>
+              <h2>Provide Company Docs & Auto-fill Responses</h2>
+              <p>Upload your operational documents on the left. The agent will parse them to auto-fill the business context on the right.</p>
             </div>
             <div class="work-area">
+              <div class="upload-split" style="display: flex; flex-direction: column; gap: 40px;">
+                
+                <!-- Section 1: Requested Documents -->
+                <div class="upload-side" style="width: 100%;">
+                  <div class="q-group-label" style="margin-top: 0;">Section 1: Requested Documents</div>
+                  
+                  <div class="upload-grid" style="display: flex; gap: 12px; flex-wrap: wrap;">
+                    <div class="upload-task-card done" style="flex: 1; min-width: 220px; margin-bottom: 0;">
+                      <div class="task-header">
+                        <div class="task-title">1. Financial Statements</div>
+                        <div class="task-status ready">✓</div>
+                      </div>
+                      <div class="task-desc">P&L, Balance Sheet, Cash Flow.</div>
+                    </div>
 
-              <div class="q-group-label">Business Strategy</div>
-              <div class="question-card">
-                <div class="q-head">
-                  <div class="q-num">1</div>
-                  <div>
-                    <div class="q-title">Top 3 strategic priorities for the next 24 months</div>
-                    <div class="q-sub">What are the primary drivers for your business growth and stability?</div>
-                  </div>
-                </div>
-                <div class="answer-pills">
-                  <div class="pill selected">Export Expansion</div>
-                  <div class="pill">Margin Recovery</div>
-                  <div class="pill">Succession Planning</div>
-                  <div class="pill">Sustainability / ESG</div>
-                  <div class="pill">Digital Transformation</div>
-                </div>
-                <div class="question" style="margin-top: 16px;">
-                  <textarea placeholder="Elaborate on your strategic priorities..."></textarea>
-                </div>
-              </div>
+                    <div class="upload-task-card done" style="flex: 1; min-width: 220px; margin-bottom: 0;">
+                      <div class="task-header">
+                        <div class="task-title">2. ERP Data Export</div>
+                        <div class="task-status ready">✓</div>
+                      </div>
+                      <div class="task-desc">Sales, Production, Inventory.</div>
+                    </div>
 
-              <div class="question-card">
-                <div class="q-head">
-                  <div class="q-num">2</div>
-                  <div>
-                    <div class="q-title">Average order-to-delivery cycle time and on-time-delivery (OTD) rate</div>
-                    <div class="q-sub">Helps us understand your delivery performance and lead time pressures.</div>
-                  </div>
-                </div>
-                <div class="question">
-                  <textarea>Average cycle time is 6–8 weeks for aerospace components. Our current OTD rate is 78%, mainly due to unplanned machine breakdowns and manual scheduling conflicts during peak medtech demand cycles.</textarea>
-                </div>
-              </div>
+                    <div class="upload-task-card done" style="flex: 1; min-width: 220px; margin-bottom: 0;">
+                      <div class="task-header">
+                        <div class="task-title">3. Production Report</div>
+                        <div class="task-status ready">✓</div>
+                      </div>
+                      <div class="task-desc">Utilisation, Downtime, Throughput.</div>
+                    </div>
 
-              <div class="q-group-label">Operational Focus</div>
-              <div class="question-card">
-                <div class="q-head">
-                  <div class="q-num">3</div>
-                  <div>
-                    <div class="q-title">Which department or process is currently facing the biggest bottlenecks?</div>
-                    <div class="q-sub">Select the primary area where you are facing the biggest operational challenges.
+                    <div class="upload-task-card" style="flex: 1; min-width: 220px; margin-bottom: 0;">
+                      <div class="task-header">
+                        <div class="task-title">4. Quality Report</div>
+                        <div style="display: flex; align-items: center;">
+                          <div class="task-status pending">Pending</div>
+                        </div>
+                      </div>
+                      <div class="task-desc">Scrap, Rework, Yield, Defects.</div>
+                    </div>
+
+                    <div class="upload-task-card" style="flex: 1; min-width: 220px; margin-bottom: 0;">
+                      <div class="task-header">
+                        <div class="task-title">5. IT Landscape</div>
+                        <div style="display: flex; align-items: center;">
+                          <div class="task-status pending">Pending</div>
+                        </div>
+                      </div>
+                      <div class="task-desc">ERP, MES, QMS, CMMS list.</div>
                     </div>
                   </div>
-                </div>
-                <div class="dept-grid">
-                  <div class="dept-card selected">
-                    <div class="dept-check"></div>
-                    <div class="dept-info">
-                      <div class="dept-name">Production & Shop Floor</div>
-                      <div class="dept-desc">Machine utilization, operator productivity, scheduling.</div>
+
+                  <div class="upload-zone" style="margin-top: 20px; padding: 32px; border: 2px dashed #ddd; background: #fafafa; border-radius: 8px; display: flex; flex-direction: column; align-items: center;">
+                    <div class="upload-icon" style="width: 44px; height: 44px; border: 1px solid #ccc; border-radius: 50%; display: grid; place-items: center; margin-bottom: 12px; color: #666; background: #fff;">
+                      <span style="font-size: 18px;">↑</span>
                     </div>
-                  </div>
-                  <div class="dept-card">
-                    <div class="dept-check"></div>
-                    <div class="dept-info">
-                      <div class="dept-name">Quality Assurance & Control</div>
-                      <div class="dept-desc">Defect tracking, inspection, compliance.</div>
-                    </div>
-                  </div>
-                  <div class="dept-card">
-                    <div class="dept-check"></div>
-                    <div class="dept-info">
-                      <div class="dept-name">Maintenance & Engineering</div>
-                      <div class="dept-desc">Equipment lifecycle, reactive repairs, spare parts.</div>
-                    </div>
-                  </div>
-                  <div class="dept-card">
-                    <div class="dept-check"></div>
-                    <div class="dept-info">
-                      <div class="dept-name">Supply Chain & Inventory</div>
-                      <div class="dept-desc">Stock levels, procurement delays, demand forecasting.</div>
-                    </div>
+                    <h3 style="font-size: 15px; font-weight: 600; margin-bottom: 6px;">Drag & drop files or Browse</h3>
+                    <div class="formats" style="font-size: 11.5px; color: #888;">Supported file formats: PDF, XLSX, CSV, DOCX, JPG · Max 25MB</div>
                   </div>
                 </div>
-                <div class="question" style="margin-top: 16px;">
-                  <textarea placeholder="Enter your text here..."></textarea>
+
+                <!-- Section 2: Questions with Autofilled responses -->
+                <div class="autofill-side" style="width: 100%;">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; border-bottom: 1px solid var(--line); padding-bottom: 16px;">
+                    <div class="q-group-label" style="margin: 0;">Section 2: AI-Autofilled Context</div>
+                    <button class="btn btn-primary" id="autofillBtn" onclick="generateInsights()" style="font-size: 13px; padding: 10px 20px; box-shadow: 0 4px 12px rgba(255,214,0,0.2);">
+                      <span style="margin-right: 8px;">⚡</span> Scan & Autofill Responses
+                    </button>
+                  </div>
+
+                  <div class="autofill-card">
+                    <div class="autofill-badge">Financial Data Extraction</div>
+                    <div class="autofill-q">1. What is the company’s revenue trend over the last three years?</div>
+                    <textarea class="autofill-a">Revenue has grown steadily from approximately SGD 30M to SGD 34M over the last three financial years, indicating moderate and stable growth.</textarea>
+                  </div>
+
+                  <div class="autofill-card">
+                    <div class="autofill-badge">Financial Data Extraction</div>
+                    <div class="autofill-q">2. What is the EBITDA and margin trend over time?</div>
+                    <textarea class="autofill-a">EBITDA margins have remained stable at approximately 13–15%, with slight pressure from rising operating and maintenance costs in the most recent year.</textarea>
+                  </div>
+
+                  <div class="autofill-card">
+                    <div class="autofill-badge">Commercial Context</div>
+                    <div class="autofill-q">3. What percentage of revenue is driven by the top five customers?</div>
+                    <textarea class="autofill-a">Approximately 56% of total revenue is concentrated among the top five customers, indicating moderate customer concentration risk.</textarea>
+                  </div>
+
+                  <div class="autofill-card">
+                    <div class="autofill-badge">Operational Model</div>
+                    <div class="autofill-q">4. What proportion of orders are make‑to‑order versus repeat orders?</div>
+                    <textarea class="autofill-a">Around 75% of orders are make‑to‑order, reflecting a high‑mix, low‑volume manufacturing model.</textarea>
+                  </div>
+
+                  <div class="autofill-card">
+                    <div class="autofill-badge">Cost Analysis</div>
+                    <div class="autofill-q">5. What are the largest cost contributors within COGS?</div>
+                    <textarea class="autofill-a">The largest contributors to COGS are direct labor, machine depreciation, maintenance costs, and scrap/rework losses.</textarea>
+                  </div>
+
+                  <div class="autofill-card">
+                    <div class="autofill-badge">Machine Intelligence</div>
+                    <div class="autofill-q">6. Which machines or production lines have the highest downtime impact?</div>
+                    <textarea class="autofill-a">High‑precision CNC machining centers account for the highest downtime impact due to frequent unplanned stoppages and long recovery times.</textarea>
+                  </div>
+
+                  <div class="autofill-card">
+                    <div class="autofill-badge">Process Flow</div>
+                    <div class="autofill-q">7. Where does work‑in‑progress accumulate most frequently?</div>
+                    <textarea class="autofill-a">WIP accumulation is most frequently observed at final machining and inspection stages due to rework and scheduling disruptions.</textarea>
+                  </div>
+
+                  <div class="autofill-card">
+                    <div class="autofill-badge">Quality Metrics</div>
+                    <div class="autofill-q">8. What is the historical scrap and rework rate?</div>
+                    <textarea class="autofill-a">Scrap and rework account for approximately 4–5% of total production output, primarily driven by tight tolerance failures.</textarea>
+                  </div>
+
+                  <div class="autofill-card">
+                    <div class="autofill-badge">Operations Variability</div>
+                    <div class="autofill-q">9. Which operational areas show the highest variability or instability?</div>
+                    <textarea class="autofill-a">Machine uptime, cycle times for complex parts, and inspection turnaround times show the highest variability across operations.</textarea>
+                  </div>
+
+                  <div class="autofill-card">
+                    <div class="autofill-badge">Systems Integration</div>
+                    <div class="autofill-q">10. What manufacturing and data systems are available and integrated?</div>
+                    <textarea class="autofill-a">ERP and finance systems are well established, while MES, quality, and maintenance data exist but operate in largely siloed systems with partial integration.</textarea>
+                  </div>
+
                 </div>
               </div>
 
-              <div class="question-card">
-                <div class="q-head">
-                  <div class="q-num">4</div>
-                  <div>
-                    <div class="q-title">What is your primary production model?</div>
-                    <div class="q-sub">How do you manage your production flow relative to customer orders?</div>
-                  </div>
-                </div>
-                <div class="answer-pills">
-                  <div class="pill">Make-to-Stock (MTS)</div>
-                  <div class="pill selected">Make-to-Order (MTO)</div>
-                  <div class="pill">Engineer-to-Order (ETO)</div>
-                  <div class="pill">Mixed Model</div>
-                </div>
-                <div class="question" style="margin-top: 16px;">
-                  <textarea placeholder="Describe your production model and any specific variations..."></textarea>
-                </div>
-              </div>
-
-              <div class="question-card">
-                <div class="q-head">
-                  <div class="q-num">5</div>
-                  <div>
-                    <div class="q-title">Which operations within Precision Engineering best describe your business?
-                    </div>
-                    <div class="q-sub">Helps tailor the recommendations to your specific operational context.</div>
-                  </div>
-                </div>
-                <div class="answer-pills">
-                  <div class="pill selected">CNC Machining</div>
-                  <div class="pill">Tool & Die Making</div>
-                  <div class="pill">Metal Stamping & Forming</div>
-                  <div class="pill">Precision Injection Molding</div>
-                  <div class="pill">Surface Treatment</div>
-                </div>
-              </div>
-
-              <div class="question-card">
-                <div class="q-head">
-                  <div class="q-num">6</div>
-                  <div>
-                    <div class="q-title">Number of SKUs and degree of product variability</div>
-                    <div class="q-sub">Understanding your product complexity helps in supply chain planning.</div>
-                  </div>
-                </div>
-                <div class="answer-pills">
-                  <div class="pill">Low (1-50 SKUs)</div>
-                  <div class="pill selected">Medium (50-500 SKUs)</div>
-                  <div class="pill">High (500+ SKUs)</div>
-                  <div class="pill">Very High (Highly customized)</div>
-                </div>
-                <div class="question" style="margin-top: 16px;">
-                  <textarea placeholder="Provide more details on your SKU range and customization levels..."></textarea>
-                </div>
-              </div>
-
-              <div class="q-group-label">Challenges & Digital Readiness</div>
-              <div class="question-card">
-                <div class="q-head">
-                  <div class="q-num">7</div>
-                  <div>
-                    <div class="q-title">What are your top operational challenges right now?</div>
-                    <div class="q-sub">Select up to 2. This helps us understand where digital tools could have the most
-                      impact.</div>
-                  </div>
-                </div>
-                <div class="answer-pills">
-                  <div class="pill selected">Frequent equipment breakdowns / unplanned downtime</div>
-                  <div class="pill">High volume of manual paperwork and data entry</div>
-                  <div class="pill">Difficulty maintaining consistent product quality</div>
-                  <div class="pill">Inefficient inventory tracking / frequent stockouts</div>
-                  <div class="pill">Over-reliance on a few highly skilled workers</div>
-                </div>
-              </div>
-
-              <div class="question-card">
-                <div class="q-head">
-                  <div class="q-num">8</div>
-                  <div>
-                    <div class="q-title">How do you currently track your production and operational data?</div>
-                    <div class="q-sub">Understanding your current methods helps identify the right solutions.</div>
-                  </div>
-                </div>
-                <div class="answer-pills">
-                  <div class="pill">Mostly paper-based forms / whiteboards</div>
-                  <div class="pill selected">Basic spreadsheets / fragmented files</div>
-                  <div class="pill">Basic accounting software with some digital records</div>
-                  <div class="pill">Fully integrated ERP system</div>
-                </div>
-              </div>
-
-              <div class="question-card">
-                <div class="q-head">
-                  <div class="q-num">9</div>
-                  <div>
-                    <div class="q-title">What is your estimated budget for technology upgrades over the next 12 months?
-                    </div>
-                    <div class="q-sub">Factoring in potential government grants.</div>
-                  </div>
-                </div>
-                <div class="answer-pills">
-                  <div class="pill">Under S$ 20k</div>
-                  <div class="pill selected">S$ 20k – 50k</div>
-                  <div class="pill">S$ 50k – 100k</div>
-                  <div class="pill">S$ 100k+</div>
-                  <div class="pill">Open — depends on proven cost savings</div>
-                </div>
-              </div>
-
-              <div class="question-card">
-                <div class="q-head">
-                  <div class="q-num">10</div>
-                  <div>
-                    <div class="q-title">Are there any specific business goals or upcoming deadlines we should know
-                      about?</div>
-                    <div class="q-sub">Free text. E.g., new compliance standards, key customer demands, or aging
-                      machinery.</div>
-                  </div>
-                </div>
-                <div class="question">
-                  <textarea>We run 4 CNC machines (2 are 10+ years old) and rely heavily on spreadsheets for scheduling. We need to reduce unplanned downtime to meet new aerospace QA requirements.</textarea>
-                </div>
-              </div>
-
-              <div class="actions">
+              <div class="actions" style="margin-top: 40px; border-top: 1px solid var(--line); padding-top: 24px;">
                 <button class="btn btn-ghost">Save & exit</button>
-                <button class="btn btn-primary" data-next="2">Continue →</button>
+                <button class="btn btn-primary" data-next="2">Proceed to Strategic Context →</button>
               </div>
             </div>
           </div>
 
-          <!-- STEP 2 — UPLOAD DATA -->
+          <!-- STEP 2 — STRATEGIC CONTEXT -->
           <div class="step-content" data-content="2">
             <div class="panel-title">
-              <h2>Upload supporting data</h2>
-              <p>Drop in any documents that help us understand your operational context (e.g., machinery logs, quality
-                assurance log sheets).</p>
+              <h2>Phase 2: Strategic Context & Targeted Questions</h2>
+              <p>Conditional questions for leadership and operations to refine AI use case activation.</p>
             </div>
             <div class="work-area">
-              <div class="upload-split" style="display: flex; gap: 24px;">
-                <!-- Left Side: Business Documents -->
-                <div class="upload-side" style="flex: 1;">
-                  <h3 style="margin-bottom: 8px; font-size: 16px;">Business documents</h3>
-                  <p style="font-size: 14px; color: #666; margin-bottom: 16px;">company information like Financial
-                    statements (last 2–3 years), Website, brochures, product
-                    catalogue</p>
-                  <div class="upload-zone">
-                    <div class="upload-icon">↑</div>
-                    <h3>Drag & drop files or Browse</h3>
-                    <div class="formats">Supported file formats: PDF, XLSX, CSV, DOCX, JPG · Max 25MB</div>
-                    <div class="uploaded-list">
-                      <div class="uploaded-file">
-                        <div class="fname">Financial_Statements_FY2024.pdf</div>
-                        <div class="fsize">1.4 MB</div>
-                      </div>
-                      <div class="uploaded-file">
-                        <div class="fname">Company_Brochure.pdf</div>
-                        <div class="fsize">820 KB</div>
-                      </div>
+              <div class="upload-split" style="display: flex; flex-direction: column; gap: 40px;">
+                
+                <!-- Top: Agentic Questions -->
+                <div class="autofill-side" style="width: 100%;">
+                  <div class="q-group-label" style="margin-top: 0;">Step 1: Agentic Questions (Leadership / Operations)</div>
+                  
+                  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                    <div class="autofill-card visible" style="margin-bottom: 0;">
+                      <div class="autofill-q">1. What are the top three business outcomes you want to improve in the next 12–18 months?</div>
+                      <textarea class="autofill-a visible">Improve on‑time delivery, reduce unplanned downtime, and increase first‑pass yield.</textarea>
+                      <div class="activated-tag">➡ AI use cases activated: <span>Dynamic scheduling</span>, <span>predictive maintenance</span></div>
+                    </div>
+
+                    <div class="autofill-card visible" style="margin-bottom: 0;">
+                      <div class="autofill-q">2. Which KPI improvement would have the highest impact on customer confidence?</div>
+                      <textarea class="autofill-a visible">On‑time delivery performance for key semiconductor customers.</textarea>
+                      <div class="activated-tag">➡ AI use cases activated: <span>AI scheduling</span>, <span>bottleneck prediction</span></div>
+                    </div>
+
+                    <div class="autofill-card visible" style="margin-bottom: 0;">
+                      <div class="autofill-q">3. Is the organisation currently focused more on cost optimisation or growth enablement?</div>
+                      <textarea class="autofill-a visible">Cost optimisation while protecting delivery reliability.</textarea>
+                      <div class="activated-tag">➡ AI use cases activated: <span>Downtime reduction</span>, <span>yield improvement</span></div>
+                    </div>
+
+                    <div class="autofill-card visible" style="margin-bottom: 0;">
+                      <div class="autofill-q">4. Is AI allowed to automate actions or only recommend actions?</div>
+                      <textarea class="autofill-a visible">AI may recommend actions, but human approval is required for execution.</textarea>
+                      <div class="activated-tag">➡ AI use cases activated: <span>Human‑in‑the‑loop agentic AI</span></div>
+                    </div>
+
+                    <div class="autofill-card visible" style="margin-bottom: 0;">
+                      <div class="autofill-q">5. Is explainability required for AI recommendations?</div>
+                      <textarea class="autofill-a visible">Yes, recommendations must be explainable to engineers and operators.</textarea>
+                      <div class="activated-tag">➡ AI use cases activated: <span>Explainable ML</span>, <span>root‑cause analytics</span></div>
+                    </div>
+
+                    <div class="autofill-card visible" style="margin-bottom: 0;">
+                      <div class="autofill-q">6. Are operators and engineers open to using AI‑driven recommendations?</div>
+                      <textarea class="autofill-a visible">Yes, if AI supports their decisions without removing control.</textarea>
+                      <div class="activated-tag">➡ AI use cases activated: <span>Operator and maintenance copilots</span></div>
+                    </div>
+
+                    <div class="autofill-card visible" style="margin-bottom: 0;">
+                      <div class="autofill-q">7. Which operational issue causes the most disruption today?</div>
+                      <textarea class="autofill-a visible">Unexpected CNC machine downtime disrupting schedules.</textarea>
+                      <div class="activated-tag">➡ AI use cases activated: <span>Predictive maintenance</span>, <span>failure alert</span></div>
+                    </div>
+
+                    <div class="autofill-card visible" style="margin-bottom: 0;">
+                      <div class="autofill-q">8. What level of false positives is acceptable from AI alerts?</div>
+                      <textarea class="autofill-a visible">Moderate false positives are acceptable if failures are detected earlier.</textarea>
+                      <div class="activated-tag">➡ AI use cases activated: <span>Early-warning anomaly detection</span></div>
+                    </div>
+
+                    <div class="autofill-card visible" style="margin-bottom: 0;">
+                      <div class="autofill-q">9. What is the acceptable payback period for AI initiatives?</div>
+                      <textarea class="autofill-a visible">12–18 months with early operational benefits.</textarea>
+                      <div class="activated-tag">➡ AI use cases activated: <span>Fast‑ROI AI use cases</span></div>
+                    </div>
+
+                    <div class="autofill-card visible" style="margin-bottom: 0;">
+                      <div class="autofill-q">10. Should AI initiatives start small or be deployed enterprise‑wide?</div>
+                      <textarea class="autofill-a visible">Start with pilots on critical machines before scaling.</textarea>
+                      <div class="activated-tag">➡ AI use cases activated: <span>Asset‑level pilots</span>, <span>phased rollout</span></div>
                     </div>
                   </div>
                 </div>
 
-                <!-- Right Side: Knowledge Base -->
-                <div class="upload-side" style="flex: 1;">
-                  <h3 style="margin-bottom: 8px; font-size: 16px;">Operational documents</h3>
-                  <p style="font-size: 14px; color: #666; margin-bottom: 16px;">operational data, equipment logs, and
-                    inspection reports</p>
-                  <div class="upload-zone">
-                    <div class="upload-icon">↑</div>
-                    <h3>Drag & drop files or Browse</h3>
-                    <div class="formats">Supported file formats: PDF, XLSX, CSV, DOCX, JPG · Max 25MB</div>
-                    <div class="uploaded-list">
-                      <div class="uploaded-file">
-                        <div class="fname">Machine_Downtime_Logs_FY2024.xlsx</div>
-                        <div class="fsize">2.1 MB</div>
+                <!-- Bottom: Additional Documents -->
+                <div class="upload-side" style="width: 100%;">
+                  <div class="q-group-label" style="margin-top: 0;">Step 2: Additional Requested Documents</div>
+                  
+                  <div class="upload-grid" style="display: flex; gap: 12px; flex-wrap: wrap;">
+                    <div class="upload-task-card" style="flex: 1; min-width: 220px; margin-bottom: 0;">
+                      <div class="task-header">
+                        <div class="task-title">1. Maintenance History</div>
+                        <div class="task-status pending">Required</div>
                       </div>
-                      <div class="uploaded-file">
-                        <div class="fname">QA_Inspection_Reports.pdf</div>
-                        <div class="fsize">1.2 MB</div>
+                      <div class="task-desc">Strategy & failure history.</div>
+                    </div>
+
+                    <div class="upload-task-card" style="flex: 1; min-width: 220px; margin-bottom: 0;">
+                      <div class="task-header">
+                        <div class="task-title">2. Critical Machine List</div>
+                        <div class="task-status pending">Required</div>
                       </div>
+                      <div class="task-desc">Assets with replacement values.</div>
+                    </div>
+
+                    <div class="upload-task-card" style="flex: 1; min-width: 220px; margin-bottom: 0;">
+                      <div class="task-header">
+                        <div class="task-title">3. Planning Rules</div>
+                        <div class="task-status pending">Required</div>
+                      </div>
+                      <div class="task-desc">Dispatch logic for scheduling.</div>
+                    </div>
+
+                    <div class="upload-task-card" style="flex: 1; min-width: 220px; margin-bottom: 0;">
+                      <div class="task-header">
+                        <div class="task-title">4. Quality Incidents</div>
+                        <div class="task-status pending">Required</div>
+                      </div>
+                      <div class="task-desc">Last 24 months CAPA summary.</div>
+                    </div>
+
+                    <div class="upload-task-card" style="flex: 1; min-width: 220px; margin-bottom: 0;">
+                      <div class="task-header">
+                        <div class="task-title">5. CAPEX Budget</div>
+                        <div class="task-status pending">Required</div>
+                      </div>
+                      <div class="task-desc">Next 12 months financial plan.</div>
                     </div>
                   </div>
-                  <div class="upload-categories">
-                    <div class="upload-cat checked">
-                      <div class="cat-name">Equipment & Downtime Logs <span class="check">✓</span></div>
-                      <div class="cat-desc">Maintenance records, machine hours</div>
+
+                  <div class="upload-zone" style="margin-top: 20px; padding: 32px; border: 2px dashed #ddd; background: #fafafa; border-radius: 8px; display: flex; flex-direction: column; align-items: center;">
+                    <div class="upload-icon" style="width: 44px; height: 44px; border: 1px solid #ccc; border-radius: 50%; display: grid; place-items: center; margin-bottom: 12px; color: #666; background: #fff;">
+                      <span style="font-size: 18px;">↑</span>
                     </div>
-                    <div class="upload-cat checked">
-                      <div class="cat-name">Quality & Defect Reports <span class="check">✓</span></div>
-                      <div class="cat-desc">QA checklists, rework rates</div>
-                    </div>
-                    <div class="upload-cat">
-                      <div class="cat-name">Inventory Snapshots <span class="check">✓</span></div>
-                      <div class="cat-desc">Stock levels, lead times</div>
-                    </div>
-                    <div class="upload-cat">
-                      <div class="cat-name">Process Flow / SOPs <span class="check">✓</span></div>
-                      <div class="cat-desc">Current manual workflows</div>
-                    </div>
+                    <h3 style="font-size: 15px; font-weight: 600; margin-bottom: 6px;">Drag & drop files or Browse</h3>
+                    <div class="formats" style="font-size: 11.5px; color: #888;">Supported file formats: PDF, XLSX, CSV, DOCX, JPG · Max 25MB</div>
                   </div>
                 </div>
               </div>
 
-
-              <div class="actions">
+              <div class="actions" style="margin-top: 40px; border-top: 1px solid var(--line); padding-top: 24px;">
                 <button class="btn btn-ghost" data-next="1">← Back</button>
-                <button class="btn btn-primary" data-next="3">Run assessment →</button>
+                <button class="btn btn-primary" data-next="3" onclick="runRAGAnalysis()">Proceed to Analysis →</button>
               </div>
             </div>
           </div>
 
-          <!-- STEP 3 — REVIEW (RAG analysis) -->
+
+          <!-- STEP 3 — REVIEW & ANALYSIS -->
           <div class="step-content" data-content="3">
             <div class="panel-title">
-              <h2>Review — RAG analysis</h2>
-              <p>The agent is reading your data and combining it with the manufacturing knowledge base. You'll be able
-                to edit the findings before continuing.</p>
+              <h2>Step 3: RAG Analysis & Confirmation</h2>
+              <p>The agent has synthesized your document data with strategic leadership inputs. Confirm the findings before generating the roadmap.</p>
             </div>
             <div class="work-area">
+              
+              <!-- Progress & Logs -->
               <div class="processing-wrap">
                 <div class="progress-main">
-                  <h3 id="progressTitle">Analysing — 0% complete</h3>
-                  <div class="sub" id="progressEta">Estimated time remaining: ~ 5 seconds</div>
+                  <h3 id="progressTitle">Starting Synthesis...</h3>
+                  <div class="sub" id="progressEta">Awaiting trigger...</div>
                   <div class="progress-bar">
-                    <div class="progress-fill" id="progressFill"></div>
+                    <div class="progress-fill" id="progressFill" style="width: 0%;"></div>
                   </div>
 
-                  <div class="agent-log" id="agentLog">
-                    <div class="line">
-                      <span class="ts">[09:14:02]</span>
-                      <span class="ok">✓ Financial_Statements_FY2024.pdf parsed (24 pages)</span>
-                    </div>
-                    <div class="line">
-                      <span class="ts" style="visibility: hidden;">[09:14:02]</span>
-                      <span class="think">extracts working capital cycle, inventory turns, COGS structure, labour
-                        intensity, margin pressure points</span>
-                    </div>
-                    <div class="line" style="margin-top: 8px;">
-                      <span class="ts">[09:14:05]</span>
-                      <span class="ok">✓ Company_Brochure.pdf parsed (8 pages)</span>
-                    </div>
-                    <div class="line">
-                      <span class="ts" style="visibility: hidden;">[09:14:05]</span>
-                      <span class="think">extracts sub-sector, product mix, customer segments</span>
-                    </div>
+                  <div class="agent-log" id="agentLogStep3">
+                    <div class="line"><span class="ts">[READY]</span> Waiting to initialize RAG cross-reference...</div>
                   </div>
                 </div>
 
                 <div class="progress-side">
-                  <h4>Pipeline</h4>
-                  <div class="check-list" id="pipeline">
-                    <div class="check-item now">
-                      <div class="ico"></div>Documents parsed
+                  <h4>Pipeline Status</h4>
+                  <div class="check-list" id="pipeline3">
+                    <div class="check-item done"><div class="ico">✓</div>Docs & Strategy Parsed</div>
+                    <div class="check-item done"><div class="ico">✓</div>Knowledge base queried</div>
+                    <div class="check-item now"><div class="ico"></div>Synthesis & Confirmation</div>
+                    <div class="check-item todo"><div class="ico"></div>Business value scoring</div>
+                    <div class="check-item todo"><div class="ico"></div>Mapping funding & vendors</div>
+                    <div class="check-item todo"><div class="ico"></div>Roadmap generation</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Dashboard: Synthesis of Step 1 & Step 2 (Shown after 100%) -->
+              <div id="ragDashboard" style="display: none; margin-top: 40px; border-top: 1px solid var(--line); padding-top: 32px; animation: autofillFadeIn 0.8s ease forwards;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+                  <!-- Card 1: Operational Synthesis (Step 1) -->
+                  <div class="card" style="padding: 24px; border: 1px solid var(--line); background: #fff; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+                      <h3 style="font-size: 14px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-soft); margin: 0;">1. Operational Synthesis</h3>
+                      <span class="tag-pill use-case" style="background: #e0f2fe; color: #0369a1;">Data Driven</span>
                     </div>
-                    <div class="check-item todo">
-                      <div class="ico"></div>Knowledge base queried
-                    </div>
-                    <div class="check-item todo">
-                      <div class="ico"></div>Use cases retrieved
-                    </div>
-                    <div class="check-item todo">
-                      <div class="ico"></div>Business value scored
-                    </div>
-                    <div class="check-item todo">
-                      <div class="ico"></div>Mapping funding & vendors
-                    </div>
-                    <div class="check-item todo">
-                      <div class="ico"></div>Drafting roadmap
-                    </div>
-                    <div class="check-item todo">
-                      <div class="ico"></div>Final report
+                    <p style="font-size: 13.5px; line-height: 1.6; color: var(--ink); margin-bottom: 16px;">
+                      Documents indicate a <strong>stable 12% revenue growth</strong> with moderate customer concentration risk (56% in top 5). However, <strong>high WIP accumulation</strong> and <strong>4-5% scrap rates</strong> suggest underlying process instability.
+                    </p>
+                    <div style="font-size: 12px; color: var(--ink-soft); display: flex; flex-direction: column; gap: 8px;">
+                      <div style="display: flex; justify-content: space-between;"><span>Financial Health:</span> <span style="color: var(--success); font-weight: 600;">Stable / Growing</span></div>
+                      <div style="display: flex; justify-content: space-between;"><span>Process Stability:</span> <span style="color: var(--warning); font-weight: 600;">Variable</span></div>
+                      <div style="display: flex; justify-content: space-between;"><span>Asset Criticality:</span> <span style="color: var(--ink); font-weight: 600;">CNC Machining Centers</span></div>
                     </div>
                   </div>
+
+                  <!-- Card 2: Strategic Mapping (Step 2) -->
+                  <div class="card" style="padding: 24px; border: 1px solid var(--line); background: #fff; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+                      <h3 style="font-size: 14px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-soft); margin: 0;">2. Strategic Mapping</h3>
+                      <span class="tag-pill use-case" style="background: #f0fdf4; color: #166534;">Strategy Aligned</span>
+                    </div>
+                    <p style="font-size: 13.5px; line-height: 1.6; color: var(--ink); margin-bottom: 16px;">
+                      Leadership prioritizes <strong>On-Time Delivery (OTD)</strong> and <strong>Downtime Reduction</strong> for semiconductor clients. AI workstreams have been filtered for <strong>Human-in-the-Loop</strong> execution with a 12-18 month ROI target.
+                    </p>
+                    <div style="font-size: 12px; color: var(--ink-soft); display: flex; flex-direction: column; gap: 8px;">
+                      <div style="display: flex; justify-content: space-between;"><span>Primary Outcome:</span> <span style="color: var(--ink); font-weight: 600;">Customer Confidence (OTD)</span></div>
+                      <div style="display: flex; justify-content: space-between;"><span>AI Philosophy:</span> <span style="color: var(--ink); font-weight: 600;">Recommend (No Auto-execute)</span></div>
+                      <div style="display: flex; justify-content: space-between;"><span>Scale Strategy:</span> <span style="color: var(--ink); font-weight: 600;">Phased Pilots</span></div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- NEW: Reasoning Dimensions Table -->
+                <div class="card" style="margin-top: 24px; padding: 24px; border: 1px solid var(--line); background: #fff; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
+                  <div style="margin-bottom: 20px;">
+                    <h3 style="font-size: 14px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-soft); margin: 0;">3. Reasoning & Prioritization Logic</h3>
+                  </div>
+                  
+                  <table style="width: 100%; border-collapse: collapse; font-size: 13px; text-align: left;">
+                    <thead>
+                      <tr style="border-bottom: 2px solid var(--line);">
+                        <th style="padding: 12px; color: var(--muted); font-weight: 600; width: 220px;">Dimension</th>
+                        <th style="padding: 12px; color: var(--muted); font-weight: 600;">Agentic Reasoning Strategy</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="border-bottom: 1px solid var(--line-soft);">
+                        <td style="padding: 14px 12px;">
+                          <div style="font-weight: 600; color: var(--ink);">Business Impact</div>
+                          <div style="font-size: 11px; color: var(--muted); margin-top: 2px;">Downtime, OTD, Yield loss</div>
+                        </td>
+                        <td style="padding: 14px 12px; color: var(--ink-soft); line-height: 1.5;">
+                          Quantifies financial exposure from operational bottlenecks. Maps each pain point directly to revenue protection and margin improvement goals identified in Step 1.
+                        </td>
+                      </tr>
+                      <tr style="border-bottom: 1px solid var(--line-soft);">
+                        <td style="padding: 14px 12px;">
+                          <div style="font-weight: 600; color: var(--ink);">Data Readiness</div>
+                          <div style="font-size: 11px; color: var(--muted); margin-top: 2px;">History, Sensor availability</div>
+                        </td>
+                        <td style="padding: 14px 12px; color: var(--ink-soft); line-height: 1.5;">
+                          Evaluates data depth and quality from your ERP and Machine logs. Assesses technical complexity specifically for high-mix, low-volume manufacturing environments.
+                        </td>
+                      </tr>
+                      <tr style="border-bottom: 1px solid var(--line-soft);">
+                        <td style="padding: 14px 12px;">
+                          <div style="font-weight: 600; color: var(--ink);">Adoption Risk</div>
+                          <div style="font-size: 11px; color: var(--muted); margin-top: 2px;">Operator trust, Explainability</div>
+                        </td>
+                        <td style="padding: 14px 12px; color: var(--ink-soft); line-height: 1.5;">
+                          Applies your governance constraints (e.g., Human-in-the-loop). Filters out use cases that exceed your stated risk appetite or require auto-execution where not desired.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding: 14px 12px;">
+                          <div style="font-weight: 600; color: var(--ink);">ROI Speed</div>
+                          <div style="font-size: 11px; color: var(--muted); margin-top: 2px;">Time to measurable benefit</div>
+                        </td>
+                        <td style="padding: 14px 12px; color: var(--ink-soft); line-height: 1.5;">
+                          Estimates payback periods against your 12–18 month preference. Favors fast-ROI, low-disruption pilots that build organizational momentum for Phase 2 scaling.
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
               </div>
 
@@ -2316,13 +2518,12 @@ Implication: highest-value early moves are predictive maintenance on the older C
 
               <div class="actions">
                 <button class="btn btn-ghost" data-next="2">← Back</button>
-                <button class="btn btn-primary" data-next="4" id="viewResultsBtn" disabled>Generate final output
-                  →</button>
+                <button class="btn btn-primary" data-next="4" id="viewResultsBtn">Generate roadmap →</button>
               </div>
             </div>
           </div>
 
-          <!-- STEP 4 — FINAL OUTPUT -->
+          <!-- STEP 4 — ROADMAP -->
           <div class="step-content" data-content="4">
             <div class="panel-title">
               <h2>Final output — Top 5 AI use cases</h2>
@@ -2336,11 +2537,11 @@ Implication: highest-value early moves are predictive maintenance on the older C
                   <div class="summary">
                     <div class="summary-item">
                       <div class="label">Total est. value</div>
-                      <div class="value accent">+ S$ 705k / yr</div>
+                      <div class="value accent">+ S$ 820k / yr</div>
                     </div>
                     <div class="summary-item">
                       <div class="label">Funding identified</div>
-                      <div class="value">S$ 240k</div>
+                      <div class="value">S$ 350k</div>
                     </div>
                     <div class="summary-item">
                       <div class="label">Use cases</div>
@@ -2367,11 +2568,11 @@ Implication: highest-value early moves are predictive maintenance on the older C
                     <tr class="uc-row" data-uc="1">
                       <td><span class="rank-num">1</span></td>
                       <td>
-                        <div class="uc-name">Predictive Maintenance — CNC line</div>
-                        <div class="uc-sector">Precision engineering · 8-week pilot</div>
+                        <div class="uc-name">Predictive Maintenance for CNC Machines</div>
+                        <div class="uc-sector">Unplanned downtime mitigation</div>
                       </td>
                       <td><span class="badge-phase now">Now</span></td>
-                      <td class="value-cell">+ S$ 240k</td>
+                      <td class="value-cell">+ S$ 280k</td>
                       <td class="funding"><span class="ai-tag"></span>Productivity Solutions</td>
                       <td class="ai-capability">Anomaly Detection</td>
                       <td><span class="chev">▼</span></td>
@@ -2380,29 +2581,25 @@ Implication: highest-value early moves are predictive maintenance on the older C
                       <td colspan="7">
                         <div class="uc-detail">
                           <div class="detail-block pain">
-                            <h5><span class="dot-i"></span>Pain points solved</h5>
+                            <h5><span class="dot-i"></span>Problem & Ranking Justification</h5>
                             <ul>
-                              <li>2 of 4 CNC machines are over 10 years old and break down monthly</li>
-                              <li>Unplanned downtime is your biggest source of lost time</li>
-                              <li>Reactive maintenance leads to expensive emergency callouts</li>
-                              <li>No early warning before a critical failure</li>
+                              <li><strong>Business Problem:</strong> Unplanned CNC downtime disrupts schedules and margins.</li>
+                              <li><strong>Why Ranked #1:</strong> Highest downtime cost, strong data availability, fast ROI, fits human‑approval model.</li>
                             </ul>
                           </div>
                           <div class="detail-block">
-                            <h5><span class="dot-i"></span>Benefits delivered</h5>
+                            <h5><span class="dot-i"></span>Expected Impact & Deployment</h5>
                             <ul>
-                              <li>Sensors + ML model predict failures 48–72 hours in advance</li>
-                              <li>Estimated 35% reduction in unplanned downtime</li>
-                              <li>Maintenance shifts from reactive to scheduled — lower overtime cost</li>
-                              <li>Extends useful life of older CNC equipment</li>
+                              <li>20–30% reduction in unplanned downtime.</li>
+                              <li>Improved OEE and delivery reliability.</li>
+                              <li><strong>Deployment:</strong> Start with top 5 critical CNC assets.</li>
                             </ul>
                           </div>
                           <div class="detail-meta">
-                            <div><span class="meta-k">Suggested vendors:</span> AITech Pte · MachineSense SG · Ufactory
-                            </div>
+                            <div><span class="meta-k">Suggested vendors:</span> AITech SG · MachineSense</div>
                             <div><span class="meta-k">Implementation:</span> 8 weeks</div>
-                            <div><span class="meta-k">Top fund match:</span> PSG up to 50% (max S$ 30k)</div>
-                            <div><span class="meta-k">Payback:</span> ~ 9 months</div>
+                            <div><span class="meta-k">Top fund match:</span> PSG (up to S$ 30k)</div>
+                            <div><span class="meta-k">Payback:</span> ~ 7 months</div>
                           </div>
                         </div>
                       </td>
@@ -2411,41 +2608,38 @@ Implication: highest-value early moves are predictive maintenance on the older C
                     <tr class="uc-row" data-uc="2">
                       <td><span class="rank-num">2</span></td>
                       <td>
-                        <div class="uc-name">Inventory Optimisation</div>
-                        <div class="uc-sector">Reduces working capital lock-up</div>
+                        <div class="uc-name">AI‑Driven Dynamic Production Scheduling</div>
+                        <div class="uc-sector">On-time delivery (OTD) improvement</div>
                       </td>
                       <td><span class="badge-phase now">Now</span></td>
-                      <td class="value-cell">+ S$ 180k</td>
-                      <td class="funding"><span class="ai-tag"></span>Productivity Solutions</td>
-                      <td class="ai-capability">Demand Forecasting</td>
+                      <td class="value-cell">+ S$ 210k</td>
+                      <td class="funding"><span class="ai-tag"></span>SME Tech Hub</td>
+                      <td class="ai-capability">Optimization Agent</td>
                       <td><span class="chev">▼</span></td>
                     </tr>
                     <tr class="uc-detail-row" data-detail="2">
                       <td colspan="7">
                         <div class="uc-detail">
                           <div class="detail-block pain">
-                            <h5><span class="dot-i"></span>Pain points solved</h5>
+                            <h5><span class="dot-i"></span>Problem & Ranking Justification</h5>
                             <ul>
-                              <li>Inventory mismatch flagged in your operational data</li>
-                              <li>Working capital tied up in slow-moving stock</li>
-                              <li>Manual stock counts prone to error</li>
-                              <li>Stock-outs on fast-movers cause production delays</li>
+                              <li><strong>Business Problem:</strong> Manual schedule changes cause missed delivery commitments.</li>
+                              <li><strong>Why Ranked #2:</strong> Directly improves on‑time delivery, aligns with top leadership KPI.</li>
                             </ul>
                           </div>
                           <div class="detail-block">
-                            <h5><span class="dot-i"></span>Benefits delivered</h5>
+                            <h5><span class="dot-i"></span>Expected Impact & Deployment</h5>
                             <ul>
-                              <li>AI demand forecasting cuts safety stock by ~ 25%</li>
-                              <li>Frees up an estimated S$ 180k in working capital annually</li>
-                              <li>Auto-reorder triggers reduce manual planning effort</li>
-                              <li>Works with your existing ERP — no rip-and-replace</li>
+                              <li>10–15% improvement in OTD performance.</li>
+                              <li>Reduced planner firefighting and manual overrides.</li>
+                              <li><strong>Deployment:</strong> Advisory scheduling agent with scenario simulation.</li>
                             </ul>
                           </div>
                           <div class="detail-meta">
-                            <div><span class="meta-k">Suggested vendors:</span> Inventoro · Netstock · Lokad</div>
-                            <div><span class="meta-k">Implementation:</span> 6 weeks</div>
-                            <div><span class="meta-k">Top fund match:</span> PSG up to 50%</div>
-                            <div><span class="meta-k">Payback:</span> ~ 6 months</div>
+                            <div><span class="meta-k">Suggested vendors:</span> OptiPlan · LogiSolve</div>
+                            <div><span class="meta-k">Implementation:</span> 12 weeks</div>
+                            <div><span class="meta-k">Top fund match:</span> Enterprise Development Grant</div>
+                            <div><span class="meta-k">Payback:</span> ~ 11 months</div>
                           </div>
                         </div>
                       </td>
@@ -2454,40 +2648,38 @@ Implication: highest-value early moves are predictive maintenance on the older C
                     <tr class="uc-row" data-uc="3">
                       <td><span class="rank-num">3</span></td>
                       <td>
-                        <div class="uc-name">Spare Parts Forecasting</div>
-                        <div class="uc-sector">Builds on inventory data</div>
+                        <div class="uc-name">AI‑Based Quality Root‑Cause Analysis</div>
+                        <div class="uc-sector">Scrap & Rework reduction</div>
                       </td>
                       <td><span class="badge-phase next">Next</span></td>
-                      <td class="value-cell">+ S$ 120k</td>
-                      <td class="funding"><span class="ai-tag"></span>Enterprise Development</td>
-                      <td class="ai-capability">Time-series Prediction</td>
+                      <td class="value-cell">+ S$ 155k</td>
+                      <td class="funding"><span class="ai-tag"></span>Productivity Solutions</td>
+                      <td class="ai-capability">Pattern Recognition</td>
                       <td><span class="chev">▼</span></td>
                     </tr>
                     <tr class="uc-detail-row" data-detail="3">
                       <td colspan="7">
                         <div class="uc-detail">
                           <div class="detail-block pain">
-                            <h5><span class="dot-i"></span>Pain points solved</h5>
+                            <h5><span class="dot-i"></span>Problem & Ranking Justification</h5>
                             <ul>
-                              <li>Critical spare parts often unavailable when needed</li>
-                              <li>Over-stocking expensive low-turn parts to "be safe"</li>
-                              <li>No link between maintenance schedule and parts ordering</li>
+                              <li><strong>Business Problem:</strong> Scrap and rework detected too late and resolved manually.</li>
+                              <li><strong>Why Ranked #3:</strong> Meaningful margin impact, moderate effort, strong explainability fit.</li>
                             </ul>
                           </div>
                           <div class="detail-block">
-                            <h5><span class="dot-i"></span>Benefits delivered</h5>
+                            <h5><span class="dot-i"></span>Expected Impact & Deployment</h5>
                             <ul>
-                              <li>Forecasts spare-parts demand from machine usage data</li>
-                              <li>Synchronises with predictive maintenance pipeline</li>
-                              <li>Cuts emergency procurement spend by ~ 40%</li>
-                              <li>Reduces obsolete stock write-offs</li>
+                              <li>10–15% reduction in scrap and rework.</li>
+                              <li>Faster defect resolution and process insight.</li>
+                              <li><strong>Deployment:</strong> Analytics‑driven insights before automation.</li>
                             </ul>
                           </div>
                           <div class="detail-meta">
-                            <div><span class="meta-k">Suggested vendors:</span> Augury · Senseye · Inventoro</div>
+                            <div><span class="meta-k">Suggested vendors:</span> Qualitas AI · VisionCore</div>
                             <div><span class="meta-k">Implementation:</span> 10 weeks</div>
-                            <div><span class="meta-k">Top fund match:</span> EDG up to 50% matched</div>
-                            <div><span class="meta-k">Payback:</span> ~ 12 months</div>
+                            <div><span class="meta-k">Top fund match:</span> PSG / ESG Grant</div>
+                            <div><span class="meta-k">Payback:</span> ~ 13 months</div>
                           </div>
                         </div>
                       </td>
@@ -2496,41 +2688,38 @@ Implication: highest-value early moves are predictive maintenance on the older C
                     <tr class="uc-row" data-uc="4">
                       <td><span class="rank-num">4</span></td>
                       <td>
-                        <div class="uc-name">Quality Vision Inspection</div>
-                        <div class="uc-sector">Capex moderate · 3 vendor options</div>
+                        <div class="uc-name">Maintenance Decision‑Support Copilot</div>
+                        <div class="uc-sector">Skill dependency mitigation</div>
                       </td>
                       <td><span class="badge-phase next">Next</span></td>
                       <td class="value-cell">+ S$ 95k</td>
-                      <td class="funding"><span class="ai-tag"></span>Enterprise Development</td>
-                      <td class="ai-capability">Computer Vision</td>
+                      <td class="funding"><span class="ai-tag"></span>SkillsFuture</td>
+                      <td class="ai-capability">Generative AI</td>
                       <td><span class="chev">▼</span></td>
                     </tr>
                     <tr class="uc-detail-row" data-detail="4">
                       <td colspan="7">
                         <div class="uc-detail">
                           <div class="detail-block pain">
-                            <h5><span class="dot-i"></span>Pain points solved</h5>
+                            <h5><span class="dot-i"></span>Problem & Ranking Justification</h5>
                             <ul>
-                              <li>Quality rework flagged as a top time-loss area</li>
-                              <li>Manual visual inspection misses subtle defects</li>
-                              <li>Inconsistent quality between operators and shifts</li>
-                              <li>Aerospace customer pushing for tighter QA reporting from Q3</li>
+                              <li><strong>Business Problem:</strong> High dependency on senior machinists and engineers.</li>
+                              <li><strong>Why Ranked #4:</strong> Reduces skill dependency but indirect financial impact.</li>
                             </ul>
                           </div>
                           <div class="detail-block">
-                            <h5><span class="dot-i"></span>Benefits delivered</h5>
+                            <h5><span class="dot-i"></span>Expected Impact & Deployment</h5>
                             <ul>
-                              <li>Camera + AI detects defects in real-time on the line</li>
-                              <li>Reduces rework rate by ~ 60%</li>
-                              <li>Consistent quality 24/7, no operator fatigue</li>
-                              <li>Auto-generates QA reports for aerospace compliance</li>
+                              <li>Faster troubleshooting and consistent shop-floor execution.</li>
+                              <li>Consistency across shifts with senior expert digital twin.</li>
+                              <li><strong>Deployment:</strong> Copilot‑first, no autonomous actions.</li>
                             </ul>
                           </div>
                           <div class="detail-meta">
-                            <div><span class="meta-k">Suggested vendors:</span> Cognex · Landing AI · Visionify</div>
-                            <div><span class="meta-k">Implementation:</span> 12 weeks</div>
-                            <div><span class="meta-k">Top fund match:</span> EDG up to 50% matched</div>
-                            <div><span class="meta-k">Payback:</span> ~ 14 months</div>
+                            <div><span class="meta-k">Suggested vendors:</span> BuildWithAI · TechAssist</div>
+                            <div><span class="meta-k">Implementation:</span> 6 weeks</div>
+                            <div><span class="meta-k">Top fund match:</span> SkillsFuture Enterprise Credit</div>
+                            <div><span class="meta-k">Payback:</span> ~ 15 months</div>
                           </div>
                         </div>
                       </td>
@@ -2539,40 +2728,38 @@ Implication: highest-value early moves are predictive maintenance on the older C
                     <tr class="uc-row" data-uc="5">
                       <td><span class="rank-num">5</span></td>
                       <td>
-                        <div class="uc-name">Energy Demand Optimisation</div>
-                        <div class="uc-sector">Long-term · pairs with sustainability</div>
+                        <div class="uc-name">Advanced Parameter Optimisation</div>
+                        <div class="uc-sector">High-mix tolerance control</div>
                       </td>
                       <td><span class="badge-phase later">Later</span></td>
-                      <td class="value-cell">+ S$ 70k</td>
-                      <td class="funding"><span class="ai-tag"></span>EnterpriseSG sustainability</td>
-                      <td class="ai-capability">Optimization Algorithms</td>
+                      <td class="value-cell">+ S$ 80k</td>
+                      <td class="funding"><span class="ai-tag"></span>Future Economy</td>
+                      <td class="ai-capability">Deep Learning</td>
                       <td><span class="chev">▼</span></td>
                     </tr>
                     <tr class="uc-detail-row" data-detail="5">
                       <td colspan="7">
                         <div class="uc-detail">
                           <div class="detail-block pain">
-                            <h5><span class="dot-i"></span>Pain points solved</h5>
+                            <h5><span class="dot-i"></span>Problem & Ranking Justification</h5>
                             <ul>
-                              <li>Energy bills rising with no clear visibility on drivers</li>
-                              <li>Equipment running idle outside production hours</li>
-                              <li>Peak-demand charges increasing utility cost</li>
+                              <li><strong>Business Problem:</strong> Tight tolerances cause variability in high‑mix production.</li>
+                              <li><strong>Why Ranked #5:</strong> High potential, but requires maturity and trust built in earlier phases.</li>
                             </ul>
                           </div>
                           <div class="detail-block">
-                            <h5><span class="dot-i"></span>Benefits delivered</h5>
+                            <h5><span class="dot-i"></span>Expected Impact & Deployment</h5>
                             <ul>
-                              <li>AI schedules energy-hungry tasks off-peak</li>
-                              <li>Cuts energy spend by ~ 15–20%</li>
-                              <li>Supports ESG / sustainability reporting</li>
-                              <li>Qualifies for green-financing programmes</li>
+                              <li>Incremental yield improvements and scrap reduction.</li>
+                              <li>Long‑term capability uplift and competitive edge.</li>
+                              <li><strong>Deployment:</strong> Phase‑2 or Phase‑3 roadmap item.</li>
                             </ul>
                           </div>
                           <div class="detail-meta">
-                            <div><span class="meta-k">Suggested vendors:</span> EnPowered · GridPoint · BeeBryte</div>
+                            <div><span class="meta-k">Suggested vendors:</span> DeepMelt · PrecisionFlow</div>
                             <div><span class="meta-k">Implementation:</span> 16 weeks</div>
-                            <div><span class="meta-k">Top fund match:</span> EnterpriseSG sustainability</div>
-                            <div><span class="meta-k">Payback:</span> ~ 18 months</div>
+                            <div><span class="meta-k">Top fund match:</span> Advanced Mfg Grant</div>
+                            <div><span class="meta-k">Payback:</span> ~ 18 months+</div>
                           </div>
                         </div>
                       </td>
@@ -2588,27 +2775,27 @@ Implication: highest-value early moves are predictive maintenance on the older C
                       <div class="label">Phase 1 · 0–3 months</div>
                       <div class="title">Now</div>
                       <ul>
-                        <li>Predictive maintenance pilot</li>
-                        <li>Inventory optimisation</li>
-                        <li>Apply for PSG grant</li>
+                        <li>Predictive maintenance pilot (CNC)</li>
+                        <li>Dynamic production scheduling</li>
+                        <li>Apply for PSG funding</li>
                       </ul>
                     </div>
                     <div class="ph next">
                       <div class="label">Phase 2 · 3–9 months</div>
                       <div class="title">Next</div>
                       <ul>
-                        <li>Spare parts forecasting</li>
-                        <li>Vision QC pilot</li>
-                        <li>Train two ops leads</li>
+                        <li>Quality defect root-cause AI</li>
+                        <li>Maintenance support copilot</li>
+                        <li>Train shop-floor supervisors</li>
                       </ul>
                     </div>
                     <div class="ph later">
-                      <div class="label">Phase 3 · 9–24 months</div>
+                      <div class="label">Phase 3 · 9–18 months</div>
                       <div class="title">Later</div>
                       <ul>
-                        <li>Energy optimisation</li>
-                        <li>Full data platform</li>
-                        <li>Capability transfer</li>
+                        <li>Process parameter optimisation</li>
+                        <li>Full data lake integration</li>
+                        <li>Capability scaling to Phase 2</li>
                       </ul>
                     </div>
                   </div>
@@ -2617,11 +2804,27 @@ Implication: highest-value early moves are predictive maintenance on the older C
 
               <div class="actions">
                 <button class="btn btn-ghost" data-next="3">← Back</button>
-                <div class="right-group">
-                  <button class="btn btn-primary" id="submitApprovalBtn">Submit for approval</button>
-                </div>
+                <button class="btn btn-primary" data-next="5">Proceed to Approval →</button>
               </div>
 
+            </div>
+          </div>
+
+          <!-- STEP 5 — APPROVAL -->
+          <div class="step-content" data-content="5">
+            <div class="panel-title">
+              <h2>Ready for Approval</h2>
+              <p>Your AI Roadmap is ready. Click the button below to submit the final proposal for executive review.</p>
+            </div>
+            <div class="work-area" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 0;">
+              <div style="background: #f0fdf4; color: var(--success); width: 60px; height: 60px; border-radius: 50%; display: grid; place-items: center; font-size: 24px; margin-bottom: 20px; border: 2px solid var(--success);">✓</div>
+              <h3 style="margin-bottom: 8px;">Roadmap Finalized</h3>
+              <p style="color: var(--ink-soft); margin-bottom: 32px;">All financial and operational context has been mapped.</p>
+              
+              <div class="actions">
+                <button class="btn btn-ghost" data-next="4">← Review Roadmap</button>
+                <button class="btn btn-primary" id="submitApprovalBtn" style="padding: 12px 32px; font-size: 15px;">Submit for Approval</button>
+              </div>
             </div>
           </div>
 
@@ -2633,10 +2836,11 @@ Implication: highest-value early moves are predictive maintenance on the older C
 
   <script>
     const stepLabels = {
-      1: 'Sector & questions',
-      2: 'Upload data',
-      3: 'Review',
-      4: 'Final output'
+      1: 'Provide Company Docs',
+      2: 'Strategic Context',
+      3: 'Review & Analysis',
+      4: 'Roadmap',
+      5: 'Approval'
     };
     let currentView = 'assessment';
     let currentStep = 1;
@@ -2652,6 +2856,123 @@ Implication: highest-value early moves are predictive maintenance on the older C
     const emptyView = document.getElementById('emptyView');
     const navAssessment = document.getElementById('navAssessment');
     const navKnowledge = document.getElementById('navKnowledge');
+
+    function generateInsights() {
+      const btn = document.getElementById('autofillBtn');
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spinner"></span> Scanning documents...';
+      
+      const answers = document.querySelectorAll('.autofill-a');
+      answers.forEach((ans, i) => {
+        setTimeout(() => {
+          ans.classList.add('visible');
+          if (i === answers.length - 1) {
+            btn.innerHTML = '✓ Analysis Complete';
+            btn.style.background = 'var(--success)';
+            btn.style.color = '#fff';
+            btn.style.borderColor = 'var(--success)';
+          }
+        }, i * 400);
+      });
+    }
+
+    function runRAGAnalysis() {
+      const fill = document.getElementById('progressFill');
+      const title = document.getElementById('progressTitle');
+      const eta = document.getElementById('progressEta');
+      const log = document.getElementById('agentLogStep3');
+      const dashboard = document.getElementById('ragDashboard');
+      const pipelineItems = document.querySelectorAll('#pipeline3 .check-item');
+      
+      let p = 0;
+      fill.style.width = '0%';
+      dashboard.style.display = 'none';
+      log.innerHTML = '';
+
+      // Reset pipeline
+      pipelineItems.forEach((item, idx) => {
+        if (idx < 2) {
+          item.className = 'check-item done';
+          item.querySelector('.ico').innerText = '✓';
+        } else if (idx === 2) {
+          item.className = 'check-item now';
+          item.querySelector('.ico').innerText = '';
+        } else {
+          item.className = 'check-item todo';
+          item.querySelector('.ico').innerText = '';
+        }
+      });
+
+      const logs = [
+        { sym: '▶', type: 'action', txt: 'Indexing Step 1: Business Information' },
+        { sym: '✓', type: 'ok', txt: 'Financial_Statements_3Y.pdf parsed · extracting working capital' },
+        { sym: '✓', type: 'ok', txt: 'ERP_Data_Export.csv analyzed · mapping production lead times' },
+        { sym: '✓', type: 'ok', txt: 'Production & Machine Reports analyzed · identifying OEE signals' },
+        { sym: '✓', type: 'ok', txt: 'Quality_Report_Summary.pdf parsed · extracting scrap trends (4.8%)' },
+        { sym: '▶', type: 'action', txt: 'Querying RAG knowledge base · precision-engineering' },
+        { sym: '...', type: 'think', txt: 'retrieving 47 relevant industry use cases from knowledge library' },
+        { sym: '✓', type: 'ok', txt: 'Cross-referencing findings with Singapore Mfg benchmarks' },
+        { sym: '▶', type: 'action', txt: 'Indexing Step 2: Strategic Context' },
+        { sym: '✓', type: 'ok', txt: '10 Leadership responses parsed · identifying OTD as primary KPI' },
+        { sym: '✓', type: 'ok', txt: 'Maintenance & Asset logs analyzed · calculating MTBF/ROI' },
+        { sym: '▶', type: 'action', txt: 'Scoring opportunities by Business Impact & Data Readiness' },
+        { sym: '▶', type: 'action', txt: 'Mapping funding (PSG/EDG) & local vendor availability' },
+        { sym: '...', type: 'think', txt: 'drafting 18-month sequenced implementation roadmap' },
+        { sym: '✓', type: 'ok', txt: 'Roadmap & findings finalized · Ready for review' }
+      ];
+
+      let logIdx = 0;
+      const interval = setInterval(() => {
+        p += Math.floor(Math.random() * 3) + 1;
+        if (p > 100) p = 100;
+        
+        fill.style.width = p + '%';
+        title.innerText = `Agent Synthesis — ${p}% complete`;
+
+        // Dynamic Pipeline Update
+        const activeIdx = Math.floor(p / 16.7) + 1; 
+        pipelineItems.forEach((item, idx) => {
+          const stepNum = idx + 1;
+          if (stepNum < activeIdx || p === 100) {
+            item.className = 'check-item done';
+            item.querySelector('.ico').innerText = '✓';
+          } else if (stepNum === activeIdx) {
+            item.className = 'check-item now';
+            item.querySelector('.ico').innerText = '';
+          } else {
+            item.className = 'check-item todo';
+            item.querySelector('.ico').innerText = '';
+          }
+        });
+        
+        // Add log lines based on progress
+        const targetLogIdx = Math.floor((p / 100) * logs.length);
+        while (logIdx < targetLogIdx && logIdx < logs.length) {
+          const l = logs[logIdx];
+          const time = new Date().toLocaleTimeString([], { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' });
+          log.innerHTML += `
+            <div class="line">
+              <span class="ts">[${time}]</span>
+              <span class="symbol sym-${l.type}">${l.sym}</span>
+              <span class="text-${l.type}">${l.txt}</span>
+            </div>
+          `;
+          logIdx++;
+          log.scrollTop = log.scrollHeight;
+        }
+
+        if (p === 100) {
+          clearInterval(interval);
+          title.innerText = 'Analysis — 100% complete';
+          eta.innerText = 'Synthesis finalized.';
+          dashboard.style.display = 'block';
+          pipelineItems.forEach(item => {
+            item.className = 'check-item done';
+            item.querySelector('.ico').innerText = '✓';
+          });
+        }
+      }, 80);
+    }
 
     const crumbHome = document.getElementById('crumbHome');
     const crumbSection = document.getElementById('crumbSection');
