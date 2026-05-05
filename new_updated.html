@@ -1035,28 +1035,76 @@
           </div>
         </div>
 
-        <div class="kb-section">
-          <div class="kb-section-head">Company documents</div>
-          <div class="kb-files">
-            <div class="kb-file">
-              <div class="file-icon">XLSX</div>
-              <div class="file-info">
-                <div class="file-name">Machine_Downtime_Logs_FY2024.xlsx</div>
-                <div class="file-meta">
-                  <span>2.1 MB · 1,420 rows</span>
-                  <span class="indexed">Indexed</span>
+        <div class="kb-split" style="display: flex; gap: 24px; margin-bottom: 28px;">
+          <!-- Left Side: Business Documents -->
+          <div class="kb-side" style="flex: 1;">
+            <div class="kb-section-head">Business documents</div>
+            <p style="font-size: 13px; color: var(--ink-soft); margin-bottom: 12px; margin-top: -6px;">company information like financial and company brochure info</p>
+            <div class="upload-zone" style="margin-bottom: 16px; padding: 24px 16px; min-height: auto;">
+              <div class="upload-icon" style="width: 40px; height: 40px; font-size: 18px; margin-bottom: 10px;">↑</div>
+              <h3 style="font-size: 14px;">Drag & drop files or Browse</h3>
+              <div class="formats" style="font-size: 11px; margin-bottom: 0;">Supported file formats: PDF, XLSX, CSV, DOCX, JPG · Max 25MB</div>
+            </div>
+            <div class="kb-files" style="display: flex; flex-direction: column; margin-bottom: 16px;">
+              <div class="kb-file">
+                <div class="file-icon">PDF</div>
+                <div class="file-info">
+                  <div class="file-name">Financial_Statements_FY2024.pdf</div>
+                  <div class="file-meta">
+                    <span>1.4 MB</span>
+                    <span class="indexed">Indexed</span>
+                  </div>
+                </div>
+              </div>
+              <div class="kb-file">
+                <div class="file-icon">PDF</div>
+                <div class="file-info">
+                  <div class="file-name">Company_Brochure.pdf</div>
+                  <div class="file-meta">
+                    <span>820 KB</span>
+                    <span class="indexed">Indexed</span>
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="kb-file">
-              <div class="file-icon">PDF</div>
-              <div class="file-info">
-                <div class="file-name">QA_Inspection_Reports.pdf</div>
-                <div class="file-meta">
-                  <span>1.2 MB · 12 pages</span>
-                  <span class="indexed">Indexed</span>
+            <div style="background: #fafafa; border: 1px solid var(--line); border-left: 3px solid var(--accent); padding: 12px 14px; border-radius: 4px; font-size: 12.5px; color: var(--ink-soft); line-height: 1.5;">
+              <strong style="color: var(--ink);">What this means:</strong> Establishes the company's financial health, market position, and available capital. Used to get the context of the company.
+            </div>
+          </div>
+
+          <!-- Right Side: Knowledge Base -->
+          <div class="kb-side" style="flex: 1;">
+            <div class="kb-section-head">Operational documents</div>
+            <p style="font-size: 13px; color: var(--ink-soft); margin-bottom: 12px; margin-top: -6px;">operational data, equipment logs, and inspection reports</p>
+            <div class="upload-zone" style="margin-bottom: 16px; padding: 24px 16px; min-height: auto;">
+              <div class="upload-icon" style="width: 40px; height: 40px; font-size: 18px; margin-bottom: 10px;">↑</div>
+              <h3 style="font-size: 14px;">Drag & drop files or Browse</h3>
+              <div class="formats" style="font-size: 11px; margin-bottom: 0;">Supported file formats: PDF, XLSX, CSV, DOCX, JPG · Max 25MB</div>
+            </div>
+            <div class="kb-files" style="display: flex; flex-direction: column; margin-bottom: 16px;">
+              <div class="kb-file">
+                <div class="file-icon">XLSX</div>
+                <div class="file-info">
+                  <div class="file-name">Machine_Downtime_Logs_FY2024.xlsx</div>
+                  <div class="file-meta">
+                    <span>2.1 MB · 1,420 rows</span>
+                    <span class="indexed">Indexed</span>
+                  </div>
                 </div>
               </div>
+              <div class="kb-file">
+                <div class="file-icon">PDF</div>
+                <div class="file-info">
+                  <div class="file-name">QA_Inspection_Reports.pdf</div>
+                  <div class="file-meta">
+                    <span>1.2 MB · 12 pages</span>
+                    <span class="indexed">Indexed</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div style="background: #fafafa; border: 1px solid var(--line); border-left: 3px solid var(--accent); padding: 12px 14px; border-radius: 4px; font-size: 12.5px; color: var(--ink-soft); line-height: 1.5;">
+              <strong style="color: var(--ink);">What this means:</strong> Provides the understanding of the operational context, such as machinery logs, quality assurance log sheets.
             </div>
           </div>
         </div>
@@ -1156,6 +1204,9 @@
                   </div>
                 </div>
               </div>
+              <div class="question" style="margin-top: 16px;">
+                <textarea placeholder="Enter your text here..."></textarea>
+              </div>
             </div>
 
             <div class="question-card">
@@ -1214,7 +1265,7 @@
                 <div class="q-num">5</div>
                 <div>
                   <div class="q-title">What is your estimated budget for technology upgrades over the next 12 months?</div>
-                  <div class="q-sub">Factoring in potential government grants (e.g., PSG, EDG in Singapore).</div>
+                  <div class="q-sub">Factoring in potential government grants.</div>
                 </div>
               </div>
               <div class="answer-pills">
@@ -1250,21 +1301,57 @@
         <div class="step-content" data-content="2">
           <div class="panel-title">
             <h2>Upload supporting data</h2>
-            <p>Drop in any documents that help us understand your business context (e.g., machinery logs, quality assurance log sheets). Optional but improves recommendation quality.</p>
+            <p style="margin-bottom: 12px;">Drop in any documents that help us understand your business and operational context.</p>
+            <div style="background: #fafafa; border: 1px solid var(--line); border-left: 3px solid var(--accent); padding: 14px 16px; border-radius: 4px; font-size: 13px; color: var(--ink-soft); line-height: 1.5;">
+              <strong style="color: var(--ink); display: block; margin-bottom: 8px;">Inputs the SME Provides:</strong>
+              <ul style="padding-left: 20px; margin: 0;">
+                <li style="margin-bottom: 4px;"><strong>Financial statements (last 2–3 years)</strong> — extracts working capital cycle, inventory turns, COGS structure, labour intensity, margin pressure points</li>
+                <li style="margin-bottom: 4px;"><strong>Website / brochures / product catalogue</strong> — extracts sub-sector, product mix, customer segments</li>
+                <li><strong>Optional:</strong> ERP screenshots, shop-floor process descriptions, top 5 pain points (free text)</li>
+              </ul>
+            </div>
           </div>
           <div class="work-area">
-            <div class="upload-zone">
-              <div class="upload-icon">↑</div>
-              <h3>Drag & drop files or Browse</h3>
-              <div class="formats">Supported file formats: PDF, XLSX, CSV, DOCX, JPG · Max 25MB</div>
-              <div class="uploaded-list">
-                <div class="uploaded-file">
-                  <div class="fname">Machine_Downtime_Logs_FY2024.xlsx</div>
-                  <div class="fsize">2.1 MB</div>
+            <div class="upload-split" style="display: flex; gap: 24px;">
+              <!-- Left Side: Business Documents -->
+              <div class="upload-side" style="flex: 1;">
+                <h3 style="margin-bottom: 8px; font-size: 16px;">Business documents</h3>
+                <p style="font-size: 14px; color: #666; margin-bottom: 16px;">company information like financial and company brochure info</p>
+                <div class="upload-zone">
+                  <div class="upload-icon">↑</div>
+                  <h3>Drag & drop files or Browse</h3>
+                  <div class="formats">Supported file formats: PDF, XLSX, CSV, DOCX, JPG · Max 25MB</div>
+                  <div class="uploaded-list">
+                    <div class="uploaded-file">
+                      <div class="fname">Financial_Statements_FY2024.pdf</div>
+                      <div class="fsize">1.4 MB</div>
+                    </div>
+                    <div class="uploaded-file">
+                      <div class="fname">Company_Brochure.pdf</div>
+                      <div class="fsize">820 KB</div>
+                    </div>
+                  </div>
                 </div>
-                <div class="uploaded-file">
-                  <div class="fname">QA_Inspection_Reports.pdf</div>
-                  <div class="fsize">1.2 MB</div>
+              </div>
+
+              <!-- Right Side: Knowledge Base -->
+              <div class="upload-side" style="flex: 1;">
+                <h3 style="margin-bottom: 8px; font-size: 16px;">Operational documents</h3>
+                <p style="font-size: 14px; color: #666; margin-bottom: 16px;">operational data, equipment logs, and inspection reports</p>
+                <div class="upload-zone">
+                  <div class="upload-icon">↑</div>
+                  <h3>Drag & drop files or Browse</h3>
+                  <div class="formats">Supported file formats: PDF, XLSX, CSV, DOCX, JPG · Max 25MB</div>
+                  <div class="uploaded-list">
+                    <div class="uploaded-file">
+                      <div class="fname">Machine_Downtime_Logs_FY2024.xlsx</div>
+                      <div class="fsize">2.1 MB</div>
+                    </div>
+                    <div class="uploaded-file">
+                      <div class="fname">QA_Inspection_Reports.pdf</div>
+                      <div class="fsize">1.2 MB</div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1388,7 +1475,7 @@ Implication: highest-value early moves are predictive maintenance on the older C
                   <th>Use case</th>
                   <th>Phase</th>
                   <th>Est. value</th>
-                  <th>Top fund match</th>
+                  <th>Catogery</th>
                   <th></th>
                 </tr>
               </thead>
@@ -1402,7 +1489,7 @@ Implication: highest-value early moves are predictive maintenance on the older C
                   </td>
                   <td><span class="badge-phase now">Now</span></td>
                   <td class="value-cell">+ S$ 240k</td>
-                  <td class="funding"><span class="ai-tag">AI</span>PSG · Productivity Solutions Grant</td>
+                  <td class="funding"><span class="ai-tag"></span>Productivity Solutions Grant</td>
                   <td><span class="chev">▼</span></td>
                 </tr>
                 <tr class="uc-detail-row" data-detail="1">
@@ -1444,7 +1531,7 @@ Implication: highest-value early moves are predictive maintenance on the older C
                   </td>
                   <td><span class="badge-phase now">Now</span></td>
                   <td class="value-cell">+ S$ 180k</td>
-                  <td class="funding"><span class="ai-tag">AI</span>PSG · Productivity Solutions Grant</td>
+                  <td class="funding"><span class="ai-tag"></span>Productivity Solutions Grant</td>
                   <td><span class="chev">▼</span></td>
                 </tr>
                 <tr class="uc-detail-row" data-detail="2">
@@ -1486,7 +1573,7 @@ Implication: highest-value early moves are predictive maintenance on the older C
                   </td>
                   <td><span class="badge-phase next">Next</span></td>
                   <td class="value-cell">+ S$ 120k</td>
-                  <td class="funding"><span class="ai-tag">AI</span>EDG · Enterprise Development Grant</td>
+                  <td class="funding"><span class="ai-tag"></span>Enterprise Development Grant</td>
                   <td><span class="chev">▼</span></td>
                 </tr>
                 <tr class="uc-detail-row" data-detail="3">
@@ -1527,7 +1614,7 @@ Implication: highest-value early moves are predictive maintenance on the older C
                   </td>
                   <td><span class="badge-phase next">Next</span></td>
                   <td class="value-cell">+ S$ 95k</td>
-                  <td class="funding"><span class="ai-tag">AI</span>EDG · Enterprise Development Grant</td>
+                  <td class="funding"><span class="ai-tag"></span>Enterprise Development Grant</td>
                   <td><span class="chev">▼</span></td>
                 </tr>
                 <tr class="uc-detail-row" data-detail="4">
@@ -1569,7 +1656,7 @@ Implication: highest-value early moves are predictive maintenance on the older C
                   </td>
                   <td><span class="badge-phase later">Later</span></td>
                   <td class="value-cell">+ S$ 70k</td>
-                  <td class="funding"><span class="ai-tag">AI</span>EnterpriseSG sustainability grant</td>
+                  <td class="funding"><span class="ai-tag"></span>EnterpriseSG sustainability grant</td>
                   <td><span class="chev">▼</span></td>
                 </tr>
                 <tr class="uc-detail-row" data-detail="5">
