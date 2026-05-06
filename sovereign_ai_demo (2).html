@@ -1,1443 +1,2358 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Sovereign Manufacturing AI Cloud — SG</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700;9..144,900&family=JetBrains+Mono:wght@400;500;600&family=Inter+Tight:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --ink:#0B1220;
-    --ink-2:#111B2E;
-    --paper:#F4EFE6;
-    --paper-2:#ECE5D6;
-    --line:#1B2740;
-    --amber:#E8A33D;
-    --amber-deep:#C9802A;
-    --crimson:#B23A2F;
-    --teal:#0F5E5B;
-    --sage:#7A8A6B;
-    --muted:#5A6376;
-    --ok:#2E8B57;
-    --shadow: 0 30px 60px -20px rgba(11,18,32,.35);
-  }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sovereign Manufacturing AI Cloud — SG</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --ink: #1a1a1a;
+      --ink-2: #242424;
+      --paper: #f5f5f3;
+      --paper-2: #ececea;
+      --line: #2e2e2e;
+      --amber: #ffd23a;
+      --amber-deep: #f5b800;
+      --crimson: #c44545;
+      --teal: #2e7d57;
+      --sage: #8a8a8a;
+      --muted: #8a8a8a;
+      --ok: #2e7d57;
+      --shadow: 0 30px 60px -20px rgba(26, 26, 26, .35);
+    }
 
-  *{box-sizing:border-box;margin:0;padding:0}
-  html,body{height:100%}
-  body{
-    font-family:'Inter Tight', system-ui, sans-serif;
-    background:var(--paper);
-    color:var(--ink);
-    -webkit-font-smoothing:antialiased;
-    overflow-x:hidden;
-    background-image:
-      radial-gradient(circle at 0 0, rgba(11,18,32,.04) 1px, transparent 1px),
-      radial-gradient(circle at 50% 50%, rgba(232,163,61,.05), transparent 60%);
-    background-size: 22px 22px, auto;
-  }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
 
-  /* Page system */
-  .page{display:none; min-height:100vh;}
-  .page.active{display:block; animation: fade .5s ease both;}
-  @keyframes fade{ from{opacity:0; transform: translateY(8px);} to{opacity:1; transform:none;} }
+    html,
+    body {
+      height: 100%
+    }
 
-  /* ============== TOP BANNER (journey strip) ============== */
-  .banner{
-    background: var(--ink);
-    color:var(--paper);
-    padding: 28px 40px 22px;
-    border-bottom: 1px solid var(--line);
-    position:relative;
-    overflow:hidden;
-  }
-  .banner::before{
-    content:""; position:absolute; inset:0;
-    background-image:
-      linear-gradient(transparent 95%, rgba(232,163,61,.18) 95%),
-      linear-gradient(90deg, transparent 95%, rgba(232,163,61,.10) 95%);
-    background-size: 28px 28px;
-    pointer-events:none;
-    mask-image: radial-gradient(ellipse at top right, black, transparent 80%);
-  }
-  .banner-top{
-    display:flex; justify-content:space-between; align-items:center;
-    gap:24px; position:relative; z-index:1;
-  }
-  .brand{
-    display:flex; align-items:center; gap:14px;
-    font-family:'Fraunces', serif; font-weight:600; font-size:20px;
-    letter-spacing:-.01em;
-  }
-  .brand-mark{
-    width:38px; height:38px; border-radius:8px;
-    background: linear-gradient(135deg, var(--amber), var(--amber-deep));
-    display:grid; place-items:center; color:var(--ink);
-    font-family:'JetBrains Mono', monospace; font-weight:700; font-size:13px;
-    box-shadow: inset 0 0 0 1px rgba(0,0,0,.2), 0 6px 14px rgba(232,163,61,.3);
-  }
-  .brand small{
-    display:block; font-family:'JetBrains Mono', monospace;
-    font-size:10px; opacity:.55; font-weight:400; letter-spacing:.18em;
-    text-transform:uppercase; margin-top:6px;
-  }
-  .banner-meta{
-    display:flex; gap:18px; align-items:center;
-    font-family:'JetBrains Mono', monospace; font-size:11px;
-    color: rgba(244,239,230,.6); letter-spacing:.1em; text-transform:uppercase;
-  }
-  .banner-meta .dot{
-    width:6px;height:6px;border-radius:50%; background:var(--amber);
-    box-shadow:0 0 0 3px rgba(232,163,61,.18);
-    animation: pulse 2s ease-in-out infinite;
-  }
-  @keyframes pulse{50%{box-shadow:0 0 0 6px rgba(232,163,61,.06);}}
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      background-image:
+        radial-gradient(circle at 0 0, rgba(26, 26, 26, .04) 1px, transparent 1px),
+        radial-gradient(circle at 50% 50%, rgba(255, 210, 58, .05), transparent 60%);
+      background-size: 22px 22px, auto;
+    }
 
-  .banner-title{
-    margin-top:18px; position:relative; z-index:1;
-    display:grid; grid-template-columns: 1.1fr 1fr; gap:40px; align-items:end;
-  }
-  .banner-title h1{
-    font-family:'Fraunces', serif;
-    font-weight:400;
-    font-size: clamp(28px, 4vw, 48px);
-    line-height:.98;
-    letter-spacing:-.02em;
-  }
-  .banner-title h1 em{
-    font-style: italic; color: var(--amber);
-    font-weight:300;
-  }
-  .banner-tag{
-    color: rgba(244,239,230,.7);
-    font-size:13px; line-height:1.55; max-width:520px;
-    border-left:2px solid var(--amber); padding-left:14px;
-  }
+    /* Page system */
+    .page {
+      display: none;
+      min-height: 100vh;
+    }
 
-  /* Journey progress - inspired by Singtel Tax Assist screenshot */
-  .journey{
-    margin-top:26px; padding-top:22px; position:relative; z-index:1;
-    border-top:1px dashed rgba(244,239,230,.15);
-    display:grid; grid-template-columns: repeat(auto-fit, minmax(0, 1fr)); gap:12px;
-  }
-  .step{
-    display:flex; gap:12px; align-items:center;
-    cursor:pointer; transition: opacity .25s;
-    opacity:.45;
-  }
-  .step.active{opacity:1;}
-  .step.done{opacity:.85;}
-  .step-num{
-    width:30px; height:30px; border-radius:50%;
-    border:1.5px solid rgba(244,239,230,.3);
-    display:grid; place-items:center;
-    font-family:'JetBrains Mono', monospace; font-size:12px;
-    flex-shrink:0; background:transparent;
-    transition: all .3s;
-  }
-  .step.active .step-num{
-    background: var(--amber); color:var(--ink);
-    border-color:var(--amber);
-    box-shadow: 0 0 0 5px rgba(232,163,61,.15);
-  }
-  .step.done .step-num{
-    background: var(--paper); color: var(--ink);
-    border-color: var(--paper);
-  }
-  .step.done .step-num::before{content:"✓"; font-family: inherit;}
-  .step.done .step-num span{display:none;}
-  .step-text{display:flex; flex-direction:column; gap:2px; min-width:0;}
-  .step-text b{font-weight:500; font-size:13px; letter-spacing:-.01em;}
-  .step-text small{
-    font-family:'JetBrains Mono', monospace; font-size:9.5px;
-    color: rgba(244,239,230,.5); text-transform:uppercase; letter-spacing:.12em;
-  }
+    .page.active {
+      display: block;
+      animation: fade .5s ease both;
+    }
 
-  /* ============== LOGIN ============== */
-  .login-wrap{
-    min-height:100vh;
-    display:grid; grid-template-columns: 1fr 1fr;
-  }
-  .login-left{
-    background: var(--ink);
-    color: var(--paper);
-    padding: 50px 60px;
-    display:flex; flex-direction:column; justify-content:space-between;
-    position:relative; overflow:hidden;
-  }
-  .login-left::before{
-    content:""; position:absolute; inset:0;
-    background:
-      radial-gradient(800px 500px at -10% 110%, rgba(232,163,61,.18), transparent 60%),
-      radial-gradient(600px 400px at 110% -10%, rgba(15,94,91,.25), transparent 60%);
-  }
-  .login-left::after{
-    content:""; position:absolute; inset:0;
-    background-image: linear-gradient(rgba(244,239,230,.04) 1px, transparent 1px),
-                      linear-gradient(90deg, rgba(244,239,230,.04) 1px, transparent 1px);
-    background-size: 40px 40px;
-    mask-image: radial-gradient(ellipse at center, black 20%, transparent 80%);
-  }
-  .login-brand{position:relative; z-index:1;}
-  .login-hero{position:relative; z-index:1; max-width:520px;}
-  .login-eyebrow{
-    font-family:'JetBrains Mono', monospace; font-size:11px;
-    letter-spacing:.22em; text-transform:uppercase;
-    color: var(--amber); margin-bottom:24px;
-    display:inline-flex; align-items:center; gap:10px;
-  }
-  .login-eyebrow::before{
-    content:""; width:24px; height:1px; background:var(--amber);
-  }
-  .login-hero h2{
-    font-family:'Fraunces', serif;
-    font-weight:300; font-size: clamp(32px, 3.6vw, 56px);
-    line-height:1.02; letter-spacing:-.025em;
-    margin-bottom:24px;
-  }
-  .login-hero h2 em{font-style:italic; color:var(--amber); font-weight:400;}
-  .login-hero p{
-    color: rgba(244,239,230,.65); line-height:1.65; font-size:15px;
-    max-width:440px;
-  }
-  .login-stats{
-    display:grid; grid-template-columns: repeat(3,1fr); gap:24px;
-    margin-top:40px; padding-top:30px;
-    border-top:1px dashed rgba(244,239,230,.15);
-  }
-  .stat b{
-    font-family:'Fraunces', serif; font-weight:400;
-    font-size:32px; color: var(--paper); display:block;
-    letter-spacing:-.02em;
-  }
-  .stat span{
-    font-family:'JetBrains Mono', monospace; font-size:10px;
-    color:rgba(244,239,230,.5); text-transform:uppercase; letter-spacing:.15em;
-  }
-  .login-foot{
-    position:relative; z-index:1;
-    display:flex; justify-content:space-between;
-    font-family:'JetBrains Mono', monospace; font-size:11px;
-    color:rgba(244,239,230,.4); letter-spacing:.12em; text-transform:uppercase;
-  }
+    @keyframes fade {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
 
-  .login-right{
-    background: var(--paper);
-    padding: 60px;
-    display:flex; flex-direction:column; justify-content:center;
-    position:relative;
-  }
-  .login-right::before{
-    content:"01"; position:absolute; top:40px; right:50px;
-    font-family:'Fraunces', serif; font-size:140px; line-height:1;
-    color: var(--ink); opacity:.04; font-weight:300;
-  }
-  .login-form{max-width:420px; width:100%;}
-  .login-form-label{
-    font-family:'JetBrains Mono', monospace; font-size:10px;
-    color:var(--muted); text-transform:uppercase; letter-spacing:.2em;
-    margin-bottom:8px;
-  }
-  .login-form h3{
-    font-family:'Fraunces', serif; font-weight:400; font-size:36px;
-    letter-spacing:-.02em; margin-bottom:8px;
-  }
-  .login-form > p{color:var(--muted); margin-bottom:36px; font-size:14px;}
-  .field{margin-bottom:20px;}
-  .field label{
-    font-family:'JetBrains Mono', monospace; font-size:10px;
-    color:var(--ink); text-transform:uppercase; letter-spacing:.2em;
-    margin-bottom:8px; display:block; font-weight:500;
-  }
-  .field input, .field select, .field textarea{
-    width:100%;
-    padding:14px 16px;
-    background:transparent;
-    border:none;
-    border-bottom: 1.5px solid var(--ink);
-    font-family:'Inter Tight', sans-serif;
-    font-size:15px;
-    color:var(--ink);
-    transition: border-color .2s;
-  }
-  .field input:focus, .field select:focus, .field textarea:focus{
-    outline:none; border-color: var(--amber);
-  }
-  .field textarea{resize:vertical; min-height:160px;}
-  .field-help{
-    font-family:'JetBrains Mono', monospace; font-size:10px;
-    color:var(--muted); margin-top:6px; letter-spacing:.05em;
-  }
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
 
-  .btn{
-    display:inline-flex; align-items:center; gap:12px;
-    padding:16px 24px;
-    background:var(--ink); color:var(--paper);
-    border:none; cursor:pointer;
-    font-family:'JetBrains Mono', monospace; font-size:11px;
-    text-transform:uppercase; letter-spacing:.18em; font-weight:500;
-    transition: all .25s;
-    position:relative;
-  }
-  .btn:hover{background:var(--amber); color:var(--ink);}
-  .btn .arrow{transition:transform .25s;}
-  .btn:hover .arrow{transform:translateX(4px);}
-  .btn.amber{background:var(--amber); color:var(--ink);}
-  .btn.amber:hover{background:var(--ink); color:var(--paper);}
-  .btn.ghost{background:transparent; color:var(--ink); box-shadow: inset 0 0 0 1.5px var(--ink);}
-  .btn.ghost:hover{background:var(--ink); color:var(--paper);}
-  .btn.full{width:100%; justify-content:center;}
+    /* ============== TOP BANNER (journey strip) ============== */
+    .banner {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 28px 40px 22px;
+      border-bottom: 1px solid var(--line);
+      position: relative;
+      overflow: hidden;
+    }
 
-  .demo-creds{
-    margin-top:32px; padding:14px 16px;
-    background: var(--paper-2);
-    border-left: 3px solid var(--amber);
-    font-family:'JetBrains Mono', monospace; font-size:11px;
-    color:var(--ink); line-height:1.7;
-  }
-  .demo-creds b{color:var(--crimson); font-weight:500;}
+    .banner::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(transparent 95%, rgba(255, 210, 58, .18) 95%),
+        linear-gradient(90deg, transparent 95%, rgba(255, 210, 58, .10) 95%);
+      background-size: 28px 28px;
+      pointer-events: none;
+      mask-image: radial-gradient(ellipse at top right, black, transparent 80%);
+    }
 
-  /* ============== APP SHELL (after login) ============== */
-  .shell{padding:0; max-width:1480px; margin:0 auto;}
-  .work{padding: 40px;}
-  .section-head{
-    display:flex; justify-content:space-between; align-items:flex-end;
-    margin-bottom:30px; gap:20px;
-  }
-  .section-head h2{
-    font-family:'Fraunces', serif; font-weight:400;
-    font-size: clamp(26px, 2.4vw, 38px); letter-spacing:-.02em;
-    line-height:1.05;
-  }
-  .section-head h2 em{font-style:italic; color:var(--amber-deep); font-weight:300;}
-  .section-head p{color:var(--muted); font-size:14px; max-width:480px; line-height:1.55;}
-  .section-actions{display:flex; gap:10px; flex-shrink:0;}
+    .banner-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+      position: relative;
+      z-index: 1;
+    }
 
-  /* ===== Upload form page ===== */
-  .form-grid{
-    display:grid; grid-template-columns: 1.1fr .9fr; gap:50px;
-    background: var(--paper-2);
-    padding:40px;
-    border:1px solid rgba(11,18,32,.08);
-    box-shadow: var(--shadow);
-  }
-  .form-grid h3{
-    font-family:'Fraunces', serif; font-weight:500; font-size:18px;
-    margin-bottom:24px; padding-bottom:12px;
-    border-bottom:1px dashed rgba(11,18,32,.2);
-  }
-  .form-grid h3 small{
-    font-family:'JetBrains Mono', monospace; font-size:10px;
-    color:var(--muted); text-transform:uppercase; letter-spacing:.2em;
-    float:right; font-weight:400; margin-top:6px;
-  }
-  .form-row{display:grid; grid-template-columns: 1fr 1fr; gap:20px;}
-  .icon-builder{
-    display:flex; gap:20px; align-items:center; padding: 20px;
-    background:var(--paper); margin-top:8px;
-  }
-  .icon-preview{
-    width:80px; height:80px; flex-shrink:0;
-    background: var(--amber);
-    color:var(--ink);
-    display:grid; place-items:center;
-    font-family:'JetBrains Mono', monospace; font-weight:700; font-size:18px;
-    border-radius:14px; letter-spacing:.05em;
-    box-shadow: 0 8px 20px rgba(232,163,61,.35), inset 0 0 0 2px rgba(0,0,0,.1);
-  }
-  .icon-controls{flex:1;}
-  .icon-controls .field{margin-bottom:10px;}
-  .color-pick{display:flex; gap:8px; margin-top:6px;}
-  .color-pick button{
-    width:26px; height:26px; border-radius:50%;
-    border:2px solid transparent; cursor:pointer;
-    transition: transform .15s;
-  }
-  .color-pick button:hover{transform:scale(1.15);}
-  .color-pick button.sel{border-color:var(--ink);}
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-family: 'Inter', -apple-system, sans-serif;
+      font-weight: 600;
+      font-size: 20px;
+      letter-spacing: -.01em;
+    }
 
-  .form-side{
-    background: var(--ink); color: var(--paper);
-    padding:30px; position:relative; overflow:hidden;
-  }
-  .form-side::before{
-    content:""; position:absolute; inset:0;
-    background-image: radial-gradient(circle at 80% 0%, rgba(232,163,61,.15), transparent 50%);
-  }
-  .form-side > *{position:relative; z-index:1;}
-  .form-side h4{
-    font-family:'Fraunces', serif; font-weight:400; font-size:22px;
-    margin-bottom:6px; letter-spacing:-.01em;
-  }
-  .form-side > p{
-    color: rgba(244,239,230,.6); font-size:13px; line-height:1.6;
-    margin-bottom:24px;
-  }
-  .form-side .field label{color:rgba(244,239,230,.7);}
-  .form-side .field input, .form-side .field textarea{
-    color:var(--paper); border-color: rgba(244,239,230,.25);
-  }
-  .form-side .field input:focus, .form-side .field textarea:focus{border-color:var(--amber);}
-  .pricing-tier{
-    background: rgba(244,239,230,.06);
-    border: 1px dashed rgba(244,239,230,.2);
-    padding:18px; margin-top:16px;
-  }
-  .pricing-tier .price{
-    font-family:'Fraunces', serif; font-weight:400; font-size:32px;
-    color: var(--amber); display:flex; align-items:baseline; gap:6px;
-    letter-spacing:-.02em;
-  }
-  .pricing-tier .price small{
-    font-family:'JetBrains Mono', monospace; font-size:11px;
-    color: rgba(244,239,230,.5); text-transform:uppercase; letter-spacing:.15em;
-    font-weight:400;
-  }
-  .pricing-tier .desc{
-    font-size:12px; color:rgba(244,239,230,.6);
-    margin-top:8px; line-height:1.5;
-  }
-  .form-actions{
-    margin-top:30px; display:flex; gap:12px; justify-content:flex-end;
-  }
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--amber), var(--amber-deep));
+      display: grid;
+      place-items: center;
+      color: var(--ink);
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 700;
+      font-size: 13px;
+      box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .2), 0 6px 14px rgba(255, 210, 58, .3);
+    }
 
-  /* ===== Submission status ===== */
-  .status-wrap{
-    max-width:780px; margin: 80px auto;
-    text-align:center; padding:60px 40px;
-    background: var(--paper-2);
-    border:1px solid rgba(11,18,32,.08);
-    position:relative;
-  }
-  .status-wrap::before, .status-wrap::after{
-    content:""; position:absolute;
-    width:30px; height:30px;
-    border:1.5px solid var(--ink);
-  }
-  .status-wrap::before{top:-1px; left:-1px; border-right:none; border-bottom:none;}
-  .status-wrap::after{bottom:-1px; right:-1px; border-left:none; border-top:none;}
-  .status-icon{
-    width:90px; height:90px; margin:0 auto 30px;
-    background: var(--amber);
-    border-radius:50%;
-    display:grid; place-items:center;
-    box-shadow: 0 0 0 8px rgba(232,163,61,.15), 0 0 0 16px rgba(232,163,61,.05);
-    animation: float 3s ease-in-out infinite;
-  }
-  @keyframes float{50%{transform:translateY(-6px);}}
-  .status-icon svg{width:42px; height:42px;}
-  .status-eyebrow{
-    font-family:'JetBrains Mono', monospace; font-size:11px;
-    color:var(--amber-deep); text-transform:uppercase; letter-spacing:.22em;
-    margin-bottom:14px;
-  }
-  .status-wrap h2{
-    font-family:'Fraunces', serif; font-weight:400;
-    font-size: clamp(28px, 3vw, 44px); letter-spacing:-.02em;
-    line-height:1.1; margin-bottom:18px;
-  }
-  .status-wrap h2 em{font-style:italic; color:var(--amber-deep);}
-  .status-wrap > p{
-    color:var(--muted); font-size:15px; line-height:1.7;
-    max-width:520px; margin:0 auto 30px;
-  }
-  .status-meta{
-    display:grid; grid-template-columns: repeat(3,1fr); gap:1px;
-    background:rgba(11,18,32,.1);
-    margin: 30px 0;
-    border:1px solid rgba(11,18,32,.1);
-  }
-  .status-meta div{
-    background:var(--paper); padding:18px;
-    text-align:left;
-  }
-  .status-meta b{
-    display:block;
-    font-family:'JetBrains Mono', monospace; font-size:10px;
-    color:var(--muted); text-transform:uppercase; letter-spacing:.18em;
-    margin-bottom:6px; font-weight:500;
-  }
-  .status-meta span{font-family:'Fraunces', serif; font-size:18px;}
-  .status-actions{display:flex; gap:12px; justify-content:center; margin-top:8px;}
+    .brand small {
+      display: block;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      opacity: .55;
+      font-weight: 400;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      margin-top: 6px;
+    }
 
-  /* ===== Marketplace / Viewing page ===== */
-  .market-head{
-    display:flex; justify-content:space-between; align-items:center;
-    padding: 22px 40px;
-    background: var(--ink); color:var(--paper);
-    border-bottom:1px solid var(--line);
-  }
-  .market-head .brand{color:var(--paper);}
-  .user-pill{
-    display:flex; align-items:center; gap:10px;
-    font-family:'JetBrains Mono', monospace; font-size:11px;
-    color:rgba(244,239,230,.7); letter-spacing:.05em;
-  }
-  .user-pill .av{
-    width:32px; height:32px; border-radius:50%;
-    background: var(--amber); color:var(--ink);
-    display:grid; place-items:center; font-weight:700; font-size:12px;
-  }
-  .market-head .actions{display:flex; gap:10px; align-items:center;}
-  .icon-btn{
-    width:38px; height:38px; border-radius:50%;
-    background:transparent; color:var(--paper);
-    border:1px solid rgba(244,239,230,.2);
-    cursor:pointer; display:grid; place-items:center;
-    transition: all .2s;
-  }
-  .icon-btn:hover{background:var(--amber); color:var(--ink); border-color:var(--amber);}
+    .banner-meta {
+      display: flex;
+      gap: 18px;
+      align-items: center;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: rgba(245, 245, 243, .6);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
 
-  .filter-bar{
-    padding: 22px 40px; background:var(--paper-2);
-    border-bottom:1px solid rgba(11,18,32,.08);
-    display:flex; gap:14px; align-items:center; flex-wrap:wrap;
-  }
-  .search{
-    flex:1; min-width:280px;
-    display:flex; align-items:center; gap:10px;
-    padding: 10px 16px;
-    background: var(--paper);
-    border:1px solid rgba(11,18,32,.12);
-  }
-  .search svg{width:16px; height:16px; color:var(--muted); flex-shrink:0;}
-  .search input{
-    border:none; outline:none; flex:1; background:transparent;
-    font-family:'Inter Tight', sans-serif; font-size:14px;
-  }
-  .chip{
-    padding: 8px 14px;
-    background: var(--paper);
-    border:1px solid rgba(11,18,32,.15);
-    cursor:pointer;
-    font-family:'JetBrains Mono', monospace; font-size:11px;
-    text-transform:uppercase; letter-spacing:.1em;
-    color:var(--ink); display:inline-flex; align-items:center; gap:8px;
-    transition: all .2s;
-  }
-  .chip:hover{background:var(--ink); color:var(--paper); border-color:var(--ink);}
-  .chip.active{background:var(--amber); color:var(--ink); border-color:var(--amber);}
-  .chip svg{width:12px; height:12px;}
+    .banner-meta .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--amber);
+      box-shadow: 0 0 0 3px rgba(255, 210, 58, .18);
+      animation: pulse 2s ease-in-out infinite;
+    }
 
-  .filter-divider{
-    width:1px; height:22px; background:rgba(11,18,32,.15);
-  }
+    @keyframes pulse {
+      50% {
+        box-shadow: 0 0 0 6px rgba(255, 210, 58, .06);
+      }
+    }
 
-  .grid-apps{
-    padding: 40px;
-    display:grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
-    gap:24px;
-  }
-  .app-card{
-    background: var(--paper-2);
-    border:1px solid rgba(11,18,32,.08);
-    padding:24px;
-    cursor:pointer;
-    transition: all .3s;
-    display:flex; flex-direction:column; gap:16px;
-    position:relative;
-    overflow:hidden;
-  }
-  .app-card::before{
-    content:""; position:absolute; top:0; left:0; right:0; height:3px;
-    background: var(--amber);
-    transform: scaleX(0); transform-origin:left;
-    transition: transform .3s;
-  }
-  .app-card:hover{
-    transform: translateY(-4px);
-    box-shadow: var(--shadow);
-  }
-  .app-card:hover::before{transform:scaleX(1);}
-  .app-card-top{
-    display:flex; justify-content:space-between; align-items:flex-start;
-    gap:12px;
-  }
-  .app-icon{
-    width:54px; height:54px;
-    display:grid; place-items:center;
-    font-family:'JetBrains Mono', monospace; font-weight:700; font-size:13px;
-    border-radius:12px; color:var(--ink);
-    flex-shrink:0;
-    box-shadow: inset 0 0 0 2px rgba(0,0,0,.1);
-    letter-spacing:.03em;
-  }
-  .app-rank{
-    font-family:'Fraunces', serif; font-size:36px;
-    color:rgba(11,18,32,.1); font-weight:300;
-    line-height:1; letter-spacing:-.04em;
-  }
-  .app-card h4{
-    font-family:'Fraunces', serif; font-weight:500; font-size:20px;
-    line-height:1.15; letter-spacing:-.01em;
-  }
-  .app-vendor{
-    font-family:'JetBrains Mono', monospace; font-size:10px;
-    color:var(--muted); text-transform:uppercase; letter-spacing:.15em;
-    margin-top:-8px;
-  }
-  .app-desc{
-    font-size:13px; color:var(--muted); line-height:1.6;
-    flex:1;
-  }
-  .app-tags{
-    display:flex; gap:6px; flex-wrap:wrap;
-  }
-  .app-tag{
-    font-family:'JetBrains Mono', monospace; font-size:9.5px;
-    text-transform:uppercase; letter-spacing:.1em;
-    padding:4px 8px; background:rgba(11,18,32,.06);
-    color: var(--ink); font-weight:500;
-  }
-  .app-foot{
-    display:flex; justify-content:space-between; align-items:center;
-    padding-top:14px; border-top:1px dashed rgba(11,18,32,.15);
-  }
-  .app-price{
-    font-family:'Fraunces', serif; font-weight:500; font-size:18px;
-    letter-spacing:-.01em;
-  }
-  .app-price small{
-    font-family:'JetBrains Mono', monospace; font-size:10px;
-    color:var(--muted); text-transform:uppercase; letter-spacing:.1em;
-    font-weight:400;
-  }
-  .app-arrow{
-    color:var(--ink); transition:transform .25s;
-  }
-  .app-card:hover .app-arrow{transform:translateX(4px); color:var(--amber-deep);}
+    .banner-title {
+      margin-top: 18px;
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 40px;
+      align-items: end;
+    }
 
-  /* ===== Detail page ===== */
-  .detail{
-    padding:40px;
-    display:grid; grid-template-columns: 1.5fr 1fr; gap:40px;
-    align-items:flex-start;
-  }
-  .detail-back{
-    grid-column:1/-1;
-    display:inline-flex; align-items:center; gap:10px;
-    font-family:'JetBrains Mono', monospace; font-size:11px;
-    text-transform:uppercase; letter-spacing:.2em;
-    color:var(--ink); cursor:pointer; background:none; border:none;
-    margin-bottom:10px;
-  }
-  .detail-back:hover{color:var(--amber-deep);}
+    .banner-title h1 {
+      font-family: 'Inter', -apple-system, sans-serif;
+      font-weight: 400;
+      font-size: clamp(28px, 4vw, 48px);
+      line-height: .98;
+      letter-spacing: -.02em;
+    }
 
-  .detail-main{
-    background:var(--paper-2);
-    border:1px solid rgba(11,18,32,.08);
-    padding:40px;
-  }
-  .detail-hero{
-    display:flex; gap:20px; align-items:center; margin-bottom:30px;
-    padding-bottom:30px; border-bottom:1px dashed rgba(11,18,32,.15);
-  }
-  .detail-hero .app-icon{width:72px; height:72px; font-size:16px;}
-  .detail-hero h2{
-    font-family:'Fraunces', serif; font-weight:500; font-size:36px;
-    line-height:1.05; letter-spacing:-.02em;
-  }
-  .detail-hero p{
-    font-family:'JetBrains Mono', monospace; font-size:11px;
-    color:var(--muted); text-transform:uppercase; letter-spacing:.18em;
-    margin-top:6px;
-  }
-  .detail-section{margin-bottom:32px;}
-  .detail-section h3{
-    font-family:'JetBrains Mono', monospace; font-size:11px;
-    color:var(--amber-deep); text-transform:uppercase; letter-spacing:.22em;
-    margin-bottom:14px; font-weight:600;
-    display:flex; align-items:center; gap:10px;
-  }
-  .detail-section h3::before{
-    content:""; width:24px; height:1px; background:var(--amber-deep);
-  }
-  .detail-section p, .detail-section li{
-    font-size:15px; line-height:1.7; color:var(--ink);
-  }
-  .detail-section ul{list-style:none; padding:0;}
-  .detail-section ul li{
-    padding-left:24px; position:relative; margin-bottom:8px;
-  }
-  .detail-section ul li::before{
-    content:"→"; position:absolute; left:0; color:var(--amber-deep);
-    font-family:'JetBrains Mono', monospace;
-  }
-  .impact-grid{display:grid; grid-template-columns:1fr 1fr; gap:1px; background:rgba(11,18,32,.1); border:1px solid rgba(11,18,32,.1);}
-  .impact-grid div{background:var(--paper); padding:20px;}
-  .impact-grid b{
-    font-family:'Fraunces', serif; font-size:32px; font-weight:400;
-    color:var(--amber-deep); letter-spacing:-.02em;
-    display:block;
-  }
-  .impact-grid span{
-    font-family:'JetBrains Mono', monospace; font-size:10px;
-    text-transform:uppercase; letter-spacing:.15em; color:var(--muted);
-    margin-top:4px; display:block;
-  }
+    .banner-title h1 em {
+      font-style: italic;
+      color: var(--amber);
+      font-weight: 300;
+    }
 
-  .detail-side{
-    background:var(--ink); color:var(--paper); padding:32px;
-    position:sticky; top:20px;
-  }
-  .detail-side h3{
-    font-family:'JetBrains Mono', monospace; font-size:10px;
-    color:var(--amber); text-transform:uppercase; letter-spacing:.22em;
-    margin-bottom:14px; font-weight:600;
-  }
-  .price-block{
-    margin-bottom:24px; padding-bottom:24px;
-    border-bottom:1px dashed rgba(244,239,230,.2);
-  }
-  .price-block .big{
-    font-family:'Fraunces', serif; font-weight:400; font-size:48px;
-    color:var(--paper); letter-spacing:-.025em; line-height:1;
-    display:flex; align-items:baseline; gap:6px;
-  }
-  .price-block .big small{
-    font-family:'JetBrains Mono', monospace; font-size:13px;
-    color:rgba(244,239,230,.5); font-weight:500;
-    text-transform:lowercase; letter-spacing:.05em;
-  }
-  .price-block .pay-mode{
-    font-family:'JetBrains Mono', monospace; font-size:11px;
-    color:var(--amber); text-transform:uppercase; letter-spacing:.18em;
-    margin-top:8px;
-  }
-  .price-block p{
-    color:rgba(244,239,230,.6); font-size:13px; line-height:1.6;
-    margin-top:12px;
-  }
-  .feature-list li{
-    font-size:13px; color:rgba(244,239,230,.8);
-    padding: 10px 0; border-bottom:1px solid rgba(244,239,230,.08);
-    display:flex; align-items:center; gap:10px;
-  }
-  .feature-list li:last-child{border:none;}
-  .feature-list li::before{
-    content:"+"; color:var(--amber); font-weight:600; flex-shrink:0;
-    font-family:'JetBrains Mono', monospace;
-  }
-  .feature-list{list-style:none; padding:0; margin-bottom:24px;}
+    .banner-tag {
+      color: rgba(245, 245, 243, .7);
+      font-size: 13px;
+      line-height: 1.55;
+      max-width: 520px;
+      border-left: 2px solid var(--amber);
+      padding-left: 14px;
+    }
 
-  /* ===== Subscribed / final page ===== */
-  .subbed-icon{
-    background: var(--ok) !important;
-    box-shadow: 0 0 0 8px rgba(46,139,87,.15), 0 0 0 16px rgba(46,139,87,.05) !important;
-  }
-  .subbed-icon svg{color:var(--paper);}
+    /* Journey progress - inspired by Singtel Tax Assist screenshot */
+    .journey {
+      margin-top: 26px;
+      padding-top: 22px;
+      position: relative;
+      z-index: 1;
+      border-top: 1px dashed rgba(245, 245, 243, .15);
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+      gap: 12px;
+    }
 
-  .access-card{
-    background:var(--ink); color:var(--paper);
-    padding:30px; margin: 30px 0;
-    text-align:left;
-    border:1px solid var(--line);
-    position:relative;
-  }
-  .access-card::before{
-    content:"ACCESS GRANTED";
-    position:absolute; top:-10px; right:20px;
-    background: var(--amber); color:var(--ink);
-    padding:4px 10px;
-    font-family:'JetBrains Mono', monospace; font-size:10px;
-    font-weight:600; letter-spacing:.18em;
-  }
-  .access-row{
-    display:flex; justify-content:space-between; padding:10px 0;
-    border-bottom:1px dashed rgba(244,239,230,.15);
-    font-family:'JetBrains Mono', monospace; font-size:12px;
-  }
-  .access-row:last-child{border:none;}
-  .access-row span:first-child{color:rgba(244,239,230,.5); text-transform:uppercase; letter-spacing:.12em; font-size:10px;}
-  .access-row span:last-child{color:var(--paper);}
+    .step {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      cursor: pointer;
+      transition: opacity .25s;
+      opacity: .45;
+    }
 
-  /* Toggle (between marketplace and my apps) */
-  .view-toggle{
-    display:flex; padding:4px; background:var(--paper);
-    border:1px solid rgba(11,18,32,.15);
-  }
-  .view-toggle button{
-    background:transparent; border:none; cursor:pointer;
-    padding: 8px 16px;
-    font-family:'JetBrains Mono', monospace; font-size:11px;
-    text-transform:uppercase; letter-spacing:.1em; color:var(--muted);
-  }
-  .view-toggle button.on{background:var(--ink); color:var(--paper);}
+    .step.active {
+      opacity: 1;
+    }
 
-  /* Mobile */
-  @media (max-width: 980px){
-    .login-wrap{grid-template-columns:1fr;}
-    .login-left{padding:30px;}
-    .login-right{padding:40px 30px;}
-    .form-grid{grid-template-columns:1fr; padding:24px; gap:30px;}
-    .form-row{grid-template-columns:1fr;}
-    .detail{grid-template-columns:1fr; padding:24px;}
-    .detail-main{padding:24px;}
-    .banner{padding:20px;}
-    .banner-title{grid-template-columns:1fr; gap:16px;}
-    .journey{grid-template-columns:1fr 1fr; gap:14px;}
-    .work, .grid-apps, .market-head, .filter-bar{padding:20px;}
-  }
+    .step.done {
+      opacity: .85;
+    }
 
-</style>
+    .step-num {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(245, 245, 243, .3);
+      display: grid;
+      place-items: center;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      flex-shrink: 0;
+      background: transparent;
+      transition: all .3s;
+    }
+
+    .step.active .step-num {
+      background: var(--amber);
+      color: var(--ink);
+      border-color: var(--amber);
+      box-shadow: 0 0 0 5px rgba(255, 210, 58, .15);
+    }
+
+    .step.done .step-num {
+      background: var(--paper);
+      color: var(--ink);
+      border-color: var(--paper);
+    }
+
+    .step.done .step-num::before {
+      content: "✓";
+      font-family: inherit;
+    }
+
+    .step.done .step-num span {
+      display: none;
+    }
+
+    .step-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    .step-text b {
+      font-weight: 500;
+      font-size: 13px;
+      letter-spacing: -.01em;
+    }
+
+    .step-text small {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9.5px;
+      color: rgba(245, 245, 243, .5);
+      text-transform: uppercase;
+      letter-spacing: .12em;
+    }
+
+    /* ============== LOGIN ============== */
+    .login-wrap {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .login-left {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 50px 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .login-left::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(800px 500px at -10% 110%, rgba(255, 210, 58, .18), transparent 60%),
+        radial-gradient(600px 400px at 110% -10%, rgba(46, 125, 87, .25), transparent 60%);
+    }
+
+    .login-left::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(rgba(245, 245, 243, .04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(245, 245, 243, .04) 1px, transparent 1px);
+      background-size: 40px 40px;
+      mask-image: radial-gradient(ellipse at center, black 20%, transparent 80%);
+    }
+
+    .login-brand {
+      position: relative;
+      z-index: 1;
+    }
+
+    .login-hero {
+      position: relative;
+      z-index: 1;
+      max-width: 520px;
+    }
+
+    .login-eyebrow {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 24px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .login-eyebrow::before {
+      content: "";
+      width: 24px;
+      height: 1px;
+      background: var(--amber);
+    }
+
+    .login-hero h2 {
+      font-family: 'Inter', -apple-system, sans-serif;
+      font-weight: 300;
+      font-size: clamp(32px, 3.6vw, 56px);
+      line-height: 1.02;
+      letter-spacing: -.025em;
+      margin-bottom: 24px;
+    }
+
+    .login-hero h2 em {
+      font-style: italic;
+      color: var(--amber);
+      font-weight: 400;
+    }
+
+    .login-hero p {
+      color: rgba(245, 245, 243, .65);
+      line-height: 1.65;
+      font-size: 15px;
+      max-width: 440px;
+    }
+
+    .login-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 40px;
+      padding-top: 30px;
+      border-top: 1px dashed rgba(245, 245, 243, .15);
+    }
+
+    .stat b {
+      font-family: 'Inter', -apple-system, sans-serif;
+      font-weight: 400;
+      font-size: 32px;
+      color: var(--paper);
+      display: block;
+      letter-spacing: -.02em;
+    }
+
+    .stat span {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      color: rgba(245, 245, 243, .5);
+      text-transform: uppercase;
+      letter-spacing: .15em;
+    }
+
+    .login-foot {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: space-between;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: rgba(245, 245, 243, .4);
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .login-right {
+      background: var(--paper);
+      padding: 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+    }
+
+    .login-right::before {
+      content: "01";
+      position: absolute;
+      top: 40px;
+      right: 50px;
+      font-family: 'Inter', -apple-system, sans-serif;
+      font-size: 140px;
+      line-height: 1;
+      color: var(--ink);
+      opacity: .04;
+      font-weight: 300;
+    }
+
+    .login-form {
+      max-width: 420px;
+      width: 100%;
+    }
+
+    .login-form-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .2em;
+      margin-bottom: 8px;
+    }
+
+    .login-form h3 {
+      font-family: 'Inter', -apple-system, sans-serif;
+      font-weight: 400;
+      font-size: 36px;
+      letter-spacing: -.02em;
+      margin-bottom: 8px;
+    }
+
+    .login-form>p {
+      color: var(--muted);
+      margin-bottom: 36px;
+      font-size: 14px;
+    }
+
+    .field {
+      margin-bottom: 20px;
+    }
+
+    .field label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      color: var(--ink);
+      text-transform: uppercase;
+      letter-spacing: .2em;
+      margin-bottom: 8px;
+      display: block;
+      font-weight: 500;
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      padding: 14px 16px;
+      background: transparent;
+      border: none;
+      border-bottom: 1.5px solid var(--ink);
+      font-family: 'Inter', -apple-system, sans-serif;
+      font-size: 15px;
+      color: var(--ink);
+      transition: border-color .2s;
+    }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      outline: none;
+      border-color: var(--amber);
+    }
+
+    .field textarea {
+      resize: vertical;
+      min-height: 160px;
+    }
+
+    .field-help {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      color: var(--muted);
+      margin-top: 6px;
+      letter-spacing: .05em;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 24px;
+      background: var(--ink);
+      color: var(--paper);
+      border: none;
+      cursor: pointer;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .18em;
+      font-weight: 500;
+      transition: all .25s;
+      position: relative;
+    }
+
+    .btn:hover {
+      background: var(--amber);
+      color: var(--ink);
+    }
+
+    .btn .arrow {
+      transition: transform .25s;
+    }
+
+    .btn:hover .arrow {
+      transform: translateX(4px);
+    }
+
+    .btn.amber {
+      background: var(--amber);
+      color: var(--ink);
+    }
+
+    .btn.amber:hover {
+      background: var(--ink);
+      color: var(--paper);
+    }
+
+    .btn.ghost {
+      background: transparent;
+      color: var(--ink);
+      box-shadow: inset 0 0 0 1.5px var(--ink);
+    }
+
+    .btn.ghost:hover {
+      background: var(--ink);
+      color: var(--paper);
+    }
+
+    .btn.full {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .demo-creds {
+      margin-top: 32px;
+      padding: 14px 16px;
+      background: var(--paper-2);
+      border-left: 3px solid var(--amber);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--ink);
+      line-height: 1.7;
+    }
+
+    .demo-creds b {
+      color: var(--crimson);
+      font-weight: 500;
+    }
+
+    /* ============== APP SHELL (after login) ============== */
+    .shell {
+      padding: 0;
+      max-width: 1480px;
+      margin: 0 auto;
+    }
+
+    .work {
+      padding: 40px;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 30px;
+      gap: 20px;
+    }
+
+    .section-head h2 {
+      font-family: 'Inter', -apple-system, sans-serif;
+      font-weight: 400;
+      font-size: clamp(26px, 2.4vw, 38px);
+      letter-spacing: -.02em;
+      line-height: 1.05;
+    }
+
+    .section-head h2 em {
+      font-style: italic;
+      color: var(--amber-deep);
+      font-weight: 300;
+    }
+
+    .section-head p {
+      color: var(--muted);
+      font-size: 14px;
+      max-width: 480px;
+      line-height: 1.55;
+    }
+
+    .section-actions {
+      display: flex;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    /* ===== Upload form page ===== */
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 50px;
+      background: var(--paper-2);
+      padding: 40px;
+      border: 1px solid rgba(26, 26, 26, .08);
+      box-shadow: var(--shadow);
+    }
+
+    .form-grid h3 {
+      font-family: 'Inter', -apple-system, sans-serif;
+      font-weight: 500;
+      font-size: 18px;
+      margin-bottom: 24px;
+      padding-bottom: 12px;
+      border-bottom: 1px dashed rgba(26, 26, 26, .2);
+    }
+
+    .form-grid h3 small {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .2em;
+      float: right;
+      font-weight: 400;
+      margin-top: 6px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .icon-builder {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      padding: 20px;
+      background: var(--paper);
+      margin-top: 8px;
+    }
+
+    .icon-preview {
+      width: 80px;
+      height: 80px;
+      flex-shrink: 0;
+      background: var(--amber);
+      color: var(--ink);
+      display: grid;
+      place-items: center;
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 700;
+      font-size: 18px;
+      border-radius: 14px;
+      letter-spacing: .05em;
+      box-shadow: 0 8px 20px rgba(255, 210, 58, .35), inset 0 0 0 2px rgba(0, 0, 0, .1);
+    }
+
+    .icon-controls {
+      flex: 1;
+    }
+
+    .icon-controls .field {
+      margin-bottom: 10px;
+    }
+
+    .color-pick {
+      display: flex;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .color-pick button {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: transform .15s;
+    }
+
+    .color-pick button:hover {
+      transform: scale(1.15);
+    }
+
+    .color-pick button.sel {
+      border-color: var(--ink);
+    }
+
+    .form-side {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 30px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .form-side::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle at 80% 0%, rgba(255, 210, 58, .15), transparent 50%);
+    }
+
+    .form-side>* {
+      position: relative;
+      z-index: 1;
+    }
+
+    .form-side h4 {
+      font-family: 'Inter', -apple-system, sans-serif;
+      font-weight: 400;
+      font-size: 22px;
+      margin-bottom: 6px;
+      letter-spacing: -.01em;
+    }
+
+    .form-side>p {
+      color: rgba(245, 245, 243, .6);
+      font-size: 13px;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    .form-side .field label {
+      color: rgba(245, 245, 243, .7);
+    }
+
+    .form-side .field input,
+    .form-side .field textarea {
+      color: var(--paper);
+      border-color: rgba(245, 245, 243, .25);
+    }
+
+    .form-side .field input:focus,
+    .form-side .field textarea:focus {
+      border-color: var(--amber);
+    }
+
+    .pricing-tier {
+      background: rgba(245, 245, 243, .06);
+      border: 1px dashed rgba(245, 245, 243, .2);
+      padding: 18px;
+      margin-top: 16px;
+    }
+
+    .pricing-tier .price {
+      font-family: 'Inter', -apple-system, sans-serif;
+      font-weight: 400;
+      font-size: 32px;
+      color: var(--amber);
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      letter-spacing: -.02em;
+    }
+
+    .pricing-tier .price small {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: rgba(245, 245, 243, .5);
+      text-transform: uppercase;
+      letter-spacing: .15em;
+      font-weight: 400;
+    }
+
+    .pricing-tier .desc {
+      font-size: 12px;
+      color: rgba(245, 245, 243, .6);
+      margin-top: 8px;
+      line-height: 1.5;
+    }
+
+    .form-actions {
+      margin-top: 30px;
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+    }
+
+    /* ===== Submission status ===== */
+    .status-wrap {
+      max-width: 780px;
+      margin: 80px auto;
+      text-align: center;
+      padding: 60px 40px;
+      background: var(--paper-2);
+      border: 1px solid rgba(26, 26, 26, .08);
+      position: relative;
+    }
+
+    .status-wrap::before,
+    .status-wrap::after {
+      content: "";
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      border: 1.5px solid var(--ink);
+    }
+
+    .status-wrap::before {
+      top: -1px;
+      left: -1px;
+      border-right: none;
+      border-bottom: none;
+    }
+
+    .status-wrap::after {
+      bottom: -1px;
+      right: -1px;
+      border-left: none;
+      border-top: none;
+    }
+
+    .status-icon {
+      width: 90px;
+      height: 90px;
+      margin: 0 auto 30px;
+      background: var(--amber);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      box-shadow: 0 0 0 8px rgba(255, 210, 58, .15), 0 0 0 16px rgba(255, 210, 58, .05);
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      50% {
+        transform: translateY(-6px);
+      }
+    }
+
+    .status-icon svg {
+      width: 42px;
+      height: 42px;
+    }
+
+    .status-eyebrow {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--amber-deep);
+      text-transform: uppercase;
+      letter-spacing: .22em;
+      margin-bottom: 14px;
+    }
+
+    .status-wrap h2 {
+      font-family: 'Inter', -apple-system, sans-serif;
+      font-weight: 400;
+      font-size: clamp(28px, 3vw, 44px);
+      letter-spacing: -.02em;
+      line-height: 1.1;
+      margin-bottom: 18px;
+    }
+
+    .status-wrap h2 em {
+      font-style: italic;
+      color: var(--amber-deep);
+    }
+
+    .status-wrap>p {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.7;
+      max-width: 520px;
+      margin: 0 auto 30px;
+    }
+
+    .status-meta {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: rgba(26, 26, 26, .1);
+      margin: 30px 0;
+      border: 1px solid rgba(26, 26, 26, .1);
+    }
+
+    .status-meta div {
+      background: var(--paper);
+      padding: 18px;
+      text-align: left;
+    }
+
+    .status-meta b {
+      display: block;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .18em;
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+
+    .status-meta span {
+      font-family: 'Inter', -apple-system, sans-serif;
+      font-size: 18px;
+    }
+
+    .status-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 8px;
+    }
+
+    /* ===== Marketplace / Viewing page ===== */
+    .market-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 22px 40px;
+      background: var(--ink);
+      color: var(--paper);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .market-head .brand {
+      color: var(--paper);
+    }
+
+    .user-pill {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: rgba(245, 245, 243, .7);
+      letter-spacing: .05em;
+    }
+
+    .user-pill .av {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--amber);
+      color: var(--ink);
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      font-size: 12px;
+    }
+
+    .market-head .actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .icon-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: transparent;
+      color: var(--paper);
+      border: 1px solid rgba(245, 245, 243, .2);
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      transition: all .2s;
+    }
+
+    .icon-btn:hover {
+      background: var(--amber);
+      color: var(--ink);
+      border-color: var(--amber);
+    }
+
+    .filter-bar {
+      padding: 22px 40px;
+      background: var(--paper-2);
+      border-bottom: 1px solid rgba(26, 26, 26, .08);
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .search {
+      flex: 1;
+      min-width: 280px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      background: var(--paper);
+      border: 1px solid rgba(26, 26, 26, .12);
+    }
+
+    .search svg {
+      width: 16px;
+      height: 16px;
+      color: var(--muted);
+      flex-shrink: 0;
+    }
+
+    .search input {
+      border: none;
+      outline: none;
+      flex: 1;
+      background: transparent;
+      font-family: 'Inter', -apple-system, sans-serif;
+      font-size: 14px;
+    }
+
+    .chip {
+      padding: 8px 14px;
+      background: var(--paper);
+      border: 1px solid rgba(26, 26, 26, .15);
+      cursor: pointer;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--ink);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all .2s;
+    }
+
+    .chip:hover {
+      background: var(--ink);
+      color: var(--paper);
+      border-color: var(--ink);
+    }
+
+    .chip.active {
+      background: var(--amber);
+      color: var(--ink);
+      border-color: var(--amber);
+    }
+
+    .chip svg {
+      width: 12px;
+      height: 12px;
+    }
+
+    .filter-divider {
+      width: 1px;
+      height: 22px;
+      background: rgba(26, 26, 26, .15);
+    }
+
+    .grid-apps {
+      padding: 40px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+      gap: 24px;
+    }
+
+    .app-card {
+      background: var(--paper-2);
+      border: 1px solid rgba(26, 26, 26, .08);
+      padding: 24px;
+      cursor: pointer;
+      transition: all .3s;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .app-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--amber);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .3s;
+    }
+
+    .app-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow);
+    }
+
+    .app-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .app-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .app-icon {
+      width: 54px;
+      height: 54px;
+      display: grid;
+      place-items: center;
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 700;
+      font-size: 13px;
+      border-radius: 12px;
+      color: var(--ink);
+      flex-shrink: 0;
+      box-shadow: inset 0 0 0 2px rgba(0, 0, 0, .1);
+      letter-spacing: .03em;
+    }
+
+    .app-rank {
+      font-family: 'Inter', -apple-system, sans-serif;
+      font-size: 36px;
+      color: rgba(26, 26, 26, .1);
+      font-weight: 300;
+      line-height: 1;
+      letter-spacing: -.04em;
+    }
+
+    .app-card h4 {
+      font-family: 'Inter', -apple-system, sans-serif;
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 1.15;
+      letter-spacing: -.01em;
+    }
+
+    .app-vendor {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .15em;
+      margin-top: -8px;
+    }
+
+    .app-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+      flex: 1;
+    }
+
+    .app-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .app-tag {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9.5px;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      padding: 4px 8px;
+      background: rgba(26, 26, 26, .06);
+      color: var(--ink);
+      font-weight: 500;
+    }
+
+    .app-foot {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 14px;
+      border-top: 1px dashed rgba(26, 26, 26, .15);
+    }
+
+    .app-price {
+      font-family: 'Inter', -apple-system, sans-serif;
+      font-weight: 500;
+      font-size: 18px;
+      letter-spacing: -.01em;
+    }
+
+    .app-price small {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      font-weight: 400;
+    }
+
+    .app-arrow {
+      color: var(--ink);
+      transition: transform .25s;
+    }
+
+    .app-card:hover .app-arrow {
+      transform: translateX(4px);
+      color: var(--amber-deep);
+    }
+
+    /* ===== Detail page ===== */
+    .detail {
+      padding: 40px;
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 40px;
+      align-items: flex-start;
+    }
+
+    .detail-back {
+      grid-column: 1/-1;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .2em;
+      color: var(--ink);
+      cursor: pointer;
+      background: none;
+      border: none;
+      margin-bottom: 10px;
+    }
+
+    .detail-back:hover {
+      color: var(--amber-deep);
+    }
+
+    .detail-main {
+      background: var(--paper-2);
+      border: 1px solid rgba(26, 26, 26, .08);
+      padding: 40px;
+    }
+
+    .detail-hero {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      margin-bottom: 30px;
+      padding-bottom: 30px;
+      border-bottom: 1px dashed rgba(26, 26, 26, .15);
+    }
+
+    .detail-hero .app-icon {
+      width: 72px;
+      height: 72px;
+      font-size: 16px;
+    }
+
+    .detail-hero h2 {
+      font-family: 'Inter', -apple-system, sans-serif;
+      font-weight: 500;
+      font-size: 36px;
+      line-height: 1.05;
+      letter-spacing: -.02em;
+    }
+
+    .detail-hero p {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .18em;
+      margin-top: 6px;
+    }
+
+    .detail-section {
+      margin-bottom: 32px;
+    }
+
+    .detail-section h3 {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--ink);
+      text-transform: uppercase;
+      letter-spacing: .22em;
+      margin-bottom: 14px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .detail-section h3::before {
+      content: "";
+      width: 24px;
+      height: 2px;
+      background: var(--amber);
+    }
+
+    .detail-section p,
+    .detail-section li {
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--ink);
+    }
+
+    .detail-section ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .detail-section ul li {
+      padding-left: 24px;
+      position: relative;
+      margin-bottom: 8px;
+    }
+
+    .detail-section ul li::before {
+      content: "→";
+      position: absolute;
+      left: 0;
+      color: var(--amber-deep);
+      font-family: 'IBM Plex Mono', monospace;
+    }
+
+    .impact-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: rgba(26, 26, 26, .1);
+      border: 1px solid rgba(26, 26, 26, .1);
+    }
+
+    .impact-grid div {
+      background: var(--paper);
+      padding: 20px;
+    }
+
+    .impact-grid b {
+      font-family: 'Inter', -apple-system, sans-serif;
+      font-size: 32px;
+      font-weight: 400;
+      color: var(--amber-deep);
+      letter-spacing: -.02em;
+      display: block;
+    }
+
+    .impact-grid span {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: .15em;
+      color: var(--muted);
+      margin-top: 4px;
+      display: block;
+    }
+
+    .detail-side {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 32px;
+      position: sticky;
+      top: 20px;
+    }
+
+    .detail-side h3 {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      color: var(--amber);
+      text-transform: uppercase;
+      letter-spacing: .22em;
+      margin-bottom: 14px;
+      font-weight: 600;
+    }
+
+    .price-block {
+      margin-bottom: 24px;
+      padding-bottom: 24px;
+      border-bottom: 1px dashed rgba(245, 245, 243, .2);
+    }
+
+    .price-block .big {
+      font-family: 'Inter', -apple-system, sans-serif;
+      font-weight: 400;
+      font-size: 48px;
+      color: var(--paper);
+      letter-spacing: -.025em;
+      line-height: 1;
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+    }
+
+    .price-block .big small {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 13px;
+      color: rgba(245, 245, 243, .5);
+      font-weight: 500;
+      text-transform: lowercase;
+      letter-spacing: .05em;
+    }
+
+    .price-block .pay-mode {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--amber);
+      text-transform: uppercase;
+      letter-spacing: .18em;
+      margin-top: 8px;
+    }
+
+    .price-block p {
+      color: rgba(245, 245, 243, .6);
+      font-size: 13px;
+      line-height: 1.6;
+      margin-top: 12px;
+    }
+
+    .feature-list li {
+      font-size: 13px;
+      color: rgba(245, 245, 243, .8);
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(245, 245, 243, .08);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .feature-list li:last-child {
+      border: none;
+    }
+
+    .feature-list li::before {
+      content: "+";
+      color: var(--amber);
+      font-weight: 600;
+      flex-shrink: 0;
+      font-family: 'IBM Plex Mono', monospace;
+    }
+
+    .feature-list {
+      list-style: none;
+      padding: 0;
+      margin-bottom: 24px;
+    }
+
+    /* ===== Subscribed / final page ===== */
+    .subbed-icon {
+      background: var(--ok) !important;
+      box-shadow: 0 0 0 8px rgba(46, 125, 87, .15), 0 0 0 16px rgba(46, 125, 87, .05) !important;
+    }
+
+    .subbed-icon svg {
+      color: var(--paper);
+    }
+
+    .access-card {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 30px;
+      margin: 30px 0;
+      text-align: left;
+      border: 1px solid var(--line);
+      position: relative;
+    }
+
+    .access-card::before {
+      content: "ACCESS GRANTED";
+      position: absolute;
+      top: -10px;
+      right: 20px;
+      background: var(--amber);
+      color: var(--ink);
+      padding: 4px 10px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: .18em;
+    }
+
+    .access-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px dashed rgba(245, 245, 243, .15);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+    }
+
+    .access-row:last-child {
+      border: none;
+    }
+
+    .access-row span:first-child {
+      color: rgba(245, 245, 243, .5);
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      font-size: 10px;
+    }
+
+    .access-row span:last-child {
+      color: var(--paper);
+    }
+
+    /* Toggle (between marketplace and my apps) */
+    .view-toggle {
+      display: flex;
+      padding: 4px;
+      background: var(--paper);
+      border: 1px solid rgba(26, 26, 26, .15);
+    }
+
+    .view-toggle button {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 8px 16px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--muted);
+    }
+
+    .view-toggle button.on {
+      background: var(--ink);
+      color: var(--paper);
+    }
+
+    /* Mobile */
+    @media (max-width: 980px) {
+      .login-wrap {
+        grid-template-columns: 1fr;
+      }
+
+      .login-left {
+        padding: 30px;
+      }
+
+      .login-right {
+        padding: 40px 30px;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+        padding: 24px;
+        gap: 30px;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .detail {
+        grid-template-columns: 1fr;
+        padding: 24px;
+      }
+
+      .detail-main {
+        padding: 24px;
+      }
+
+      .banner {
+        padding: 20px;
+      }
+
+      .banner-title {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .journey {
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+      }
+
+      .work,
+      .grid-apps,
+      .market-head,
+      .filter-bar {
+        padding: 20px;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-<!-- ======================================================== -->
-<!-- 1. LOGIN PAGE                                            -->
-<!-- ======================================================== -->
-<section class="page active" id="page-login">
-  <div class="login-wrap">
-    <div class="login-left">
-      <div class="login-brand brand">
-        <div class="brand-mark">SG</div>
-        <div>
-          Sovereign Manufacturing AI Cloud
-          <small>Republic of Singapore · Pilot</small>
+  <!-- ======================================================== -->
+  <!-- 1. LOGIN PAGE                                            -->
+  <!-- ======================================================== -->
+  <section class="page active" id="page-login">
+    <div class="login-wrap">
+      <div class="login-left">
+        <div class="login-brand brand">
+          <div class="brand-mark">SG</div>
+          <div>
+            Sovereign Manufacturing AI Cloud
+            <small>Republic of Singapore · Pilot</small>
+          </div>
+        </div>
+
+        <div class="login-hero">
+          <div class="login-eyebrow">A GitHub for Manufacturing AI</div>
+          <h2>Build once.<br><em>Reuse</em> across the nation.</h2>
+          <p>A sovereign cloud where Singaporean SME manufacturers discover, configure and deploy enterprise-grade AI
+            applications — secure, governed, and compliant by design.</p>
+          <div class="login-stats">
+            <div class="stat"><b>148</b><span>SME Tenants</span></div>
+            <div class="stat"><b>32</b><span>Published Apps</span></div>
+            <div class="stat"><b>7</b><span>Reg. Sandboxes</span></div>
+          </div>
+        </div>
+
+        <div class="login-foot">
+          <span>v1.04</span>
+          <!-- <span>IMDA</span> -->
         </div>
       </div>
 
-      <div class="login-hero">
-        <div class="login-eyebrow">A GitHub for Manufacturing AI</div>
-        <h2>Build once.<br><em>Reuse</em> across the nation.</h2>
-        <p>A sovereign cloud where Singaporean SME manufacturers discover, configure and deploy enterprise-grade AI applications — secure, governed, and compliant by design.</p>
-        <div class="login-stats">
-          <div class="stat"><b>148</b><span>SME Tenants</span></div>
-          <div class="stat"><b>32</b><span>Published Apps</span></div>
-          <div class="stat"><b>7</b><span>Reg. Sandboxes</span></div>
-        </div>
-      </div>
+      <div class="login-right">
+        <form class="login-form" onsubmit="event.preventDefault(); login();">
+          <div class="login-form-label">— Tenant Sign In</div>
+          <h3>Welcome back.</h3>
+          <p>Enter your registered company credentials to continue.</p>
 
-      <div class="login-foot">
-        <span>v1.04 · Closed Pilot</span>
-        <span>IMDA</span>
-      </div>
-    </div>
+          <div class="field">
+            <label>Company Name</label>
+            <input type="text" id="loginCompany" value="Lim Precision Engineering" placeholder="e.g. EastMark Precision"
+              required />
+          </div>
+          <div class="field">
+            <label>Password</label>
+            <input type="password" id="loginPass" value="sg-mfg-2026" placeholder="••••••••••••" required />
+          </div>
 
-    <div class="login-right">
-      <form class="login-form" onsubmit="event.preventDefault(); login();">
-        <div class="login-form-label">— Tenant Sign In</div>
-        <h3>Welcome back.</h3>
-        <p>Enter your registered company credentials to continue.</p>
-
-        <div class="field">
-          <label>Company Name</label>
-          <input type="text" id="loginCompany" value="EastMark Precision" placeholder="e.g. EastMark Precision" required />
-        </div>
-        <div class="field">
-          <label>Password</label>
-          <input type="password" id="loginPass" value="sg-mfg-2026" placeholder="••••••••••••" required />
-        </div>
-
-        <button type="submit" class="btn full amber">
-          Enter the Cloud
-          <span class="arrow">→</span>
-        </button>
-
-        <div class="demo-creds">
-          <b>// DEMO CREDENTIALS</b><br>
-          company: <b>EastMark Precision</b><br>
-          password: <b>sg-mfg-2026</b>
-        </div>
-      </form>
-    </div>
-  </div>
-</section>
-
-
-<!-- ======================================================== -->
-<!-- 2. UPLOAD APPLICATION FORM PAGE                          -->
-<!-- ======================================================== -->
-<section class="page" id="page-upload">
-  <!-- Banner with journey -->
-  <div class="banner">
-    <div class="banner-top">
-      <div class="brand">
-        <div class="brand-mark">SG</div>
-        <div>Sovereign Manufacturing AI Cloud<small>Tenant Portal · <span id="tenantName1">EastMark Precision</span></small></div>
-      </div>
-      <div class="banner-meta">
-        <span class="dot"></span> SESSION ACTIVE · SG-NODE-01
+          <button type="submit" class="btn full amber">
+            Enter the Cloud
+            <span class="arrow">→</span>
+          </button>
+        </form>
       </div>
     </div>
-    <div class="banner-title">
-      <h1>AI Application <em>Creation</em>.<br>Build once. Reuse globally.</h1>
-      <div class="banner-tag">Submit your manufacturing AI application to the sovereign registry. Once approved, it becomes discoverable to all Singapore SMEs — configurable with their own data, no rebuilding required.</div>
-    </div>
-    <div class="journey">
-      <div class="step done" onclick="show('page-upload')"><div class="step-num"><span>01</span></div><div class="step-text"><b>Authenticated</b><small>Login · Tenant verified</small></div></div>
-      <div class="step active"><div class="step-num"><span>02</span></div><div class="step-text"><b>Publish App</b><small>Upload &amp; configure</small></div></div>
-      <div class="step"><div class="step-num"><span>03</span></div><div class="step-text"><b>Approval</b><small>Sandbox review</small></div></div>
-    </div>
-  </div>
+  </section>
 
-  <div class="shell">
-    <div class="work">
-      <div class="section-head">
-        <div>
-          <h2>Publish a new <em>AI application</em>.</h2>
-          <p>Define your application metadata, value proposition and pricing. All submissions enter the regulatory sandbox before going live on the sovereign marketplace.</p>
+
+  <!-- ======================================================== -->
+  <!-- 2. UPLOAD APPLICATION FORM PAGE                          -->
+  <!-- ======================================================== -->
+  <section class="page" id="page-upload">
+    <!-- Banner with journey -->
+    <div class="banner">
+      <div class="banner-top">
+        <div class="brand">
+          <div class="brand-mark">SG</div>
+          <div>Sovereign Manufacturing AI Cloud<small>Tenant Portal · <span id="tenantName1">EastMark
+                Precision</span></small></div>
         </div>
-        <!-- <div class="section-actions">
+        <div class="banner-meta">
+          <span class="dot"></span> SESSION ACTIVE · SG-NODE-01
+        </div>
+      </div>
+      <div class="banner-title">
+        <h1>AI Application <em>Creation</em>.<br>Build once. Reuse globally.</h1>
+        <div class="banner-tag">Submit your manufacturing AI application to the sovereign registry. Once approved, it
+          becomes discoverable to all Singapore SMEs — configurable with their own data, no rebuilding required.</div>
+      </div>
+      <div class="journey">
+        <div class="step done" onclick="show('page-upload')">
+          <div class="step-num"><span>01</span></div>
+          <div class="step-text"><b>Authenticated</b><small>Login · Tenant verified</small></div>
+        </div>
+        <div class="step active">
+          <div class="step-num"><span>02</span></div>
+          <div class="step-text"><b>Publish App</b><small>Upload &amp; configure</small></div>
+        </div>
+        <div class="step">
+          <div class="step-num"><span>03</span></div>
+          <div class="step-text"><b>Approval</b><small>Sandbox review</small></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="shell">
+      <div class="work">
+        <div class="section-head">
+          <div>
+            <h2>Publish a new <em>AI application</em>.</h2>
+            <p>Define your application metadata, value proposition and pricing. All submissions enter the regulatory
+              sandbox before going live on the sovereign marketplace.</p>
+          </div>
+          <!-- <div class="section-actions">
           <button class="btn ghost" onclick="show('page-marketplace'); setView('marketplace');">View Marketplace →</button>
         </div> -->
+        </div>
+
+        <form class="form-grid" onsubmit="event.preventDefault(); submitApp();">
+          <!-- LEFT: main details -->
+          <div>
+            <h3>Application Details <small>01 / 03</small></h3>
+
+            <div class="field">
+              <label>Application Name</label>
+              <input type="text" id="appName" value="Predictive Maintenance for CNC Machines"
+                placeholder="e.g. Predictive Maintenance for CNC Machines" required>
+            </div>
+
+            <div class="form-row">
+              <div class="field">
+                <label>Primary Use Case</label>
+                <select id="appUse" required>
+                  <option value="">Select...</option>
+                  <option selected>Predictive Maintenance</option>
+                  <option>Quality Inspection (Vision AI)</option>
+                  <option>Supply Chain Forecasting</option>
+                  <option>Energy Optimization</option>
+                  <option>Worker Safety Monitoring</option>
+                  <option>Process Anomaly Detection</option>
+                </select>
+              </div>
+              <div class="field">
+                <label>Industry Segment</label>
+                <select id="appIndustry" required>
+                  <option value="">Select...</option>
+                  <option selected>Precision Engineering</option>
+                  <option>Semiconductor</option>
+                  <option>Food &amp; Beverage</option>
+                  <option>Pharmaceutical</option>
+                  <option>Aerospace Components</option>
+                  <option>Marine &amp; Offshore</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field">
+              <label>Use cases &amp; problem statement</label>
+              <textarea id="appProblem" rows="6"
+                placeholder="Describe the manufacturing problem this AI application solves and how it is applied operationally...">Unplanned CNC downtime disrupts production schedules and erodes margins for precision engineering SMEs. Our application uses real-time spindle vibration, thermal and load sensor data to predict bearing wear, tool degradation and motor anomalies up to 72 hours before failure. Engineers receive ranked alerts with a recommended action and human-in-the-loop approval before any automated workflow triggers.</textarea>
+            </div>
+
+            <div class="field">
+              <label>Benefits &amp; expected impact</label>
+              <textarea id="appBenefits" rows="6"
+                placeholder="e.g. 20–30% reduction in unplanned downtime, improved OEE, fast ROI under 9 months...">20–30% reduction in unplanned CNC downtime, +18% improvement in Overall Equipment Effectiveness (OEE), tool spend cut by 12–20%, and typical ROI under 9 months. Designed for the top 5 critical CNC assets first, then expandable across the fleet. Configures with your own historian and MES data — no rebuild, no expert data team required.</textarea>
+            </div>
+
+            <h3 style="margin-top:30px;">Brand Identity <small>02 / 03</small></h3>
+            <div class="icon-builder">
+              <div class="icon-preview" id="iconPreview" style="background:#ffd23a;">EMFG</div>
+              <div class="icon-controls">
+                <div class="field" style="margin-bottom:6px;">
+                  <label>Icon Text (max 4 chars)</label>
+                  <input type="text" id="iconText" maxlength="4" value="EMFG" oninput="updateIcon();" />
+                </div>
+                <div class="color-pick" id="colorPick">
+                  <button type="button" data-c="#ffd23a" class="sel" style="background:#ffd23a;"></button>
+                  <button type="button" data-c="#c44545" style="background:#c44545;"></button>
+                  <button type="button" data-c="#2e7d57" style="background:#2e7d57;"></button>
+                  <button type="button" data-c="#8a8a8a" style="background:#8a8a8a;"></button>
+                  <button type="button" data-c="#555555" style="background:#555555;"></button>
+                  <button type="button" data-c="#1a1a1a" style="background:#1a1a1a;"></button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT: pricing side -->
+          <div class="form-side">
+            <h4>Subscription &amp; Pricing</h4>
+            <p>Set the per-tenant subscription fee. Pricing is metered through the sovereign cloud's pay-as-you-use
+              rails — audit-ready.</p>
+
+            <div class="field">
+              <label>Subscription Amount (SGD / month)</label>
+              <input type="number" id="appPrice" placeholder="e.g. 1200" value="1200" min="0"
+                oninput="updatePricePreview();" />
+            </div>
+
+            <div class="field">
+              <label>Billing Model</label>
+              <select id="appBilling">
+                <option>Pay-as-you-use (per inference)</option>
+                <option>Flat monthly subscription</option>
+                <option>Hybrid — base + usage</option>
+              </select>
+            </div>
+
+            <div class="pricing-tier">
+              <div class="price">SGD <span id="pricePreview">1,200</span><small>/ month</small></div>
+              <div class="pay-mode" id="billingPreview">PAY-AS-YOU-USE</div>
+              <div class="desc">Visible to SME consumers in the sovereign marketplace. They configure with their own
+                data, no rebuild required.</div>
+            </div>
+
+            <div class="form-actions">
+              <button type="button" class="btn ghost"
+                onclick="show('page-marketplace'); setView('marketplace');">Cancel</button>
+              <button type="submit" class="btn amber">Submit for Approval <span class="arrow">→</span></button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ======================================================== -->
+  <!-- 3. SUBMISSION STATUS PAGE                                -->
+  <!-- ======================================================== -->
+  <section class="page" id="page-status">
+    <div class="banner">
+      <div class="banner-top">
+        <div class="brand">
+          <div class="brand-mark">SG</div>
+          <div>Sovereign Manufacturing AI Cloud<small>Tenant Portal · <span id="tenantName2">EastMark
+                Precision</span></small></div>
+        </div>
+        <div style="display:flex; align-items:center; gap:20px;">
+          <div class="banner-meta">
+            <span class="dot"></span> AWAITING REVIEW
+          </div>
+          <button class="icon-btn" title="Log out" onclick="logout();">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+              <polyline points="16 17 21 12 16 7" />
+              <line x1="21" y1="12" x2="9" y2="12" />
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="banner-title">
+        <h1>Submission <em>received</em>.<br>The sandbox now does its work.</h1>
+        <div class="banner-tag">Your application has been routed to the regulatory review sandbox. Compliance, security
+          and responsible-AI checks run in parallel — typical turnaround is 5–7 business days.</div>
+      </div>
+      <div class="journey">
+        <div class="step done">
+          <div class="step-num"><span>01</span></div>
+          <div class="step-text"><b>Authenticated</b><small>Login · Tenant verified</small></div>
+        </div>
+        <div class="step done">
+          <div class="step-num"><span>02</span></div>
+          <div class="step-text"><b>Published App</b><small>Upload complete</small></div>
+        </div>
+        <div class="step active">
+          <div class="step-num"><span>03</span></div>
+          <div class="step-text"><b>Approval</b><small>In sandbox review</small></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="status-wrap">
+      <div class="status-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round"
+          stroke-linejoin="round">
+          <circle cx="12" cy="12" r="9" />
+          <polyline points="12 7 12 12 15 14" />
+        </svg>
+      </div>
+      <div class="status-eyebrow">— Status · Pending Internal Approval</div>
+      <h2>Application <em>submitted</em> for review.</h2>
+      <p id="submittedMsg">Your AI application <b>"Predictive Maintenance for CNC Machines"</b> has been queued in the
+        sovereign sandbox. You will receive a tenant notification once review is complete.</p>
+
+      <div class="status-meta" style="grid-template-columns: 1fr 1fr;">
+        <div><b>Submission ID</b><span id="submitId">SG-AIC-2026-0148</span></div>
+        <div><b>Est. Turnaround</b><span>5–7 days</span></div>
       </div>
 
-      <form class="form-grid" onsubmit="event.preventDefault(); submitApp();">
-        <!-- LEFT: main details -->
-        <div>
-          <h3>Application Details <small>01 / 03</small></h3>
-
-          <div class="field">
-            <label>Application Name</label>
-            <input type="text" id="appName" value="Predictive Maintenance for CNC Machines" placeholder="e.g. Predictive Maintenance for CNC Machines" required>
-          </div>
-
-          <div class="form-row">
-            <div class="field">
-              <label>Primary Use Case</label>
-              <select id="appUse" required>
-                <option value="">Select...</option>
-                <option selected>Predictive Maintenance</option>
-                <option>Quality Inspection (Vision AI)</option>
-                <option>Supply Chain Forecasting</option>
-                <option>Energy Optimization</option>
-                <option>Worker Safety Monitoring</option>
-                <option>Process Anomaly Detection</option>
-              </select>
-            </div>
-            <div class="field">
-              <label>Industry Segment</label>
-              <select id="appIndustry" required>
-                <option value="">Select...</option>
-                <option selected>Precision Engineering</option>
-                <option>Semiconductor</option>
-                <option>Food &amp; Beverage</option>
-                <option>Pharmaceutical</option>
-                <option>Aerospace Components</option>
-                <option>Marine &amp; Offshore</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="field">
-            <label>Use cases &amp; problem statement</label>
-            <textarea id="appProblem" rows="6" placeholder="Describe the manufacturing problem this AI application solves and how it is applied operationally...">Unplanned CNC downtime disrupts production schedules and erodes margins for precision engineering SMEs. Our application uses real-time spindle vibration, thermal and load sensor data to predict bearing wear, tool degradation and motor anomalies up to 72 hours before failure. Engineers receive ranked alerts with a recommended action and human-in-the-loop approval before any automated workflow triggers.</textarea>
-          </div>
-
-          <div class="field">
-            <label>Benefits &amp; expected impact</label>
-            <textarea id="appBenefits" rows="6" placeholder="e.g. 20–30% reduction in unplanned downtime, improved OEE, fast ROI under 9 months...">20–30% reduction in unplanned CNC downtime, +18% improvement in Overall Equipment Effectiveness (OEE), tool spend cut by 12–20%, and typical ROI under 9 months. Designed for the top 5 critical CNC assets first, then expandable across the fleet. Configures with your own historian and MES data — no rebuild, no expert data team required.</textarea>
-          </div>
-
-          <h3 style="margin-top:30px;">Brand Identity <small>02 / 03</small></h3>
-          <div class="icon-builder">
-            <div class="icon-preview" id="iconPreview" style="background:#E8A33D;">EMFG</div>
-            <div class="icon-controls">
-              <div class="field" style="margin-bottom:6px;">
-                <label>Icon Text (max 4 chars)</label>
-                <input type="text" id="iconText" maxlength="4" value="EMFG" oninput="updateIcon();" />
-              </div>
-              <div class="color-pick" id="colorPick">
-                <button type="button" data-c="#E8A33D" class="sel" style="background:#E8A33D;"></button>
-                <button type="button" data-c="#B23A2F" style="background:#B23A2F;"></button>
-                <button type="button" data-c="#0F5E5B" style="background:#0F5E5B;"></button>
-                <button type="button" data-c="#7A8A6B" style="background:#7A8A6B;"></button>
-                <button type="button" data-c="#3D4F7A" style="background:#3D4F7A;"></button>
-                <button type="button" data-c="#0B1220" style="background:#0B1220;"></button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- RIGHT: pricing side -->
-        <div class="form-side">
-          <h4>Subscription &amp; Pricing</h4>
-          <p>Set the per-tenant subscription fee. Pricing is metered through the sovereign cloud's pay-as-you-use rails — IMDA-aligned and audit-ready.</p>
-
-          <div class="field">
-            <label>Subscription Amount (SGD / month)</label>
-            <input type="number" id="appPrice" placeholder="e.g. 1200" value="1200" min="0" oninput="updatePricePreview();" />
-          </div>
-
-          <div class="field">
-            <label>Billing Model</label>
-            <select id="appBilling">
-              <option>Pay-as-you-use (per inference)</option>
-              <option>Flat monthly subscription</option>
-              <option>Hybrid — base + usage</option>
-            </select>
-          </div>
-
-          <div class="pricing-tier">
-            <div class="price">SGD <span id="pricePreview">1,200</span><small>/ month</small></div>
-            <div class="pay-mode" id="billingPreview">PAY-AS-YOU-USE</div>
-            <div class="desc">Visible to SME consumers in the sovereign marketplace. They configure with their own data, no rebuild required.</div>
-          </div>
-
-          <div class="form-actions">
-            <button type="button" class="btn ghost" onclick="show('page-marketplace'); setView('marketplace');">Cancel</button>
-            <button type="submit" class="btn amber">Submit for Approval <span class="arrow">→</span></button>
-          </div>
-        </div>
-      </form>
+      <div class="status-actions">
+        <button class="btn ghost" onclick="show('page-upload');">Submit Another</button>
+        <button class="btn amber" onclick="show('page-marketplace'); setView('marketplace');">Browse Marketplace →</button>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
 
-<!-- ======================================================== -->
-<!-- 3. SUBMISSION STATUS PAGE                                -->
-<!-- ======================================================== -->
-<section class="page" id="page-status">
-  <div class="banner">
-    <div class="banner-top">
+  <!-- ======================================================== -->
+  <!-- 4. MARKETPLACE / VIEWING PAGE                            -->
+  <!-- ======================================================== -->
+  <section class="page" id="page-marketplace">
+    <div class="market-head">
       <div class="brand">
         <div class="brand-mark">SG</div>
-        <div>Sovereign Manufacturing AI Cloud<small>Tenant Portal · <span id="tenantName2">EastMark Precision</span></small></div>
+        <div>Sovereign Manufacturing AI Cloud<small>Marketplace · Singapore SMEs</small></div>
       </div>
-      <div class="banner-meta">
-        <span class="dot"></span> AWAITING REVIEW
+      <div class="actions">
+        <div class="user-pill">
+          <div class="av" id="userAv">EP</div>
+          <span id="tenantName3">EastMark Precision</span>
+        </div>
+        <button class="icon-btn" title="Notifications" onclick="show('page-status');">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
+            <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
+          </svg>
+        </button>
+        <button class="icon-btn" title="Log out" onclick="logout();">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+            <polyline points="16 17 21 12 16 7" />
+            <line x1="21" y1="12" x2="9" y2="12" />
+          </svg>
+        </button>
       </div>
     </div>
-    <div class="banner-title">
-      <h1>Submission <em>received</em>.<br>The sandbox now does its work.</h1>
-      <div class="banner-tag">Your application has been routed to the regulatory review sandbox. Compliance, security and responsible-AI checks run in parallel — typical turnaround is 5–7 business days.</div>
-    </div>
-    <div class="journey">
-      <div class="step done"><div class="step-num"><span>01</span></div><div class="step-text"><b>Authenticated</b><small>Login · Tenant verified</small></div></div>
-      <div class="step done"><div class="step-num"><span>02</span></div><div class="step-text"><b>Published App</b><small>Upload complete</small></div></div>
-      <div class="step active"><div class="step-num"><span>03</span></div><div class="step-text"><b>Approval</b><small>In sandbox review</small></div></div>
-    </div>
-  </div>
 
-  <div class="status-wrap">
-    <div class="status-icon">
-      <svg viewBox="0 0 24 24" fill="none" stroke="#0B1220" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="12" cy="12" r="9"/>
-        <polyline points="12 7 12 12 15 14"/>
-      </svg>
-    </div>
-    <div class="status-eyebrow">— Status · Pending Internal Approval</div>
-    <h2>Application <em>submitted</em> for review.</h2>
-    <p id="submittedMsg">Your AI application <b>"Predictive Maintenance for CNC Machines"</b> has been queued in the sovereign sandbox. You will receive a tenant notification once review is complete.</p>
-
-    <div class="status-meta">
-      <div><b>Submission ID</b><span id="submitId">SG-AIC-2026-0148</span></div>
-      <div><b>Sandbox Reviewer</b><span>IMDA</span></div>
-      <div><b>Est. Turnaround</b><span>5–7 days</span></div>
-    </div>
-
-    <div class="status-actions">
-      <button class="btn ghost" onclick="show('page-upload');">Submit Another</button>
-      <button class="btn" onclick="show('page-marketplace'); setView('marketplace');">Browse Marketplace →</button>
-      <button class="btn amber" onclick="logout();">Log Out</button>
-    </div>
-  </div>
-</section>
-
-
-<!-- ======================================================== -->
-<!-- 4. MARKETPLACE / VIEWING PAGE                            -->
-<!-- ======================================================== -->
-<section class="page" id="page-marketplace">
-  <div class="market-head">
-    <div class="brand">
-      <div class="brand-mark">SG</div>
-      <div>Sovereign Manufacturing AI Cloud<small>Marketplace · Singapore SMEs</small></div>
-    </div>
-    <div class="actions">
-      <div class="user-pill">
-        <div class="av" id="userAv">EP</div>
-        <span id="tenantName3">EastMark Precision</span>
+    <div class="banner" style="padding:30px 40px;">
+      <div class="banner-title" style="margin-top:0;">
+        <h1>AI Application <em>Consumption</em>.<br>Discover. Configure. Deploy.</h1>
+        <!-- <div class="banner-tag">SMEs find enterprise-grade AI applications already built and approved. Configure them with your own data — no rebuild, no procurement headache, no compliance gap.</div> -->
+        <button class="btn amber" style="margin-top:20px; padding: 14px 22px; font-size: 11px; justify-self: end;"
+          onclick="show('page-upload');">
+          Publish Your Own App
+          <span class="arrow">→</span>
+        </button>
       </div>
-      <button class="icon-btn" title="Notifications" onclick="show('page-status');">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
-      </button>
-      <button class="icon-btn" title="Log out" onclick="logout();">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-      </button>
-    </div>
-  </div>
-
-  <div class="banner" style="padding:30px 40px;">
-    <div class="banner-title" style="margin-top:0;">
-      <h1>AI Application <em>Consumption</em>.<br>Discover. Configure. Deploy.</h1>
-      <!-- <div class="banner-tag">SMEs find enterprise-grade AI applications already built and approved. Configure them with your own data — no rebuild, no procurement headache, no compliance gap.</div> -->
-      <button class="btn amber" style="margin-top:20px; padding: 14px 22px; font-size: 11px; justify-self: end;" onclick="show('page-upload');">
-        Publish Your Own App
-        <span class="arrow">→</span>
-      </button>
-    </div>
-  </div>
-
-  <div class="filter-bar">
-    <div class="search">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      <input type="text" id="searchBox" placeholder="Search keywords — e.g. CNC, predictive maintenance, vision AI..." oninput="renderApps();" />
     </div>
 
-    <div class="view-toggle">
-      <button class="on" id="tabAll" onclick="setView('marketplace');">Marketplace</button>
-      <button id="tabMine" onclick="setView('mine');">My Apps</button>
-    </div>
-
-    <div class="filter-divider"></div>
-
-    <div class="chip active" data-filter="all" onclick="setFilter(this,'all');">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="7" y1="12" x2="17" y2="12"/><line x1="10" y1="18" x2="14" y2="18"/></svg>
-      All
-    </div>
-    <div class="chip" data-filter="precision" onclick="setFilter(this,'precision');">Precision Engineering</div>
-    <div class="chip" data-filter="maintenance" onclick="setFilter(this,'maintenance');">Predictive Maintenance</div>
-    <div class="chip" data-filter="cnc" onclick="setFilter(this,'cnc');">CNC Machining</div>
-    <div class="chip" data-filter="vision" onclick="setFilter(this,'vision');">Vision AI</div>
-    <div class="chip" data-filter="energy" onclick="setFilter(this,'energy');">Energy</div>
-    <div class="chip" data-filter="supply" onclick="setFilter(this,'supply');">Supply Chain</div>
-  </div>
-
-  <div class="grid-apps" id="appsGrid">
-    <!-- cards injected by JS -->
-  </div>
-</section>
-
-
-<!-- ======================================================== -->
-<!-- 5. APP DETAIL PAGE                                       -->
-<!-- ======================================================== -->
-<section class="page" id="page-detail">
-  <div class="market-head">
-    <div class="brand">
-      <div class="brand-mark">SG</div>
-      <div>Sovereign Manufacturing AI Cloud<small>Application Detail</small></div>
-    </div>
-    <div class="actions">
-      <div class="user-pill">
-        <div class="av" id="userAv2">EP</div>
-        <span id="tenantName4">EastMark Precision</span>
+    <div class="filter-bar">
+      <div class="search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8" />
+          <line x1="21" y1="21" x2="16.65" y2="16.65" />
+        </svg>
+        <input type="text" id="searchBox" placeholder="Search keywords — e.g. CNC, predictive maintenance, vision AI..."
+          oninput="renderApps();" />
       </div>
-      <button class="icon-btn" title="Log out" onclick="logout();">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-      </button>
+
+      <div class="view-toggle">
+        <button class="on" id="tabAll" onclick="setView('marketplace');">Marketplace</button>
+        <button id="tabMine" onclick="setView('mine');">My Apps</button>
+      </div>
+
+      <div class="filter-divider"></div>
+
+      <div class="chip active" data-filter="all" onclick="setFilter(this,'all');">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="4" y1="6" x2="20" y2="6" />
+          <line x1="7" y1="12" x2="17" y2="12" />
+          <line x1="10" y1="18" x2="14" y2="18" />
+        </svg>
+        All
+      </div>
+      <div class="chip" data-filter="precision" onclick="setFilter(this,'precision');">Precision Engineering</div>
+      <div class="chip" data-filter="maintenance" onclick="setFilter(this,'maintenance');">Predictive Maintenance</div>
+      <div class="chip" data-filter="cnc" onclick="setFilter(this,'cnc');">CNC Machining</div>
+      <div class="chip" data-filter="vision" onclick="setFilter(this,'vision');">Vision AI</div>
+      <div class="chip" data-filter="energy" onclick="setFilter(this,'energy');">Energy</div>
+      <div class="chip" data-filter="supply" onclick="setFilter(this,'supply');">Supply Chain</div>
     </div>
-  </div>
 
-  <div class="detail">
-    <button class="detail-back" onclick="show('page-marketplace'); setView('marketplace');">← Back to Marketplace</button>
+    <div class="grid-apps" id="appsGrid">
+      <!-- cards injected by JS -->
+    </div>
+  </section>
 
-    <div class="detail-main">
-      <div class="detail-hero">
-        <div class="app-icon" id="dIcon" style="background:#E8A33D;">CNC</div>
-        <div>
-          <h2 id="dName">Predictive Maintenance for CNC Machines</h2>
-          <p id="dVendor">By PrecisionWorks AI · Singapore · #1 Ranked</p>
+
+  <!-- ======================================================== -->
+  <!-- 5. APP DETAIL PAGE                                       -->
+  <!-- ======================================================== -->
+  <section class="page" id="page-detail">
+    <div class="market-head">
+      <div class="brand">
+        <div class="brand-mark">SG</div>
+        <div>Sovereign Manufacturing AI Cloud<small>Application Detail</small></div>
+      </div>
+      <div class="actions">
+        <div class="user-pill">
+          <div class="av" id="userAv2">EP</div>
+          <span id="tenantName4">EastMark Precision</span>
+        </div>
+        <button class="icon-btn" title="Log out" onclick="logout();">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+            <polyline points="16 17 21 12 16 7" />
+            <line x1="21" y1="12" x2="9" y2="12" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="detail">
+      <button class="detail-back" onclick="show('page-marketplace'); setView('marketplace');">← Back to
+        Marketplace</button>
+
+      <div class="detail-main">
+        <div class="detail-hero">
+          <div class="app-icon" id="dIcon" style="background:#ffd23a;">CNC</div>
+          <div>
+            <h2 id="dName">Predictive Maintenance for CNC Machines</h2>
+            <p id="dVendor">By PrecisionWorks AI · Singapore · #1 Ranked</p>
+          </div>
+        </div>
+
+        <div class="detail-section">
+          <h3>Business Problem</h3>
+          <p id="dProblem">Unplanned CNC downtime disrupts schedules and erodes margins for precision engineering SMEs.
+            Reactive maintenance routines also waste expensive spare parts and skilled technician hours.</p>
+        </div>
+
+        <div class="detail-section">
+          <h3>Why Ranked #1</h3>
+          <ul id="dWhy">
+            <li>Highest downtime cost across the SME segment</li>
+            <li>Strong sensor data already available on most CNC fleets</li>
+            <li>Fast ROI — typically under 9 months</li>
+            <li>Fits the human-approval governance model</li>
+          </ul>
+        </div>
+
+        <div class="detail-section">
+          <h3>Expected Impact</h3>
+          <div class="impact-grid">
+            <div><b>20–30%</b><span>Reduction in unplanned downtime</span></div>
+            <div><b>+18%</b><span>Improvement in OEE</span></div>
+            <div><b>9 mo</b><span>Typical ROI period</span></div>
+          </div>
+        </div>
+
+        <div class="detail-section">
+          <h3>Deployment Path</h3>
+          <p>The application auto-configures against your historian and MES
+            feeds — no rebuild required. Pilot completes in 6 weeks.</p>
         </div>
       </div>
 
-      <div class="detail-section">
-        <h3>Business Problem</h3>
-        <p id="dProblem">Unplanned CNC downtime disrupts schedules and erodes margins for precision engineering SMEs. Reactive maintenance routines also waste expensive spare parts and skilled technician hours.</p>
-      </div>
+      <aside class="detail-side">
+        <h3>— Subscription</h3>
+        <div class="price-block">
+          <div class="big">SGD <span id="dPrice">1,200</span><small>/mo</small></div>
+          <div class="pay-mode">PAY-AS-YOU-USE</div>
+          <p>Metered through the sovereign billing layer. Cancel anytime. Your data stays inside your tenant boundary.
+          </p>
+        </div>
 
-      <div class="detail-section">
-        <h3>Why Ranked #1</h3>
-        <ul id="dWhy">
-          <li>Highest downtime cost across the SME segment</li>
-          <li>Strong sensor data already available on most CNC fleets</li>
-          <li>Fast ROI — typically under 9 months</li>
-          <li>Fits the human-approval governance model</li>
+        <h3>— What's included</h3>
+        <ul class="feature-list">
+          <li>Pre-trained CNC failure models</li>
+          <li>Tenant-isolated data plane</li>
+          <li>MES &amp; historian connectors</li>
+          <!-- <li>IMDA-aligned audit trail</li> -->
+          <li>Human-in-the-loop approval</li>
         </ul>
-      </div>
 
-      <div class="detail-section">
-        <h3>Expected Impact</h3>
-        <div class="impact-grid">
-          <div><b>20–30%</b><span>Reduction in unplanned downtime</span></div>
-          <div><b>+18%</b><span>Improvement in OEE</span></div>
-          <div><b>9 mo</b><span>Typical ROI period</span></div>
-          <div><b>Top 5</b><span>Critical CNC assets to start</span></div>
+        <button class="btn amber full" onclick="subscribe();">Subscribe &amp; Deploy <span
+            class="arrow">→</span></button>
+        <button class="btn ghost full"
+          style="margin-top:10px; background:transparent; box-shadow: inset 0 0 0 1.5px rgba(245, 245, 243,.3); color:var(--paper);"
+          onclick="show('page-marketplace'); setView('marketplace');">Maybe later</button>
+      </aside>
+    </div>
+  </section>
+
+
+  <!-- ======================================================== -->
+  <!-- 6. SUBSCRIBED / FINAL PAGE                                -->
+  <!-- ======================================================== -->
+  <section class="page" id="page-subscribed">
+    <div class="banner">
+      <div class="banner-top">
+        <div class="brand">
+          <div class="brand-mark">SG</div>
+          <div>Sovereign Manufacturing AI Cloud<small>Tenant Portal · <span id="tenantName5">EastMark
+                Precision</span></small></div>
+        </div>
+        <div style="display:flex; align-items:center; gap:20px;">
+          <div class="banner-meta">
+            <span class="dot" style="background:#2e7d57; box-shadow:0 0 0 3px rgba(46, 125, 87,.18);"></span> DEPLOYED &amp;
+            LIVE
+          </div>
+          <button class="icon-btn" title="Log out" onclick="logout();">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+              <polyline points="16 17 21 12 16 7" />
+              <line x1="21" y1="12" x2="9" y2="12" />
+            </svg>
+          </button>
         </div>
       </div>
-
-      <div class="detail-section">
-        <h3>Deployment Path</h3>
-        <p>Start with the top 5 critical CNC assets. The application auto-configures against your historian and MES feeds — no rebuild required. Pilot completes in 6 weeks.</p>
+      <div class="banner-title">
+        <h1>You're <em>subscribed</em>.<br>The application is now in your tenant.</h1>
+        <div class="banner-tag">Your subscription is active. The application has been provisioned inside your isolated
+          tenant boundary, with data connectors ready to be configured.</div>
+      </div>
+      <div class="journey">
+        <div class="step done">
+          <div class="step-num"><span>01</span></div>
+          <div class="step-text"><b>Authenticated</b><small>Login · Tenant verified</small></div>
+        </div>
+        <div class="step done">
+          <div class="step-num"><span>02</span></div>
+          <div class="step-text"><b>Discover</b><small>Marketplace browsed</small></div>
+        </div>
+        <div class="step done">
+          <div class="step-num"><span>03</span></div>
+          <div class="step-text"><b>Subscribe</b><small>Pay-as-you-use active</small></div>
+        </div>
+        <div class="step active">
+          <div class="step-num"><span>04</span></div>
+          <div class="step-text"><b>Deploy</b><small>Running in your tenant</small></div>
+        </div>
       </div>
     </div>
 
-    <aside class="detail-side">
-      <h3>— Subscription</h3>
-      <div class="price-block">
-        <div class="big">SGD <span id="dPrice">1,200</span><small>/mo</small></div>
-        <div class="pay-mode">PAY-AS-YOU-USE</div>
-        <p>Metered through the sovereign billing layer. Cancel anytime. Your data stays inside your tenant boundary.</p>
+    <div class="status-wrap">
+      <div class="status-icon subbed-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"
+          stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12" />
+        </svg>
+      </div>
+      <div class="status-eyebrow" style="color:#2e7d57;">— Status · Active Subscription</div>
+      <h2><em id="sName">Predictive Maintenance for CNC Machines</em><br>is now live in your tenant.</h2>
+      <p>Configure it with your own MES and historian data — no rebuild, no procurement, no compliance gaps. Billing is
+        metered through the sovereign cloud's pay-as-you-use rails.</p>
+
+      <div class="access-card">
+        <div class="access-row"><span>Application</span><span id="sName2">Predictive Maintenance for CNC Machines</span>
+        </div>
+        <div class="access-row"><span>Tenant</span><span id="sTenant">EastMark Precision · SG-NODE-01</span></div>
+        <div class="access-row"><span>Billing</span><span>Pay-as-you-use · SGD <span id="sPrice">1,200</span>/mo
+            cap</span></div>
+        <div class="access-row"><span>Subscription ID</span><span id="sSub">SUB-CNC-2026-0492</span></div>
+        <div class="access-row"><span>Activated</span><span id="sDate">—</span></div>
       </div>
 
-      <h3>— What's included</h3>
-      <ul class="feature-list">
-        <li>Pre-trained CNC failure models</li>
-        <li>Tenant-isolated data plane</li>
-        <li>MES &amp; historian connectors</li>
-        <li>IMDA-aligned audit trail</li>
-        <li>Human-in-the-loop approval</li>
-      </ul>
-
-      <button class="btn amber full" onclick="subscribe();">Subscribe &amp; Deploy <span class="arrow">→</span></button>
-      <button class="btn ghost full" style="margin-top:10px; background:transparent; box-shadow: inset 0 0 0 1.5px rgba(244,239,230,.3); color:var(--paper);" onclick="show('page-marketplace'); setView('marketplace');">Maybe later</button>
-    </aside>
-  </div>
-</section>
-
-
-<!-- ======================================================== -->
-<!-- 6. SUBSCRIBED / FINAL PAGE                                -->
-<!-- ======================================================== -->
-<section class="page" id="page-subscribed">
-  <div class="banner">
-    <div class="banner-top">
-      <div class="brand">
-        <div class="brand-mark">SG</div>
-        <div>Sovereign Manufacturing AI Cloud<small>Tenant Portal · <span id="tenantName5">EastMark Precision</span></small></div>
-      </div>
-      <div class="banner-meta">
-        <span class="dot" style="background:#2E8B57; box-shadow:0 0 0 3px rgba(46,139,87,.18);"></span> DEPLOYED &amp; LIVE
+      <div class="status-actions">
+        <button class="btn" onclick="show('page-marketplace'); setView('mine');">View My Apps</button>
+        <button class="btn amber" onclick="show('page-marketplace'); setView('marketplace');">Continue Browsing</button>
       </div>
     </div>
-    <div class="banner-title">
-      <h1>You're <em>subscribed</em>.<br>The application is now in your tenant.</h1>
-      <div class="banner-tag">Your subscription is active. The application has been provisioned inside your isolated tenant boundary, with data connectors ready to be configured.</div>
-    </div>
-    <div class="journey">
-      <div class="step done"><div class="step-num"><span>01</span></div><div class="step-text"><b>Authenticated</b><small>Login · Tenant verified</small></div></div>
-      <div class="step done"><div class="step-num"><span>02</span></div><div class="step-text"><b>Discover</b><small>Marketplace browsed</small></div></div>
-      <div class="step done"><div class="step-num"><span>03</span></div><div class="step-text"><b>Subscribe</b><small>Pay-as-you-use active</small></div></div>
-      <div class="step active"><div class="step-num"><span>04</span></div><div class="step-text"><b>Deploy</b><small>Running in your tenant</small></div></div>
-    </div>
-  </div>
-
-  <div class="status-wrap">
-    <div class="status-icon subbed-icon">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="20 6 9 17 4 12"/>
-      </svg>
-    </div>
-    <div class="status-eyebrow" style="color:#2E8B57;">— Status · Active Subscription</div>
-    <h2><em id="sName">Predictive Maintenance for CNC Machines</em><br>is now live in your tenant.</h2>
-    <p>Configure it with your own MES and historian data — no rebuild, no procurement, no compliance gaps. Billing is metered through the sovereign cloud's pay-as-you-use rails.</p>
-
-    <div class="access-card">
-      <div class="access-row"><span>Application</span><span id="sName2">Predictive Maintenance for CNC Machines</span></div>
-      <div class="access-row"><span>Tenant</span><span id="sTenant">EastMark Precision · SG-NODE-01</span></div>
-      <div class="access-row"><span>Billing</span><span>Pay-as-you-use · SGD <span id="sPrice">1,200</span>/mo cap</span></div>
-      <div class="access-row"><span>Subscription ID</span><span id="sSub">SUB-CNC-2026-0492</span></div>
-      <div class="access-row"><span>Activated</span><span id="sDate">—</span></div>
-    </div>
-
-    <div class="status-actions">
-      <button class="btn" onclick="show('page-marketplace'); setView('mine');">View My Apps</button>
-      <button class="btn ghost" onclick="show('page-marketplace'); setView('marketplace');">Continue Browsing</button>
-      <button class="btn amber" onclick="logout();">Log Out</button>
-    </div>
-  </div>
-</section>
+  </section>
 
 
-<script>
-  // ---------- App data ----------
-  const APPS = [
-    {
-      id:'vis',
-      name:'Vision-AI Surface Defect Detection',
-      vendor:'OptiInspect · Singapore',
-      icon:'OPT', color:'#B23A2F',
-      desc:'Real-time surface inspection on production lines. Catches sub-millimetre defects, retrains on your own product images.',
-      tags:['Quality','Vision AI','Precision Engineering'],
-      filters:['precision','vision'],
-      price:980, rank:'#2',
-      problem:'Manual visual inspection misses fine defects and is slow under high throughput.',
-      why:['Reuses pretrained vision models','Fine-tune with as few as 200 images','Edge-deployable on factory hardware','IMDA-aligned audit log']
-    },
-    {
-      id:'erg',
-      name:'Energy Optimisation for Plant Floor',
-      vendor:'GridSense Labs · Singapore',
-      icon:'GRID', color:'#0F5E5B',
-      desc:'Forecasts plant energy demand and recommends load-shifting actions. Cuts utility cost without disrupting throughput.',
-      tags:['Energy','Sustainability'],
-      filters:['energy'],
-      price:760, rank:'#4',
-      problem:'Rising tariffs and peak charges erode SME margins, with no clear levers to optimise.',
-      why:['Connects to existing meters in 1 day','12–18% energy cost reduction','Carbon reporting included','Pay-as-you-use billing']
-    },
-    {
-      id:'sup',
-      name:'Supply Chain Disruption Forecaster',
-      vendor:'PortLink AI · Singapore',
-      icon:'SCM', color:'#3D4F7A',
-      desc:'Anticipates supplier delays using port, weather and shipping signals. Tailored to Singapore-anchored SME logistics.',
-      tags:['Supply Chain','Forecasting'],
-      filters:['supply'],
-      price:1450, rank:'#3',
-      problem:'SMEs lack early warning when upstream suppliers slip, causing reactive expediting and lost orders.',
-      why:['7–14 day lead-time on disruption alerts','Singapore port + global feeds','Tenant-isolated data','No retraining required']
-    },
-    {
-      id:'cnc2',
-      name:'Tooling Wear Prediction for Lathes',
-      vendor:'EdgeMetrics · Singapore',
-      icon:'LTH', color:'#7A8A6B',
-      desc:'Sister model to CNC predictive maintenance, tuned specifically for high-speed lathe tool wear curves.',
-      tags:['Precision Engineering','Predictive Maintenance','CNC Machining'],
-      filters:['precision','maintenance','cnc'],
-      price:890, rank:'#5',
-      problem:'Tool changes are scheduled on calendar time, not actual wear — creating waste and surprise breaks.',
-      why:['Cuts tool spend by 12–20%','Fits beside CNC PdM app','Configures in 2 weeks','Approved sandbox vendor']
-    },
-    {
-      id:'qa',
-      name:'Statistical Process Control Copilot',
-      vendor:'SigmaOps · Singapore',
-      icon:'SPC', color:'#0B1220',
-      desc:'A natural-language copilot that turns process data into SPC charts, alarms and root-cause hypotheses for line engineers.',
-      tags:['Quality','Precision Engineering'],
-      filters:['precision','vision'],
-      price:540, rank:'#7',
-      problem:'SPC tools require expert setup; SMEs rarely have a dedicated quality engineer per line.',
-      why:['Conversational interface','Pulls from existing MES','Exports IMDA-ready audit packs','Lowest-cost entry point']
-    },
-    {
-      id:'cnc',
-      name:'Predictive Maintenance for CNC Machines',
-      vendor:'PrecisionWorks AI · Singapore',
-      icon:'CNC', color:'#E8A33D',
-      desc:'Reduces unplanned CNC downtime using sensor data and human-in-the-loop approval. Top-ranked across the SME pilot.',
-      tags:['Precision Engineering','Predictive Maintenance','CNC Machining'],
-      filters:['precision','maintenance','cnc'],
-      price:1200, rank:'#1',
-      problem:'Unplanned CNC downtime disrupts schedules and erodes margins for precision engineering SMEs.',
-      why:[
-        'Highest downtime cost across the SME segment',
-        'Strong sensor data already available on most CNC fleets',
-        'Fast ROI — typically under 9 months',
-        'Fits the human-approval governance model'
-      ]
-    }
-  ];
-
-  // ---------- State ----------
-  let activeFilter = 'all';
-  let view = 'marketplace';
-  let currentAppId = 'cnc';
-  let tenant = 'EastMark Precision';
-
-  // ---------- Page nav ----------
-  function show(id){
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.getElementById(id).classList.add('active');
-    window.scrollTo({top:0, behavior:'instant'});
-  }
-
-  // ---------- Login / logout ----------
-  function login(){
-    const c = document.getElementById('loginCompany').value.trim();
-    if (c) tenant = c;
-    refreshTenantUI();
-    setView('marketplace');
-    show('page-marketplace');
-  }
-  function logout(){
-    document.getElementById('loginCompany').value = '';
-    document.getElementById('loginPass').value = '';
-    show('page-login');
-  }
-  function refreshTenantUI(){
-    ['tenantName1','tenantName2','tenantName3','tenantName4','tenantName5','sTenant'].forEach(id=>{
-      const el = document.getElementById(id);
-      if (el) {
-        if (id === 'sTenant') el.textContent = tenant + ' · SG-NODE-01';
-        else el.textContent = tenant;
+  <script>
+    // ---------- App data ----------
+    const APPS = [
+      {
+        id: 'vis',
+        name: 'Vision-AI Surface Defect Detection',
+        vendor: 'OptiInspect · Singapore',
+        icon: 'OPT', color: '#c44545',
+        desc: 'Real-time surface inspection on production lines. Catches sub-millimetre defects, retrains on your own product images.',
+        tags: ['Quality', 'Vision AI', 'Precision Engineering'],
+        filters: ['precision', 'vision'],
+        price: 980, rank: '#2',
+        problem: 'Manual visual inspection misses fine defects and is slow under high throughput.',
+        why: ['Reuses pretrained vision models', 'Fine-tune with as few as 200 images', 'Edge-deployable on factory hardware']
+      },
+      {
+        id: 'erg',
+        name: 'Energy Optimisation for Plant Floor',
+        vendor: 'GridSense Labs · Singapore',
+        icon: 'GRID', color: '#2e7d57',
+        desc: 'Forecasts plant energy demand and recommends load-shifting actions. Cuts utility cost without disrupting throughput.',
+        tags: ['Energy', 'Sustainability'],
+        filters: ['energy'],
+        price: 760, rank: '#4',
+        problem: 'Rising tariffs and peak charges erode SME margins, with no clear levers to optimise.',
+        why: ['Connects to existing meters in 1 day', '12–18% energy cost reduction', 'Carbon reporting included', 'Pay-as-you-use billing']
+      },
+      {
+        id: 'sup',
+        name: 'Supply Chain Disruption Forecaster',
+        vendor: 'PortLink AI · Singapore',
+        icon: 'SCM', color: '#ffb46e',
+        desc: 'Anticipates supplier delays using port, weather and shipping signals. Tailored to Singapore-anchored SME logistics.',
+        tags: ['Supply Chain', 'Forecasting'],
+        filters: ['supply'],
+        price: 1450, rank: '#3',
+        problem: 'SMEs lack early warning when upstream suppliers slip, causing reactive expediting and lost orders.',
+        why: ['7–14 day lead-time on disruption alerts', 'Singapore port + global feeds', 'Tenant-isolated data', 'No retraining required']
+      },
+      {
+        id: 'cnc2',
+        name: 'Tooling Wear Prediction for Lathes',
+        vendor: 'EdgeMetrics · Singapore',
+        icon: 'LTH', color: '#6ee7a0',
+        desc: 'Sister model to CNC predictive maintenance, tuned specifically for high-speed lathe tool wear curves.',
+        tags: ['Precision Engineering', 'Predictive Maintenance', 'CNC Machining'],
+        filters: ['precision', 'maintenance', 'cnc'],
+        price: 890, rank: '#5',
+        problem: 'Tool changes are scheduled on calendar time, not actual wear — creating waste and surprise breaks.',
+        why: ['Cuts tool spend by 12–20%', 'Fits beside CNC PdM app', 'Configures in 2 weeks', 'Approved sandbox vendor']
+      },
+      {
+        id: 'qa',
+        name: 'Statistical Process Control Copilot',
+        vendor: 'SigmaOps · Singapore',
+        icon: 'SPC', color: '#f5b800',
+        desc: 'A natural-language copilot that turns process data into SPC charts, alarms and root-cause hypotheses for line engineers.',
+        tags: ['Quality', 'Precision Engineering'],
+        filters: ['precision', 'vision'],
+        price: 540, rank: '#7',
+        problem: 'SPC tools require expert setup; SMEs rarely have a dedicated quality engineer per line.',
+        why: ['Conversational interface', 'Pulls from existing MES', 'Lowest-cost entry point']
+      },
+      {
+        id: 'cnc',
+        name: 'Predictive Maintenance for CNC Machines',
+        vendor: 'PrecisionWorks AI · Singapore',
+        icon: 'CNC', color: '#ffd23a',
+        desc: 'Reduces unplanned CNC downtime using sensor data and human-in-the-loop approval. Top-ranked across the SME pilot.',
+        tags: ['Precision Engineering', 'Predictive Maintenance', 'CNC Machining'],
+        filters: ['precision', 'maintenance', 'cnc'],
+        price: 1200, rank: '#1',
+        problem: 'Unplanned CNC downtime disrupts schedules and erodes margins for precision engineering SMEs.',
+        why: [
+          'Highest downtime cost across the SME segment',
+          'Strong sensor data already available on most CNC fleets',
+          'Fast ROI — typically under 9 months',
+          'Fits the human-approval governance model'
+        ]
       }
-    });
-    const initials = tenant.split(/\s+/).map(s=>s[0]).join('').slice(0,2).toUpperCase();
-    ['userAv','userAv2'].forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.textContent = initials;
-    });
-  }
+    ];
 
-  // ---------- Upload form ----------
-  function updateIcon(){
-    const t = document.getElementById('iconText').value.toUpperCase();
-    document.getElementById('iconPreview').textContent = t || 'EMFG';
-  }
-  document.querySelectorAll('#colorPick button').forEach(b => {
-    b.addEventListener('click', e => {
-      document.querySelectorAll('#colorPick button').forEach(x=>x.classList.remove('sel'));
-      b.classList.add('sel');
-      document.getElementById('iconPreview').style.background = b.dataset.c;
+    // ---------- State ----------
+    let activeFilter = 'all';
+    let view = 'marketplace';
+    let currentAppId = 'cnc';
+    let tenant = 'EastMark Precision';
+
+    // ---------- Page nav ----------
+    function show(id) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    }
+
+    // ---------- Login / logout ----------
+    function login() {
+      const c = document.getElementById('loginCompany').value.trim();
+      if (c) tenant = c;
+      refreshTenantUI();
+      setView('marketplace');
+      show('page-marketplace');
+    }
+    function logout() {
+      document.getElementById('loginCompany').value = '';
+      document.getElementById('loginPass').value = '';
+      show('page-login');
+    }
+    function refreshTenantUI() {
+      ['tenantName1', 'tenantName2', 'tenantName3', 'tenantName4', 'tenantName5', 'sTenant'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          if (id === 'sTenant') el.textContent = tenant + ' · SG-NODE-01';
+          else el.textContent = tenant;
+        }
+      });
+      const initials = tenant.split(/\s+/).map(s => s[0]).join('').slice(0, 2).toUpperCase();
+      ['userAv', 'userAv2'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = initials;
+      });
+    }
+
+    // ---------- Upload form ----------
+    function updateIcon() {
+      const t = document.getElementById('iconText').value.toUpperCase();
+      document.getElementById('iconPreview').textContent = t || 'EMFG';
+    }
+    document.querySelectorAll('#colorPick button').forEach(b => {
+      b.addEventListener('click', e => {
+        document.querySelectorAll('#colorPick button').forEach(x => x.classList.remove('sel'));
+        b.classList.add('sel');
+        document.getElementById('iconPreview').style.background = b.dataset.c;
+      });
     });
-  });
-  function updatePricePreview(){
-    const v = +document.getElementById('appPrice').value || 0;
-    document.getElementById('pricePreview').textContent = v.toLocaleString('en-SG');
-    const mode = document.getElementById('appBilling').value || 'Pay-as-you-use';
-    document.getElementById('billingPreview').textContent =
-      mode.toUpperCase().split('—')[0].trim().split('(')[0].trim();
-  }
-  document.getElementById('appBilling')?.addEventListener('change', updatePricePreview);
+    function updatePricePreview() {
+      const v = +document.getElementById('appPrice').value || 0;
+      document.getElementById('pricePreview').textContent = v.toLocaleString('en-SG');
+      const mode = document.getElementById('appBilling').value || 'Pay-as-you-use';
+      document.getElementById('billingPreview').textContent =
+        mode.toUpperCase().split('—')[0].trim().split('(')[0].trim();
+    }
+    document.getElementById('appBilling')?.addEventListener('change', updatePricePreview);
 
-  function submitApp(){
-    const name = document.getElementById('appName').value.trim() || 'Predictive Maintenance for CNC Machines';
-    document.getElementById('submittedMsg').innerHTML =
-      `Your AI application <b>"${name}"</b> has been queued in the sovereign sandbox. You will receive a tenant notification once review is complete.`;
-    document.getElementById('submitId').textContent =
-      'SG-AIC-2026-' + String(Math.floor(100 + Math.random()*900));
-    show('page-status');
-  }
+    function submitApp() {
+      const name = document.getElementById('appName').value.trim() || 'Predictive Maintenance for CNC Machines';
+      document.getElementById('submittedMsg').innerHTML =
+        `Your AI application <b>"${name}"</b> has been queued in the sovereign sandbox. You will receive a tenant notification once review is complete.`;
+      document.getElementById('submitId').textContent =
+        'SG-AIC-2026-' + String(Math.floor(100 + Math.random() * 900));
+      show('page-status');
+    }
 
-  // ---------- Marketplace ----------
-  function setFilter(el, f){
-    activeFilter = f;
-    document.querySelectorAll('.filter-bar .chip').forEach(c=>c.classList.remove('active'));
-    el.classList.add('active');
-    renderApps();
-  }
-  function setView(v){
-    view = v;
-    document.getElementById('tabAll').classList.toggle('on', v==='marketplace');
-    document.getElementById('tabMine').classList.toggle('on', v==='mine');
-    renderApps();
-  }
-  function renderApps(){
-    const grid = document.getElementById('appsGrid');
-    const q = (document.getElementById('searchBox')?.value || '').toLowerCase();
-    let list = APPS.filter(a => {
-      if (activeFilter !== 'all' && !a.filters.includes(activeFilter)) return false;
-      if (q && !(a.name + ' ' + a.tags.join(' ') + ' ' + a.desc).toLowerCase().includes(q)) return false;
-      return true;
-    });
+    // ---------- Marketplace ----------
+    function setFilter(el, f) {
+      activeFilter = f;
+      document.querySelectorAll('.filter-bar .chip').forEach(c => c.classList.remove('active'));
+      el.classList.add('active');
+      renderApps();
+    }
+    function setView(v) {
+      view = v;
+      document.getElementById('tabAll').classList.toggle('on', v === 'marketplace');
+      document.getElementById('tabMine').classList.toggle('on', v === 'mine');
+      renderApps();
+    }
+    function renderApps() {
+      const grid = document.getElementById('appsGrid');
+      const q = (document.getElementById('searchBox')?.value || '').toLowerCase();
+      let list = APPS.filter(a => {
+        if (activeFilter !== 'all' && !a.filters.includes(activeFilter)) return false;
+        if (q && !(a.name + ' ' + a.tags.join(' ') + ' ' + a.desc).toLowerCase().includes(q)) return false;
+        return true;
+      });
 
-    // Sort logic: if a specific filter is applied, move CNC app to the front
-    if (activeFilter !== 'all') {
-      const cncIdx = list.findIndex(a => a.id === 'cnc');
-      if (cncIdx > -1) {
-        const [cnc] = list.splice(cncIdx, 1);
-        list.unshift(cnc);
+      // Sort logic: if a specific filter is applied, move CNC app to the front
+      if (activeFilter !== 'all') {
+        const cncIdx = list.findIndex(a => a.id === 'cnc');
+        if (cncIdx > -1) {
+          const [cnc] = list.splice(cncIdx, 1);
+          list.unshift(cnc);
+        }
       }
-    }
 
-    if (view === 'mine') list = list.filter(a => a.id === window.__sub);
-    if (!list.length){
-      grid.innerHTML = `<div style="grid-column:1/-1; padding:60px 20px; text-align:center; color:var(--muted); font-family:'JetBrains Mono', monospace; font-size:12px; letter-spacing:.1em; text-transform:uppercase;">— No applications match these filters —</div>`;
-      return;
-    }
-    grid.innerHTML = list.map((a, idx) => {
-      const dynamicRank = '#' + (idx + 1).toString().padStart(2, '0');
-      return `
+      if (view === 'mine') list = list.filter(a => a.id === window.__sub);
+      if (!list.length) {
+        grid.innerHTML = `<div style="grid-column:1/-1; padding:60px 20px; text-align:center; color:var(--muted); font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:.1em; text-transform:uppercase;">— No applications match these filters —</div>`;
+        return;
+      }
+      grid.innerHTML = list.map((a, idx) => {
+        const dynamicRank = '#' + (idx + 1).toString().padStart(2, '0');
+        return `
       <div class="app-card" onclick="openApp('${a.id}', '${dynamicRank}')">
         <div class="app-card-top">
-          <div class="app-icon" style="background:${a.color}; color:${a.color==='#0B1220' ? '#F4EFE6':'#0B1220'}">${a.icon}</div>
+          <div class="app-icon" style="background:${a.color}; color:${a.color === '#1a1a1a' ? '#f5f5f3' : '#1a1a1a'}">${a.icon}</div>
           <div class="app-rank">${dynamicRank}</div>
         </div>
         <div>
@@ -1445,50 +2360,52 @@
           <div class="app-vendor" style="margin-top:6px;">${a.vendor}</div>
         </div>
         <div class="app-desc">${a.desc}</div>
-        <div class="app-tags">${a.tags.map(t=>`<span class="app-tag">${t}</span>`).join('')}</div>
+        <div class="app-tags">${a.tags.map(t => `<span class="app-tag">${t}</span>`).join('')}</div>
         <div class="app-foot">
           <div class="app-price">SGD ${a.price.toLocaleString('en-SG')} <small>/ mo</small></div>
           <span class="app-arrow">→</span>
         </div>
       </div>
-    `;}).join('');
-  }
+    `;
+      }).join('');
+    }
 
-  // ---------- Detail ----------
-  function openApp(id, rank){
-    const a = APPS.find(x => x.id === id);
-    if (!a) return;
-    currentAppId = id;
-    document.getElementById('dName').textContent = a.name;
-    document.getElementById('dVendor').textContent = `By ${a.vendor} · Ranked ${rank || a.rank}`;
-    document.getElementById('dProblem').textContent = a.problem;
-    const ic = document.getElementById('dIcon');
-    ic.textContent = a.icon; ic.style.background = a.color;
-    ic.style.color = a.color === '#0B1220' ? '#F4EFE6' : '#0B1220';
-    document.getElementById('dPrice').textContent = a.price.toLocaleString('en-SG');
-    document.getElementById('dWhy').innerHTML = a.why.map(w=>`<li>${w}</li>`).join('');
-    show('page-detail');
-  }
+    // ---------- Detail ----------
+    function openApp(id, rank) {
+      const a = APPS.find(x => x.id === id);
+      if (!a) return;
+      currentAppId = id;
+      document.getElementById('dName').textContent = a.name;
+      document.getElementById('dVendor').textContent = `By ${a.vendor} · Ranked ${rank || a.rank}`;
+      document.getElementById('dProblem').textContent = a.problem;
+      const ic = document.getElementById('dIcon');
+      ic.textContent = a.icon; ic.style.background = a.color;
+      ic.style.color = a.color === '#1a1a1a' ? '#f5f5f3' : '#1a1a1a';
+      document.getElementById('dPrice').textContent = a.price.toLocaleString('en-SG');
+      document.getElementById('dWhy').innerHTML = a.why.map(w => `<li>${w}</li>`).join('');
+      show('page-detail');
+    }
 
-  // ---------- Subscribe ----------
-  function subscribe(){
-    const a = APPS.find(x => x.id === currentAppId);
-    window.__sub = currentAppId;
-    document.getElementById('sName').textContent = a.name;
-    document.getElementById('sName2').textContent = a.name;
-    document.getElementById('sPrice').textContent = a.price.toLocaleString('en-SG');
-    document.getElementById('sSub').textContent =
-      'SUB-' + a.icon + '-2026-' + String(Math.floor(100 + Math.random()*900));
-    const d = new Date();
-    document.getElementById('sDate').textContent =
-      d.toLocaleDateString('en-SG',{year:'numeric',month:'short',day:'2-digit'}) +
-      ' · ' + d.toLocaleTimeString('en-SG',{hour:'2-digit',minute:'2-digit'});
-    show('page-subscribed');
-  }
+    // ---------- Subscribe ----------
+    function subscribe() {
+      const a = APPS.find(x => x.id === currentAppId);
+      window.__sub = currentAppId;
+      document.getElementById('sName').textContent = a.name;
+      document.getElementById('sName2').textContent = a.name;
+      document.getElementById('sPrice').textContent = (a.price + 100).toLocaleString('en-SG');
+      document.getElementById('sSub').textContent =
+        'SUB-' + a.icon + '-2026-' + String(Math.floor(100 + Math.random() * 900));
+      const d = new Date();
+      document.getElementById('sDate').textContent =
+        d.toLocaleDateString('en-SG', { year: 'numeric', month: 'short', day: '2-digit' }) +
+        ' · ' + d.toLocaleTimeString('en-SG', { hour: '2-digit', minute: '2-digit' });
+      show('page-subscribed');
+    }
 
-  // ---------- Boot ----------
-  renderApps();
-  refreshTenantUI();
-</script>
+    // ---------- Boot ----------
+    renderApps();
+    refreshTenantUI();
+  </script>
 </body>
+
 </html>
