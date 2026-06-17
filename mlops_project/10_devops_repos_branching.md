@@ -63,9 +63,9 @@ Your diagram shows **two** Container Registries — this is a real-world securit
 Keep these names — they're referenced across files `11`–`12`:
 
 **CI (build) pipelines:**
-- **CI-1**: `iras-udp-apps-ml-mlops` → `azure-pipelines.yml` (feature/develop builds → UAT ACR002)
-- **CI-2**: `iras-udp-apps-ml-mlops-prod` → `azure-pipelines-release.yml` (develop → PROD ACR002 for local PROD testing)
-- **CI-3**: `iras-udp-apps-ml-mlops-release` → `azure-pipelines-release.yml` (main → UAT ACR001, sign + verify)
+- **CI-1**: `kivas-udp-apps-ml-mlops` → `azure-pipelines.yml` (feature/develop builds → UAT ACR002)
+- **CI-2**: `kivas-udp-apps-ml-mlops-prod` → `azure-pipelines-release.yml` (develop → PROD ACR002 for local PROD testing)
+- **CI-3**: `kivas-udp-apps-ml-mlops-release` → `azure-pipelines-release.yml` (main → UAT ACR001, sign + verify)
 
 **CD (release) pipelines:**
 - **CD-1**: `Mlops-Sample-UAT` (deploy to UAT AKS + APIM)
