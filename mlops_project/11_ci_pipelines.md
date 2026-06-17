@@ -58,7 +58,7 @@ This runs on **feature** and **develop** branches → builds and pushes to **ACR
 Create `azure-pipelines/ci/azure-pipelines.yml`:
 
 ```yaml
-# CI-1 : iras-udp-apps-ml-mlops
+# CI-1 : kivas-udp-apps-ml-mlops
 # Runs on feature/* and develop. Build + test + scan + push to ACR002 (dev).
 trigger:
   branches:
@@ -144,7 +144,7 @@ stages:
 > crucial for debugging "which build is in production?"
 
 Create the pipeline in DevOps: **Pipelines → New pipeline → Azure Repos Git → your repo → Existing YAML
-file →** select this file. Name it **`iras-udp-apps-ml-mlops`** (CI-1).
+file →** select this file. Name it **`kivas-udp-apps-ml-mlops`** (CI-1).
 
 ---
 
@@ -180,7 +180,7 @@ there. It's the same YAML as CI-1 but triggered differently and pointed at PROD'
 `azure-pipelines/ci/azure-pipelines-prod.yml`:
 
 ```yaml
-# CI-2 : iras-udp-apps-ml-mlops-prod
+# CI-2 : kivas-udp-apps-ml-mlops-prod
 # Build with PROD ACR002 base image, push to PROD ACR002 for local PROD testing.
 trigger:
   branches: { include: [ develop ] }
@@ -218,7 +218,7 @@ This runs on **main** (after develop→main PR). It builds, pushes to **UAT ACR0
 verifies** the image. Create `azure-pipelines/ci/azure-pipelines-release.yml`:
 
 ```yaml
-# CI-3 : iras-udp-apps-ml-mlops-release
+# CI-3 : kivas-udp-apps-ml-mlops-release
 # On main: build, push to UAT ACR001, SIGN and VERIFY the image.
 trigger:
   branches: { include: [ main ] }
@@ -271,7 +271,7 @@ stages:
 
 | Your doc | This file | Trigger | Pushes to | Special |
 |----------|-----------|---------|-----------|---------|
-| CI-1 `iras-udp-apps-ml-mlops` | `azure-pipelines.yml` | feature/develop | UAT **ACR002** | test+scan+build |
+| CI-1 `kivas-udp-apps-ml-mlops` | `azure-pipelines.yml` | feature/develop | UAT **ACR002** | test+scan+build |
 | CI-2 `...-prod` | `azure-pipelines-prod.yml` | develop | PROD **ACR002** | PROD-flavored build |
 | CI-3 `...-release` | `azure-pipelines-release.yml` | main | UAT **ACR001** | **sign + verify** |
 
