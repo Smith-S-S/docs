@@ -48,7 +48,7 @@ trigger: none                          # triggered by CI completion, not by code
 resources:
   pipelines:
     - pipeline: ci
-      source: iras-udp-apps-ml-mlops   # CI-1
+      source: kivas-udp-apps-ml-mlops   # CI-1
       trigger: true                    # run this CD when CI-1 finishes
 variables:
   - group: mlops-common
@@ -98,7 +98,7 @@ trigger: none
 resources:
   pipelines:
     - pipeline: ciprod
-      source: iras-udp-apps-ml-mlops-prod   # CI-2
+      source: kivas-udp-apps-ml-mlops-prod   # CI-2
       trigger: true
 variables:
   - group: mlops-common-prod
@@ -149,7 +149,7 @@ trigger: none
 resources:
   pipelines:
     - pipeline: cirelease
-      source: iras-udp-apps-ml-mlops-release   # CI-3 (signed image in UAT ACR001)
+      source: kivas-udp-apps-ml-mlops-release   # CI-3 (signed image in UAT ACR001)
       trigger: true
 variables:
   - group: mlops-common
